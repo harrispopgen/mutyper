@@ -1,26 +1,30 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import cyvcf2
 import pyfaidx
 import re
 from Bio.Seq import reverse_complement
-from typing import Generator
+from typing import Generator, Tuple, Dict, Union, TextIO
+from collections import Counter
 
 
-class Ancestor():
-    def __init__(self, anc_fasta_file: str, k: int = 3, target: int = None,
-                 strand_file: str = None):
+class Ancestor(pyfaidx.Fasta):
+    def __init__(self, fasta: str, k: int = 3, target: int = None,
+                 strand_file: str = None, **kwargs):
         """ancestral state of a chromosome
 
-        anc_fasta_file: path to ancestral sequence fasta
+        fasta: path to ancestral sequence FASTA
         k: the size of the context window (default 3)
         target: which position for the site within the kmer (default middle)
         strand_file: path to bed file with regions where reverse strand defines
                      mutation context, e.g. direction of replication or
                      transcription (default collapse reverse complements)
+        kwargs: additional keyword arguments passed to base class. Useful
+                ones are key_function (for chromosome name parsing), read_ahead
+                (for buffering), and sequence_always_upper (to allow lowercase
+                nucleotides to be considered ancestrally identified)
         """
-        self.fasta = pyfaidx.Fasta(anc_fasta_file, read_ahead=10000)
+        super(Ancestor, self).__init__(fasta, **kwargs)
         if target is None:
             assert k % 2 == 1, f'k = {k} must be odd for default middle target'
             target = k // 2
@@ -31,24 +35,76 @@ class Ancestor():
         self.k = k
         if strand_file is None:
             self.strandedness = None
-            assert self.target == self.k // 2, f'non-central target {self.target} requires strand_file'
+            if self.target != self.k // 2:
+                raise ValueError(f'non-central target {self.target} requires '
+                                 'strand_file')
         else:
             raise NotImplementedError('strand_file argument must be None')
 
-    def region_context(self, id: str, start: int, end: int) -> Generator[str, None, None]:
-        """ancestral context of each site in a bed file region, oriented
-        according to self.strandedness or collapsed by reverse complementation
-        (returns None if ancestral state at target not in capital ACGT)
+    def mutation_type(self, chrom: str,
+                      pos: int, ref: str, alt: str) -> Tuple[str, str]:
+        """mutation type of a given snp, oriented or collapsed by strand
+        returns a tuple of ancestral and derived kmers
 
-        id: fasta record identifier
+        chrom: FASTA record chromosome identifier
         pos: position (0-based)
+        ref: reference allele (A, C, G, or T)
+        alt: alternative allele (A, C, G, or T)
+        """
+        # ancestral state
+        anc = self[chrom][pos].seq
+        # derived state
+        if anc == ref:
+            der = alt
+        elif anc == alt:
+            der = ref
+        else:
+            # infinite sites violation
+            return None, None
+        start = pos - self.target
+        assert start >= 0
+        end = pos + self.k - self.target
+        assert start <= end
+
+        context = self[chrom][start:end]
+        anc_kmer = f'{context[:self.target]}{anc}{context[(self.target + 1):]}'
+        der_kmer = f'{context[:self.target]}{der}{context[(self.target + 1):]}'
+
+        if not re.match('^[ACGT]+$', anc_kmer) or not re.match('^[ACGT]+$',
+                                                               der_kmer):
+            return None, None
+
+        if self.strandedness is None:
+            if anc in 'AC':
+                return anc_kmer, der_kmer
+            elif anc in 'TG':
+                return (reverse_complement(anc_kmer),
+                        reverse_complement(der_kmer))
+            else:
+                raise ValueError('there is a bug if you got here')
+        else:
+            raise NotImplementedError('self.strandedness must be None')
+
+    def region_contexts(self, chrom: str,
+                        start: int = None,
+                        end: int = None) -> Generator[str, None, None]:
+        """ancestral context of each site in a BED style region (0-based,
+        half-open), oriented according to self.strandedness or collapsed by
+        reverse complementation (returns None if ancestral state at target not
+        in capital ACGT)
+
+        chrom: chromosome name
+        start: region start position (default to chromsome start)
+        end: region end position (default to chromsome end)
         """
         # NOTE: only valid for central target
-        if start - self.target < 0:
-            raise ValueError(f'position {start - self.target} too close to '
-                             'sequence end to compute context')
-        # we want to access the fasta as few times as possible
-        region_seq = self.fasta[id][(start - self.target):(end + self.k - self.target)]
+        if start is None:
+            start = self.target
+        if end is None:
+            end = len(self[chrom]) - self.target
+        # we want to access the FASTA as few times as possible
+        region_seq = self[chrom][(start - self.target):
+                                 (end + self.k - self.target)]
         for i in range(end - start):
             context = region_seq[i:(i + self.k)].seq
             if not re.match('^[ACGT]+$', context):
@@ -63,105 +119,21 @@ class Ancestor():
             else:
                 raise NotImplementedError('self.strandedness must be None')
 
-    def mutation_type(self, id: str, pos: int, ref: str, alt: str) -> str:
-        """mutation type of a given snp, oriented or collapsed by strand
-        returns a tuple of ancestral and derived kmers
+    def targets(self,
+                bed: Union[str, TextIO] = None) -> Dict[str, int]:
+        """return a dictionary of the number of sites of each k-mer
 
-        id: fasta record identifier
-        pos: position (0-based)
-        ref: reference allele (A, C, G, or T)
-        alt: alternative allele (A, C, G, or T)
-        """
-        # ancestral state
-        anc = self.fasta[id][pos].seq
-        # derived state
-        if anc == ref:
-            der = alt
-        elif anc == alt:
-            der = ref
+        bed: optional path to BED mask file, or I/O object"""
+        sizes = Counter()
+        if bed is None:
+            for chrom in self.keys():
+                sizes.update(self.region_contexts(chrom))
         else:
-            # infinite sites violation
-            return None, None
-        start = pos - self.target
-        assert start >= 0
-        end = pos + self.k - self.target
-        assert start <= end
+            if isinstance(bed, str):
+                bed = open(bed, 'r')
+            for line in bed:
+                chrom, start, end = line.rstrip().split('\t')
+                sizes.update(self.region_contexts(chrom, int(start), int(end)))
+        del sizes[None]
 
-        context = self.fasta[id][start:end]
-        anc_kmer = f'{context[:self.target]}{anc}{context[(self.target + 1):]}'
-        der_kmer = f'{context[:self.target]}{der}{context[(self.target + 1):]}'
-
-        if not re.match('^[ACGT]+$', anc_kmer) or not re.match('^[ACGT]+$', der_kmer):
-            return None, None
-
-        if self.strandedness is None:
-            if anc in 'AC':
-                return anc_kmer, der_kmer
-            elif anc in 'TG':
-                return reverse_complement(anc_kmer), reverse_complement(der_kmer)
-        else:
-            NotImplementedError('self.strandedness must be None')
-
-    def __del__(self):
-        self.fasta.close()
-
-
-def main():
-    """
-    usage: python ancestor.py -h
-    """
-    import argparse
-
-    parser = argparse.ArgumentParser(description='add kmer context to vcf/bcf '
-                                                 'INFO and stream to stdout')
-    parser.add_argument('anc_fasta_file', type=str, default=None,
-                        help='path to ancestral alignment fasta (one '
-                             'chromosome)')
-    parser.add_argument('--vcf_file', type=str, default='-',
-                        help='VCF file (default stdin)')
-    parser.add_argument('--k', type=int, default=3,
-                        help='k-mer context size (default 3)')
-    parser.add_argument('--target', type=int, default=None,
-                        help='0-based mutation target position in kmer (default middle)')
-    parser.add_argument('--sep', type=str, default=':',
-                        help='field delimiter in fasta headers (default ":")')
-    parser.add_argument('--chrom_pos', type=int, default=2,
-                        help='0-based chromosome field position in fasta headers (default 2)')
-    parser.add_argument('--strand_file', type=str, default=None,
-                        help='path to bed file with regions where reverse '
-                             'strand defines mutation context, e.g. direction '
-                             'of replication or transcription (default collapse '
-                             'reverse complements)')
-
-
-    args = parser.parse_args()
-
-    ancestor = Ancestor(args.anc_fasta_file, args.k, args.target, args.strand_file)
-
-    # parse chromosome names from fasta headers
-    chrom_map = {name.split(args.sep)[args.chrom_pos]:
-                 name for name in ancestor.fasta.keys()}
-
-    vcf = cyvcf2.VCF(args.vcf_file)
-    vcf.add_info_to_header({'ID': 'mutation_type',
-                            'Description': f'ancestral {args.k}mer mutation type',
-                            'Type': 'Character', 'Number': '1'})
-    vcf_writer = cyvcf2.Writer('-', vcf)
-    vcf_writer.write_header()
-    for variant in vcf:
-        # biallelic snps only
-        if not (variant.is_snp and len(variant.ALT) == 1):
-            continue
-        # mutation type
-        anc_kmer, der_kmer = ancestor.mutation_type(chrom_map[variant.CHROM],
-                                                    variant.start, variant.REF,
-                                                    variant.ALT[0])
-        if anc_kmer is None or der_kmer is None:
-            continue
-        mutation_type = f'{anc_kmer}>{der_kmer}'
-        variant.INFO['mutation_type'] = mutation_type
-        vcf_writer.write_record(variant)
-
-
-if __name__ == '__main__':
-    main()
+        return sizes
