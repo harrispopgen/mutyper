@@ -26,7 +26,7 @@ Command line usage
 $ python mutyper.py -h
 usage: mutyper.py [-h] {variants,targets,spectra,ksfs} ...
 
-mutyper: ancestral 𝑘-mer mutation types for variant data
+mutyper: ancestral kmer mutation types for variant data
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -43,7 +43,7 @@ subcommands:
 $ python mutyper.py variants -h
 usage: mutyper.py variants [-h] [--k K] [--target TARGET] [--sep SEP]
                            [--chrom_pos CHROM_POS] [--strand_file STRAND_FILE]
-                           [--allowlower]
+                           [--strict]
                            fasta vcf
 
 adds mutation_type to VCF/BCF INFO, polarizes REF/ALT/AC according to
@@ -68,8 +68,8 @@ optional arguments:
                         defines mutation context, e.g. direction of
                         replication or transcription (default collapse reverse
                         complements)
-  --allowlower          take lowercase nucleotides as ancestrally identified
-                        in FASTA (by default only uppercase)
+  --strict              only uppercase nucleotides in FASTA considered
+                        ancestrally identified
 ```
 
 ### `targets` subcommand
@@ -77,7 +77,7 @@ optional arguments:
 $ python mutyper.py targets -h
 usage: mutyper.py targets [-h] [--k K] [--target TARGET] [--sep SEP]
                           [--chrom_pos CHROM_POS] [--strand_file STRAND_FILE]
-                          [--allowlower] [--bed BED]
+                          [--strict] [--bed BED]
                           fasta
 
 compute 𝑘-mer target sizes and stream to stdout
@@ -99,9 +99,10 @@ optional arguments:
                         defines mutation context, e.g. direction of
                         replication or transcription (default collapse reverse
                         complements)
-  --allowlower          take lowercase nucleotides as ancestrally identified
-                        in FASTA (by default only uppercase)
+  --strict              only uppercase nucleotides in FASTA considered
+                        ancestrally identified
   --bed BED             path to BED file mask ("-" for stdin)
+
 ```
 
 ### `spectra` subcommand
