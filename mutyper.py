@@ -19,7 +19,7 @@ def setup_ancestor(args):
                              key_function=lambda x:
                              x.split(args.sep)[args.chrom_pos],
                              read_ahead=10000,
-                             sequence_always_upper=args.allowlower)
+                             sequence_always_upper=(not args.strict))
 
 
 def variants(args):
@@ -175,10 +175,9 @@ def main():
                                      'context, e.g. direction of replication '
                                      'or transcription (default collapse '
                                      'reverse complements)')
-        sub_parser.add_argument('--allowlower', action='store_true',
-                                help='take lowercase nucleotides as '
-                                     'ancestrally identified in FASTA (by '
-                                     'default only uppercase)')
+        sub_parser.add_argument('--strict', action='store_true',
+                                help='only uppercase nucleotides in FASTA '
+                                     'considered ancestrally identified')
 
     # subcommands that require VCF input
     for sub_parser in (parser_variants, parser_spectra, parser_ksfs):
