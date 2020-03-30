@@ -38,7 +38,7 @@ def variants(args):
         # biallelic snps only
         if not (variant.is_snp and len(variant.ALT) == 1):
             continue
-        # mutation type
+        # mutation type as ancestral kmer and derived kmer
         anc_kmer, der_kmer = ancestor.mutation_type(variant.CHROM,
                                                     variant.start, variant.REF,
                                                     variant.ALT[0])
@@ -115,6 +115,7 @@ def ksfs(args):
         AN = variant.INFO['AN']
         ksfs_data[variant.INFO['mutation_type']][variant.INFO['AC']] += 1
 
+    # exclude fixed sites AC=0, AC=AN
     index = range(1, AN)
     for mutation_type in sorted(ksfs_data):
         ksfs_data[mutation_type] = [ksfs_data[mutation_type][ac]
@@ -133,7 +134,7 @@ def main():
     usage: python mutyper.py -h"""
 
     parser = argparse.ArgumentParser(
-        description='mutyper: ancestral 𝑘-mer mutation types for variant data')
+        description='mutyper: ancestral kmer mutation types for variant data')
     subparsers = parser.add_subparsers(
         title='subcommands', description='specify one of these', required=True,
         help='additional help available for each subcommand')
