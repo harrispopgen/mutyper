@@ -1,137 +1,47 @@
 mutyper
 ====
 
-A Python3 package for annotating the local ancestral sequence context of biallelic SNPs, featuring
+A Python package for annotating the local ancestral sequence context of biallelic SNPs, featuring
 
-- A Python API
-- A CLI for integration in pipelines analyzing VCF/BCF data
+- CLI for integration in pipelines analyzing VCF/BCF data
+- Python API
 
-
-Dependencies
+Installation
 ---
-
-Dependences are listed in [env.yml](). You can set up a [conda](https://docs.conda.io/en/latest/) environment with
+1. clone the repository
 ```bash
-$ conda env create -f env.yml
+$ git clone https://github.com/harrispopgen/mutyper
 ```
-and activate your new environment with
+2. install with pip
 ```bash
-$ conda activate mutyper
+$ pip install mutyper
+```
+ **Developer note:** for editable installation, instead use
+```bash
+$ pip install -e mutyper
+```
+3. To run the demonstration Jupyter notebook [`demo.ipynb`](demo.ipynb), you'll also need to install Jupyter, bcftools, and tabix. If you're working in a Conda environment, this can be done with
+```bash
+$ conda install bcftools tabix jupyter --channel conda-forge --channel bioconda
 ```
 
 Command line usage
 ---
-### main help and subcommand list
+- ### main help and subcommand list
 ```bash
-$ python mutyper.py -h
-usage: mutyper.py [-h] {variants,targets,spectra,ksfs} ...
-
-mutyper: ancestral kmer mutation types for variant data
-
-optional arguments:
-  -h, --help            show this help message and exit
-
-subcommands:
-  specify one of these
-
-  {variants,targets,spectra,ksfs}
-                        additional help available for each subcommand
+$ mutyper -h
 ```
 
-### `variants` subcommand
+- ### help for each subcommand
 ```bash
-$ python mutyper.py variants -h
-usage: mutyper.py variants [-h] [--k K] [--target TARGET] [--sep SEP]
-                           [--chrom_pos CHROM_POS] [--strand_file STRAND_FILE]
-                           [--strict]
-                           fasta vcf
-
-adds mutation_type to VCF/BCF INFO, polarizes REF/ALT/AC according to
-ancestral/derived states, and stream to stdout
-
-positional arguments:
-  fasta                 path to ancestral FASTA
-  vcf                   VCF/BCF file created by the variants subcommand ("-"
-                        for stdin)
-
-optional arguments:
-  -h, --help            show this help message and exit
-  --k K                 k-mer context size (default 3)
-  --target TARGET       0-based mutation target position in kmer (default
-                        middle)
-  --sep SEP             field delimiter in FASTA headers (default ":")
-  --chrom_pos CHROM_POS
-                        0-based chromosome field position in FASTA headers
-                        (default 2)
-  --strand_file STRAND_FILE
-                        path to bed file with regions where reverse strand
-                        defines mutation context, e.g. direction of
-                        replication or transcription (default collapse reverse
-                        complements)
-  --strict              only uppercase nucleotides in FASTA considered
-                        ancestrally identified
+$ mutyper <subcommand> -h
 ```
 
-### `targets` subcommand
-```bash
-$ python mutyper.py targets -h
-usage: mutyper.py targets [-h] [--k K] [--target TARGET] [--sep SEP]
-                          [--chrom_pos CHROM_POS] [--strand_file STRAND_FILE]
-                          [--strict] [--bed BED]
-                          fasta
+Python API
+---
 
-compute 𝑘-mer target sizes and stream to stdout
-
-positional arguments:
-  fasta                 path to ancestral FASTA
-
-optional arguments:
-  -h, --help            show this help message and exit
-  --k K                 k-mer context size (default 3)
-  --target TARGET       0-based mutation target position in kmer (default
-                        middle)
-  --sep SEP             field delimiter in FASTA headers (default ":")
-  --chrom_pos CHROM_POS
-                        0-based chromosome field position in FASTA headers
-                        (default 2)
-  --strand_file STRAND_FILE
-                        path to bed file with regions where reverse strand
-                        defines mutation context, e.g. direction of
-                        replication or transcription (default collapse reverse
-                        complements)
-  --strict              only uppercase nucleotides in FASTA considered
-                        ancestrally identified
-  --bed BED             path to BED file mask ("-" for stdin)
-
-```
-
-### `spectra` subcommand
-```bash
-$ python mutyper.py spectra -h
-usage: mutyper.py spectra [-h] vcf
-
-compute mutation spectra for each sample in VCF/BCF with mutation_type data
-and stream to stdout
-
-positional arguments:
-  vcf         VCF/BCF file created by the variants subcommand ("-" for stdin)
-
-optional arguments:
-  -h, --help  show this help message and exit
-```
-
-### `ksfs` subcommand
-```bash
-$ python mutyper.py ksfs -h   
-usage: mutyper.py ksfs [-h] vcf
-
-compute sample frequency spectrum for each mutation type from a VCF/BCF file
-with mutation_type data (i.e. output from variants subcommand ) and stream to
-stdout
-
-positional arguments:
-  vcf         VCF/BCF file created by the variants subcommand ("-" for stdin)
-
-optional arguments:
-  -h, --help  show this help message and exit
+- ### `ancestor` module
+```python
+>>> from mutyper import ancestor
+>>> help(ancestor)
 ```

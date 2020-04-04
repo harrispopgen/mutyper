@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 
 import unittest
-from ancestor import Ancestor
+from mutyper.ancestor import Ancestor
 
 
 class TestAncestor(unittest.TestCase):
@@ -9,7 +9,7 @@ class TestAncestor(unittest.TestCase):
         self.anc = Ancestor('tests/test_data/ancestor.fa')
 
     def test_seq(self):
-        anc_seq = self.anc['foo'][:]
+        anc_seq = self.anc['foo'][:].seq
         anc_seq_true = 'AAACCCgggTTT'
         self.assertEqual(anc_seq, anc_seq_true)
 
