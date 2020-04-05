@@ -8,7 +8,7 @@ import pandas as pd
 import signal
 import numpy as np
 
-import ancestor
+from mutyper import ancestor
 
 
 def setup_ancestor(args):
@@ -47,7 +47,7 @@ def variants(args):
         mutation_type = f'{anc_kmer}>{der_kmer}'
         variant.INFO['mutation_type'] = mutation_type
         # ancestral allele
-        AA = ancestor[variant.CHROM][variant.start]
+        AA = ancestor[variant.CHROM][variant.start].seq
         # flip the alternative allele count if alternative allele is ancestral
         if variant.ALT[0] == AA:
             variant.INFO['AC'] = variant.INFO['AN'] - variant.INFO['AC']
