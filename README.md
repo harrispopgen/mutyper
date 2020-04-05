@@ -1,5 +1,4 @@
-mutyper
-====
+![](logo.png)
 
 A Python package for annotating the local ancestral sequence context of biallelic SNPs, featuring
 
