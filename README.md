@@ -43,3 +43,16 @@ Python API
 >>> from mutyper import ancestor
 >>> help(ancestor)
 ```
+
+Citing mutyper
+---
+
+```
+@software{mutyper2020github,
+  author = {William DeWitt},
+  title = {mutyper: ancestral $k$-mer mutation types for SNP data},
+  url = {https://github.com/harrispopgen/mutyper},
+  version = {0.1},
+  year = {2020},
+}
+```
