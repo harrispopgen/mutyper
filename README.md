@@ -7,19 +7,18 @@ A Python package for annotating the local ancestral sequence context of bialleli
 
 Installation
 ---
-1. clone the repository
+
+- Basic install with pip
 ```bash
-$ git clone https://github.com/harrispopgen/mutyper
+$ pip install git+https://github.com/harrispopgen/mutyper
 ```
-2. install with pip
+
+- Developer installation: add `-e` for editable (clones repo to `./src/mutyper`)
 ```bash
-$ pip install mutyper
+$ pip install -e git+https://github.com/harrispopgen/mutyper#egg=mutyper
 ```
- **Developer note:** for editable installation, instead use
-```bash
-$ pip install -e mutyper
-```
-3. To run the demonstration Jupyter notebook [`demo.ipynb`](demo.ipynb), you'll also need to install Jupyter, bcftools, and tabix. If you're working in a Conda environment, this can be done with
+
+- To run the demonstration Jupyter notebook [`demo.ipynb`](demo.ipynb), you'll also need to install Jupyter, bcftools, and tabix. If you're working in a Conda environment, this can be done with
 ```bash
 $ conda install bcftools tabix jupyter --channel conda-forge --channel bioconda
 ```
