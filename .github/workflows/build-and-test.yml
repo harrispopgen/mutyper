@@ -26,12 +26,12 @@ jobs:
         python -m pip install --upgrade pip setuptools wheel
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-     - name: Install Linux dependencies
-       if: matrix.os == 'ubuntu-latest'
-       run: sudo apt-get install gcc
-     - name: Install macOS dependencies
-       if: matrix.os == 'macos-latest'
-       run: brew install gcc
+    - name: Install Linux dependencies
+      if: matrix.os == 'ubuntu-latest'
+      run: sudo apt-get install gcc
+    - name: Install macOS dependencies
+      if: matrix.os == 'macos-latest'
+      run: brew install gcc
     - name: Install mutyper
       run: |
         pip install .
