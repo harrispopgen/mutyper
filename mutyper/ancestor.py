@@ -8,10 +8,9 @@ from collections import Counter
 
 
 class Ancestor(pyfaidx.Fasta):
-    def __init__(self, fasta: str, k: int = 3, target: int = None,
-                 strand_file: str = None, **kwargs):
-        """ancestral state of a chromosome
+    r"""ancestral state of a chromosome
 
+    Args:
         fasta: path to ancestral sequence FASTA
         k: the size of the context window (default 3)
         target: which position for the site within the kmer (default middle)
@@ -23,6 +22,8 @@ class Ancestor(pyfaidx.Fasta):
                 (for buffering), and sequence_always_upper (to allow lowercase
                 nucleotides to be considered ancestrally identified)
         """
+    def __init__(self, fasta: str, k: int = 3, target: int = None,
+                 strand_file: str = None, **kwargs):
         super(Ancestor, self).__init__(fasta, **kwargs)
         if target is None:
             assert k % 2 == 1, f'k = {k} must be odd for default middle target'
@@ -42,13 +43,14 @@ class Ancestor(pyfaidx.Fasta):
 
     def mutation_type(self, chrom: str,
                       pos: int, ref: str, alt: str) -> Tuple[str, str]:
-        """mutation type of a given snp, oriented or collapsed by strand
+        r"""mutation type of a given snp, oriented or collapsed by strand
         returns a tuple of ancestral and derived kmers
 
-        chrom: FASTA record chromosome identifier
-        pos: position (0-based)
-        ref: reference allele (A, C, G, or T)
-        alt: alternative allele (A, C, G, or T)
+        Args:
+            chrom: FASTA record chromosome identifier
+            pos: position (0-based)
+            ref: reference allele (A, C, G, or T)
+            alt: alternative allele (A, C, G, or T)
         """
         # ancestral state
         anc = self[chrom][pos].seq
@@ -87,14 +89,15 @@ class Ancestor(pyfaidx.Fasta):
     def region_contexts(self, chrom: str,
                         start: int = None,
                         end: int = None) -> Generator[str, None, None]:
-        """ancestral context of each site in a BED style region (0-based,
+        r"""ancestral context of each site in a BED style region (0-based,
         half-open), oriented according to self.strandedness or collapsed by
         reverse complementation (returns None if ancestral state at target not
         in capital ACGT)
 
-        chrom: chromosome name
-        start: region start position (default to chromsome start)
-        end: region end position (default to chromsome end)
+        Args:
+            chrom: chromosome name
+            start: region start position (default to chromsome start)
+            end: region end position (default to chromsome end)
         """
         # NOTE: only valid for central target
         if start is None:
@@ -120,9 +123,10 @@ class Ancestor(pyfaidx.Fasta):
 
     def targets(self,
                 bed: Union[str, TextIO] = None) -> Dict[str, int]:
-        """return a dictionary of the number of sites of each k-mer
+        r"""return a dictionary of the number of sites of each k-mer
 
-        bed: optional path to BED mask file, or I/O object"""
+        Args:
+            bed: optional path to BED mask file, or I/O object"""
         sizes = Counter()
         if bed is None:
             for chrom in self.keys():

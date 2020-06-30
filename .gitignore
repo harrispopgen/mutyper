@@ -112,3 +112,5 @@ scons_output*
 
 .DS_Store
 *.fa.fai
+
+_build
