@@ -31,7 +31,7 @@ jobs:
       run: sudo apt-get update; sudo apt-get install -y libcurl4-openssl-dev
     - name: Install macOS dependencies
       if: matrix.os == 'macos-latest'
-      run: export LDFLAGS="-L/usr/local/opt/openssl/lib"; export CPPFLAGS="-I/usr/local/opt/openssl/include"; export PKG_CONFIG_PATH="/usr/local/opt/openssl/lib/pkgconfig"
+      run: export LIBRARY_PATH="-L/usr/local/lib"
     - name: Install mutyper
       run: |
         pip install .
