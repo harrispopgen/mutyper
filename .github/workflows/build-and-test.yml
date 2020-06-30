@@ -31,7 +31,7 @@ jobs:
       run: sudo apt-get update; sudo apt-get install -y libcurl4-openssl-dev
     - name: Install macOS dependencies
       if: matrix.os == 'macos-latest'
-      run: conda install clang_osx-64
+      run: conda install -c anaconda clang_osx-64
     - name: Install mutyper
       run: |
         pip install .
