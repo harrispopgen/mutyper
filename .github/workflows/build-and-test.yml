@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: [ubuntu-latest] #, macos-latest]
+        os: [ubuntu-latest, macos-latest]
         python-version: [3.7, 3.8]
 
     steps:
@@ -31,7 +31,7 @@ jobs:
       run: sudo apt-get update; sudo apt-get install -y libcurl4-openssl-dev
     - name: Install macOS dependencies
       if: matrix.os == 'macos-latest'
-      run: xcode-select --install
+      run: conda install clang_osx-64
     - name: Install mutyper
       run: |
         pip install .
