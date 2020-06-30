@@ -129,10 +129,7 @@ def ksfs(args):
         pass
 
 
-def main():
-    """
-    usage: python mutyper.py -h"""
-
+def get_parser():
     parser = argparse.ArgumentParser(
         description='mutyper: ancestral kmer mutation types for variant data')
     subparsers = parser.add_subparsers(
@@ -200,11 +197,9 @@ def main():
     # arguments specific to ksfs subcommand
     parser_ksfs.set_defaults(func=ksfs)
 
-    args = parser.parse_args()
+    return parser
 
-    # execute the default subroutine for the chosen subcommand
+
+def main(arg_list=None):
+    args = get_parser().parse_args(arg_list)
     args.func(args)
-
-
-if __name__ == '__main__':
-    main()
