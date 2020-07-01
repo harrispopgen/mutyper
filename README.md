@@ -5,6 +5,6 @@ A Python package and command line utility for annotating the local ancestral seq
 ![build and test](https://github.com/harrispopgen/mutyper/workflows/build%20and%20test/badge.svg)
 ![Python package](https://github.com/harrispopgen/mutyper/workflows/Python%20package/badge.svg)
 
-Pairs well with the package [`mushi`](https://github.com/harrispopgen/mushi), which performs mutation spectrum history inference.
+#### See [documentation](https://harrispopgen.github.io/mutyper) for install and usage information.
 
-See [documentation](https://harrispopgen.github.io/mutyper) for install and usage information.
+Pairs well with the package [`mushi`](https://github.com/harrispopgen/mushi), which performs mutation spectrum history inference.
