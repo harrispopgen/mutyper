@@ -1078,7 +1078,7 @@ HG00106 0       0       0       2
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">!</span>mutyper spectra -h
+<span></span><span class="o">!</span>mutyper ksfs -h
 </pre></div>
 </div>
 </div>
@@ -1087,10 +1087,11 @@ HG00106 0       0       0       2
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-usage: mutyper spectra [-h] vcf
+usage: mutyper ksfs [-h] vcf
 
-compute mutation spectra for each sample in VCF/BCF with mutation_type data
-and stream to stdout
+compute sample frequency spectrum for each mutation type from a VCF/BCF file
+with mutation_type data (i.e. output from variants subcommand ) and stream to
+stdout
 
 positional arguments:
   vcf         VCF/BCF file created by the variants subcommand (&#34;-&#34; for stdin)
