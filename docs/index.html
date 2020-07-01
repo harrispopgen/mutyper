@@ -198,11 +198,11 @@
 </style>
 <div class="section" id="ancestral-k-mer-mutation-types-for-snp-data">
 <h1>Ancestral <span class="math notranslate nohighlight">\(k\)</span>-mer Mutation Types for SNP Data<a class="headerlink" href="#ancestral-k-mer-mutation-types-for-snp-data" title="Permalink to this headline">¶</a></h1>
-<p><code class="docutils literal notranslate"><span class="pre">mutyper</span></code> is a Python package for augmenting genomic variation data in VCF/BCF format with information about the local ancestral sequence context of each variant.
-Studying mutation spectra usually begins with computing the mutation type for SNPs in a VCF/BCF file
+<p><code class="docutils literal notranslate"><span class="pre">mutyper</span></code> is a command line utility and Python package for augmenting genomic variation data in VCF/BCF format with information about the local ancestral sequence context of each variant.
+Studying mutation spectra usually begins with computing the mutation type for SNPs in a VCF/BCF file.
 To polarize SNPs from REF/ALT to ancestral/derived and determine their local context, we need an estimate of the ancestral sequence, which usually takes the form of a FASTA file.
-<code class="docutils literal notranslate"><span class="pre">mutyper</span></code> is a Python package for doing this.
-It also has a command-line interface for easily integrating in more complex bioinformatic pipelines.</p>
+The <code class="docutils literal notranslate"><span class="pre">mutyper</span></code> command-line interface makes it easy to include such analysis in more complex bioinformatic pipelines.
+The Python API can be used for exploratory mutation type analysis in Python scripts or Jupyter notebooks.</p>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">User Guide</span></p>
 <ul>
