@@ -24,7 +24,8 @@ jobs:
     - name: Install dependencies
       run: |
         # C libraries needed for cyvcf2 build
-        conda install libcurl bzip2 pip --channel anaconda
+        conda create -n mutyperenv -c anaconda libcurl bzip2 pip python=${{ matrix.python-version }}
+        conda activate mutyperenv
         # install mutyper
         pip install .
         pip install flake8 pytest
