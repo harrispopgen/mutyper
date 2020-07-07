@@ -219,11 +219,14 @@
 </div>
 <div class="section" id="additional-dependencies">
 <h2>Additional dependencies<a class="headerlink" href="#additional-dependencies" title="Permalink to this headline">¶</a></h2>
-<p>If installation fails with a build failure from <code class="docutils literal notranslate"><span class="pre">cyvcf2</span></code>, you may need to install libcurl:</p>
-<p><strong>linux:</strong></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get update<span class="p">;</span> sudo apt-get install -y libcurl4-openssl-dev
+<p>If installation fails with a build failure from <code class="docutils literal notranslate"><span class="pre">cyvcf2</span></code>, you may need to install a few C libraries.
+To create and activate a Conda environment with these, e.g. named <code class="docutils literal notranslate"><span class="pre">mutyperenv</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda create -n mutyperenv -c anaconda libcurl bzip2 pip
+conda activate mutyperenv
 </pre></div>
 </div>
+<p>Then <code class="docutils literal notranslate"><span class="pre">mutyper</span></code> can be installed using pip as shown above.
+If you do not already have a C compiler (<code class="docutils literal notranslate"><span class="pre">gcc</span></code>), you can append one in the <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">create</span> <span class="pre">...</span></code> command above (<code class="docutils literal notranslate"><span class="pre">gcc_linux-64</span></code> for linux, <code class="docutils literal notranslate"><span class="pre">clang_osx-64</span></code> for macos).</p>
 </div>
 </div>
 
