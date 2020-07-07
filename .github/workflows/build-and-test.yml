@@ -21,10 +21,17 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
+    - name: Install Linux dependencies
+      if: matrix.os == 'ubuntu-latest'
       run: |
         conda update conda
-        conda install libcurl bzip2 pip --channel anaconda
+        conda install gcc_linux-64 libcurl bzip2 pip --channel anaconda
+    - name: Install MacOS dependencies
+      if: matrix.os == 'macos-latest'
+      run: |
+        conda update conda
+        conda install clang_osx-64 libcurl bzip2 pip --channel anaconda
+    - name: Install dependencies
         pip install --upgrade pip setuptools wheel
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
