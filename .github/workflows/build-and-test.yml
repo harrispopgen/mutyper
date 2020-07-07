@@ -12,26 +12,29 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest] #, macos-latest]
         python-version: [3.7, 3.8]
 
     steps:
     - uses: actions/checkout@v2
-    - uses: goanpeca/setup-miniconda@v1
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
       with:
-        auto-update-conda: true
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
-      shell: bash -l {0}
       run: |
-        # C libraries needed for cyvcf2 build
-        conda create -n mutyperenv -c anaconda libcurl bzip2 pip python=${{ matrix.python-version }}
-        conda init bash
-        conda activate mutyperenv
-        # install mutyper
-        pip install .
+        python -m pip install --upgrade pip setuptools wheel
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Install Linux dependencies
+      if: matrix.os == 'ubuntu-latest'
+      run: sudo apt-get update; sudo apt-get install -y libcurl4-openssl-dev
+    # - name: Install macOS dependencies
+    #   if: matrix.os == 'macos-latest'
+    #   run: conda install -c anaconda libcurl
+    - name: Install mutyper
+      run: |
+        pip install .
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
