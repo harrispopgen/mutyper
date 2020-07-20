@@ -14,9 +14,9 @@ class TestAncestor(unittest.TestCase):
         self.assertEqual(anc_seq, anc_seq_true)
 
     def test_context(self):
-        self.assertEqual(list(self.anc.region_contexts('foo', 1, 11)),
-                         ['AAA', 'AAC', 'ACC', 'CCC', None, None, None, None,
-                          None, 'AAA'])
+        self.assertEqual(list(self.anc.region_contexts('foo')),
+                         [None, 'AAA', 'AAC', 'ACC', 'CCC', None, None, None,
+                          None, None, 'AAA', None])
 
     def test_mutation_type(self):
         self.assertEqual(self.anc.mutation_type('foo', 1, 'A', 'T'),
