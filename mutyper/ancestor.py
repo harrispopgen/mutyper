@@ -4,7 +4,8 @@ import pyfaidx
 import re
 from Bio.Seq import reverse_complement
 from typing import Generator, Tuple, Dict, Union, TextIO
-from collections import Counter
+from collections import Counter, defaultdict
+import bisect
 
 
 class Ancestor(pyfaidx.Fasta):
@@ -14,16 +15,20 @@ class Ancestor(pyfaidx.Fasta):
         fasta: path to ancestral sequence FASTA
         k: the size of the context window (default 3)
         target: which position for the site within the kmer (default middle)
-        strand_file: path to bed file with regions where reverse strand defines
-                     mutation context, e.g. direction of replication or
-                     transcription (default collapse reverse complements)
+        strand_file: path to bed file (or I/O object) with regions where
+                     reverse strand defines mutation context, e.g. direction of
+                     replication or transcription. Sites not in theses regions
+                     are assigned forward strand context. If not provided,
+                     collapse by reverse complement.
         kwargs: additional keyword arguments passed to base class. Useful
-                ones are key_function (for chromosome name parsing), read_ahead
-                (for buffering), and sequence_always_upper (to allow lowercase
-                nucleotides to be considered ancestrally identified)
+                ones are ``key_function`` (for chromosome name parsing),
+                ``read_ahead`` (for buffering), and ``sequence_always_upper``
+                (to allow lowercase nucleotides to be considered ancestrally
+                identified)
         """
+
     def __init__(self, fasta: str, k: int = 3, target: int = None,
-                 strand_file: str = None, **kwargs):
+                 strand_file: Union[str, TextIO] = None, **kwargs):
         super(Ancestor, self).__init__(fasta, **kwargs)
         if target is None:
             assert k % 2 == 1, f'k = {k} must be odd for default middle target'
@@ -34,12 +39,33 @@ class Ancestor(pyfaidx.Fasta):
         self.target = target
         self.k = k
         if strand_file is None:
-            self.strandedness = None
+            self._revcomp_func = self._AC
             if self.target != self.k // 2:
                 raise ValueError(f'non-central target {self.target} requires '
                                  'strand_file')
         else:
-            raise NotImplementedError('strand_file argument must be None')
+            self.strandedness = defaultdict(list)
+            if isinstance(strand_file, str):
+                bed = open(strand_file, 'r')
+            for line in bed:
+                chrom, start, end = line.rstrip().split('\t')
+                bisect.insort(self.strandedness[chrom], (int(start), int(end)))
+            self.strand_func = self._reverse_strand
+
+    def _reverse_strand(self, chrom: str, pos: int):
+        r"""return True if strand_file indicates reverse complementation at
+        this site"""
+        closest_idx = bisect.bisect(self.strandedness[chrom], (pos, -1))
+        if pos < self.strandedness[chrom][closest_idx][1]:
+            return True
+        return False
+
+    def _AC(self, chrom: str, pos: int):
+        r"""return True if reverse complementation is needed at this site
+        this site to get state A or C"""
+        if self[chrom][pos].seq not in 'AC':
+            return True
+        return False
 
     def mutation_type(self, chrom: str,
                       pos: int, ref: str, alt: str) -> Tuple[str, str]:
@@ -75,16 +101,11 @@ class Ancestor(pyfaidx.Fasta):
                                                                der_kmer):
             return None, None
 
-        if self.strandedness is None:
-            if anc in 'AC':
-                return anc_kmer, der_kmer
-            elif anc in 'TG':
-                return (reverse_complement(anc_kmer),
-                        reverse_complement(der_kmer))
-            else:
-                raise ValueError('there is a bug if you got here')
+        if not self._revcomp_func(chrom, pos):
+            return anc_kmer, der_kmer
         else:
-            raise NotImplementedError('self.strandedness must be None')
+            return (reverse_complement(anc_kmer),
+                    reverse_complement(der_kmer))
 
     def region_contexts(self, chrom: str,
                         start: int = None,
@@ -101,25 +122,32 @@ class Ancestor(pyfaidx.Fasta):
         """
         # NOTE: only valid for central target
         if start is None:
-            start = self.target
+            start = 0
         if end is None:
-            end = len(self[chrom]) - self.target
+            end = len(self[chrom])
         # we want to access the FASTA as few times as possible
-        region_seq = self[chrom][(start - self.target):
-                                 (end + self.k - self.target)]
-        for i in range(end - start):
-            context = region_seq[i:(i + self.k)].seq
-            if not re.match('^[ACGT]+$', context):
-                yield None
-            elif self.strandedness is None:
-                if context[self.target] in 'AC':
-                    yield context
-                elif context[self.target] in 'TG':
-                    yield reverse_complement(context)
+        region_seq = self[chrom][start:end]
+        for pos in range(start, end):
+            if not self._revcomp_func(chrom, pos):
+                context_start = pos - self.target
+                context_end = pos + self.k - self.target
+                if context_start < start or context_end > end:
+                    yield None
+                    continue
                 else:
-                    raise ValueError('there is a bug if you got here')
+                    context = region_seq[context_start:context_end].seq
             else:
-                raise NotImplementedError('self.strandedness must be None')
+                context_start = pos - self.k + self.target + 1
+                context_end = pos + self.target + 1
+                if context_start < start or context_end > end:
+                    yield None
+                    continue
+                else:
+                    context = reverse_complement(region_seq[context_start:
+                                                            context_end].seq)
+            if not re.match('^[ACGT]+$', context):
+                context = None
+            yield context
 
     def targets(self,
                 bed: Union[str, TextIO] = None) -> Dict[str, int]:

@@ -210,13 +210,16 @@
 <li><p><strong>fasta</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – path to ancestral sequence FASTA</p></li>
 <li><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the size of the context window (default 3)</p></li>
 <li><p><strong>target</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]) – which position for the site within the kmer (default middle)</p></li>
-<li><p><strong>strand_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]) – path to bed file with regions where reverse strand defines
-mutation context, e.g. direction of replication or
-transcription (default collapse reverse complements)</p></li>
+<li><p><strong>strand_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TextIO" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextIO</span></code></a>, <code class="docutils literal notranslate"><span class="pre">None</span></code>]) – path to bed file (or I/O object) with regions where
+reverse strand defines mutation context, e.g. direction of
+replication or transcription. Sites not in theses regions
+are assigned forward strand context. If not provided,
+collapse by reverse complement.</p></li>
 <li><p><strong>kwargs</strong> – additional keyword arguments passed to base class. Useful
-ones are key_function (for chromosome name parsing), read_ahead
-(for buffering), and sequence_always_upper (to allow lowercase
-nucleotides to be considered ancestrally identified)</p></li>
+ones are <code class="docutils literal notranslate"><span class="pre">key_function</span></code> (for chromosome name parsing),
+<code class="docutils literal notranslate"><span class="pre">read_ahead</span></code> (for buffering), and <code class="docutils literal notranslate"><span class="pre">sequence_always_upper</span></code>
+(to allow lowercase nucleotides to be considered ancestrally
+identified)</p></li>
 </ul>
 </dd>
 </dl>

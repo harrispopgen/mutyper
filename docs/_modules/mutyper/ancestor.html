@@ -176,7 +176,8 @@
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">Bio.Seq</span> <span class="kn">import</span> <span class="n">reverse_complement</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">TextIO</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span><span class="p">,</span> <span class="n">defaultdict</span>
+<span class="kn">import</span> <span class="nn">bisect</span>
 
 
 <div class="viewcode-block" id="Ancestor"><a class="viewcode-back" href="../../mutyper.html#mutyper.Ancestor">[docs]</a><span class="k">class</span> <span class="nc">Ancestor</span><span class="p">(</span><span class="n">pyfaidx</span><span class="o">.</span><span class="n">Fasta</span><span class="p">):</span>
@@ -186,16 +187,20 @@
 <span class="sd">        fasta: path to ancestral sequence FASTA</span>
 <span class="sd">        k: the size of the context window (default 3)</span>
 <span class="sd">        target: which position for the site within the kmer (default middle)</span>
-<span class="sd">        strand_file: path to bed file with regions where reverse strand defines</span>
-<span class="sd">                     mutation context, e.g. direction of replication or</span>
-<span class="sd">                     transcription (default collapse reverse complements)</span>
+<span class="sd">        strand_file: path to bed file (or I/O object) with regions where</span>
+<span class="sd">                     reverse strand defines mutation context, e.g. direction of</span>
+<span class="sd">                     replication or transcription. Sites not in theses regions</span>
+<span class="sd">                     are assigned forward strand context. If not provided,</span>
+<span class="sd">                     collapse by reverse complement.</span>
 <span class="sd">        kwargs: additional keyword arguments passed to base class. Useful</span>
-<span class="sd">                ones are key_function (for chromosome name parsing), read_ahead</span>
-<span class="sd">                (for buffering), and sequence_always_upper (to allow lowercase</span>
-<span class="sd">                nucleotides to be considered ancestrally identified)</span>
+<span class="sd">                ones are ``key_function`` (for chromosome name parsing),</span>
+<span class="sd">                ``read_ahead`` (for buffering), and ``sequence_always_upper``</span>
+<span class="sd">                (to allow lowercase nucleotides to be considered ancestrally</span>
+<span class="sd">                identified)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fasta</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">strand_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+                 <span class="n">strand_file</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">TextIO</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Ancestor</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">fasta</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">target</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">assert</span> <span class="n">k</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;k = </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1"> must be odd for default middle target&#39;</span>
@@ -206,12 +211,33 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">target</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span>
         <span class="k">if</span> <span class="n">strand_file</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">strandedness</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_revcomp_func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_AC</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">//</span> <span class="mi">2</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;non-central target </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="si">}</span><span class="s1"> requires &#39;</span>
                                  <span class="s1">&#39;strand_file&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;strand_file argument must be None&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">strandedness</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">strand_file</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="n">bed</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">strand_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">bed</span><span class="p">:</span>
+                <span class="n">chrom</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="n">bisect</span><span class="o">.</span><span class="n">insort</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strandedness</span><span class="p">[</span><span class="n">chrom</span><span class="p">],</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">start</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">end</span><span class="p">)))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">strand_func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reverse_strand</span>
+
+    <span class="k">def</span> <span class="nf">_reverse_strand</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chrom</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">pos</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;return True if strand_file indicates reverse complementation at</span>
+<span class="sd">        this site&quot;&quot;&quot;</span>
+        <span class="n">closest_idx</span> <span class="o">=</span> <span class="n">bisect</span><span class="o">.</span><span class="n">bisect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strandedness</span><span class="p">[</span><span class="n">chrom</span><span class="p">],</span> <span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">pos</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">strandedness</span><span class="p">[</span><span class="n">chrom</span><span class="p">][</span><span class="n">closest_idx</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">_AC</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chrom</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">pos</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;return True if reverse complementation is needed at this site</span>
+<span class="sd">        this site to get state A or C&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="p">[</span><span class="n">chrom</span><span class="p">][</span><span class="n">pos</span><span class="p">]</span><span class="o">.</span><span class="n">seq</span> <span class="ow">not</span> <span class="ow">in</span> <span class="s1">&#39;AC&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span>
 
 <div class="viewcode-block" id="Ancestor.mutation_type"><a class="viewcode-back" href="../../mutyper.html#mutyper.Ancestor.mutation_type">[docs]</a>    <span class="k">def</span> <span class="nf">mutation_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chrom</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                       <span class="n">pos</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">ref</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">alt</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
@@ -247,16 +273,11 @@
                                                                <span class="n">der_kmer</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">strandedness</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">anc</span> <span class="ow">in</span> <span class="s1">&#39;AC&#39;</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">anc_kmer</span><span class="p">,</span> <span class="n">der_kmer</span>
-            <span class="k">elif</span> <span class="n">anc</span> <span class="ow">in</span> <span class="s1">&#39;TG&#39;</span><span class="p">:</span>
-                <span class="k">return</span> <span class="p">(</span><span class="n">reverse_complement</span><span class="p">(</span><span class="n">anc_kmer</span><span class="p">),</span>
-                        <span class="n">reverse_complement</span><span class="p">(</span><span class="n">der_kmer</span><span class="p">))</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;there is a bug if you got here&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_revcomp_func</span><span class="p">(</span><span class="n">chrom</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">anc_kmer</span><span class="p">,</span> <span class="n">der_kmer</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;self.strandedness must be None&#39;</span><span class="p">)</span></div>
+            <span class="k">return</span> <span class="p">(</span><span class="n">reverse_complement</span><span class="p">(</span><span class="n">anc_kmer</span><span class="p">),</span>
+                    <span class="n">reverse_complement</span><span class="p">(</span><span class="n">der_kmer</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="Ancestor.region_contexts"><a class="viewcode-back" href="../../mutyper.html#mutyper.Ancestor.region_contexts">[docs]</a>    <span class="k">def</span> <span class="nf">region_contexts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chrom</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                         <span class="n">start</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -273,25 +294,32 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># NOTE: only valid for central target</span>
         <span class="k">if</span> <span class="n">start</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">if</span> <span class="n">end</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">end</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">chrom</span><span class="p">])</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">chrom</span><span class="p">])</span>
         <span class="c1"># we want to access the FASTA as few times as possible</span>
-        <span class="n">region_seq</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">chrom</span><span class="p">][(</span><span class="n">start</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">):</span>
-                                 <span class="p">(</span><span class="n">end</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">)]</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">):</span>
-            <span class="n">context</span> <span class="o">=</span> <span class="n">region_seq</span><span class="p">[</span><span class="n">i</span><span class="p">:(</span><span class="n">i</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">)]</span><span class="o">.</span><span class="n">seq</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">&#39;^[ACGT]+$&#39;</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-                <span class="k">yield</span> <span class="kc">None</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">strandedness</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">context</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">]</span> <span class="ow">in</span> <span class="s1">&#39;AC&#39;</span><span class="p">:</span>
-                    <span class="k">yield</span> <span class="n">context</span>
-                <span class="k">elif</span> <span class="n">context</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">]</span> <span class="ow">in</span> <span class="s1">&#39;TG&#39;</span><span class="p">:</span>
-                    <span class="k">yield</span> <span class="n">reverse_complement</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+        <span class="n">region_seq</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">chrom</span><span class="p">][</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_revcomp_func</span><span class="p">(</span><span class="n">chrom</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+                <span class="n">context_start</span> <span class="o">=</span> <span class="n">pos</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span>
+                <span class="n">context_end</span> <span class="o">=</span> <span class="n">pos</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span>
+                <span class="k">if</span> <span class="n">context_start</span> <span class="o">&lt;</span> <span class="n">start</span> <span class="ow">or</span> <span class="n">context_end</span> <span class="o">&gt;</span> <span class="n">end</span><span class="p">:</span>
+                    <span class="k">yield</span> <span class="kc">None</span>
+                    <span class="k">continue</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;there is a bug if you got here&#39;</span><span class="p">)</span>
+                    <span class="n">context</span> <span class="o">=</span> <span class="n">region_seq</span><span class="p">[</span><span class="n">context_start</span><span class="p">:</span><span class="n">context_end</span><span class="p">]</span><span class="o">.</span><span class="n">seq</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;self.strandedness must be None&#39;</span><span class="p">)</span></div>
+                <span class="n">context_start</span> <span class="o">=</span> <span class="n">pos</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="n">context_end</span> <span class="o">=</span> <span class="n">pos</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">context_start</span> <span class="o">&lt;</span> <span class="n">start</span> <span class="ow">or</span> <span class="n">context_end</span> <span class="o">&gt;</span> <span class="n">end</span><span class="p">:</span>
+                    <span class="k">yield</span> <span class="kc">None</span>
+                    <span class="k">continue</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">context</span> <span class="o">=</span> <span class="n">reverse_complement</span><span class="p">(</span><span class="n">region_seq</span><span class="p">[</span><span class="n">context_start</span><span class="p">:</span>
+                                                            <span class="n">context_end</span><span class="p">]</span><span class="o">.</span><span class="n">seq</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">&#39;^[ACGT]+$&#39;</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+                <span class="n">context</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">yield</span> <span class="n">context</span></div>
 
 <div class="viewcode-block" id="Ancestor.targets"><a class="viewcode-back" href="../../mutyper.html#mutyper.Ancestor.targets">[docs]</a>    <span class="k">def</span> <span class="nf">targets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                 <span class="n">bed</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">TextIO</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
