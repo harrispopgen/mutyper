@@ -125,26 +125,24 @@ class Ancestor(pyfaidx.Fasta):
             start = 0
         if end is None:
             end = len(self[chrom])
-        # we want to access the FASTA as few times as possible
-        region_seq = self[chrom][start:end]
         for pos in range(start, end):
             if not self._revcomp_func(chrom, pos):
                 context_start = pos - self.target
                 context_end = pos + self.k - self.target
-                if context_start < start or context_end > end:
+                if context_start < 0 or context_end > len(self[chrom]):
                     yield None
                     continue
                 else:
-                    context = region_seq[context_start:context_end].seq
+                    context = self[chrom][context_start:context_end].seq
             else:
                 context_start = pos - self.k + self.target + 1
                 context_end = pos + self.target + 1
-                if context_start < start or context_end > end:
+                if context_start < 0 or context_end > len(self[chrom]):
                     yield None
                     continue
                 else:
-                    context = reverse_complement(region_seq[context_start:
-                                                            context_end].seq)
+                    context = reverse_complement(self[chrom][context_start:
+                                                             context_end].seq)
             if not re.match('^[ACGT]+$', context):
                 context = None
             yield context
