@@ -85,19 +85,35 @@ def spectra(args):
     """
     vcf = cyvcf2.VCF(args.vcf, gts012=True)
 
-    spectra_data = defaultdict(lambda: np.zeros_like(vcf.samples, dtype=int))
+    if args.population:
+        spectra_data = Counter()
 
-    for variant in vcf:
-        spectra_data[variant.INFO['mutation_type']] += variant.gt_types
+        for variant in vcf:
+            spectra_data[variant.INFO['mutation_type']] += 1
 
-    spectra = pd.DataFrame(spectra_data,
-                           vcf.samples).reindex(sorted(spectra_data),
-                                                axis='columns')
-    try:
-        print(spectra.to_csv(sep='\t', index=True,
-                             index_label='sample'))
-    except BrokenPipeError:
-        pass
+        spectra = pd.DataFrame(spectra_data,
+                               ['population']).reindex(sorted(spectra_data),
+                                                       axis='columns')
+        try:
+            print(spectra.to_csv(sep='\t', index=False))
+        except BrokenPipeError:
+            pass
+
+    else:
+        spectra_data = defaultdict(lambda: np.zeros_like(vcf.samples,
+                                                         dtype=int))
+
+        for variant in vcf:
+            spectra_data[variant.INFO['mutation_type']] += variant.gt_types
+
+        spectra = pd.DataFrame(spectra_data,
+                               vcf.samples).reindex(sorted(spectra_data),
+                                                    axis='columns')
+        try:
+            print(spectra.to_csv(sep='\t', index=True,
+                                 index_label='sample'))
+        except BrokenPipeError:
+            pass
 
 
 def ksfs(args):
@@ -192,6 +208,9 @@ def get_parser():
     parser_targets.set_defaults(func=targets)
 
     # arguments specific to spectra subcommand
+    parser_spectra.add_argument('--population', action='store_true',
+                                help='population-wise spectrum, instead of '
+                                     'individual')
     parser_spectra.set_defaults(func=spectra)
 
     # arguments specific to ksfs subcommand

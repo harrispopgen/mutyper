@@ -528,6 +528,22 @@
   },
   {
    "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Use the `--population` to get the spectrum for whole population, rather than each individual"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "!mutyper variants {fasta} {vcf} | mutyper spectra - --population | head | cut -f-5"
+   ]
+  },
+  {
+   "cell_type": "markdown",
    "metadata": {
     "slideshow": {
      "slide_type": "slide"
@@ -563,6 +579,13 @@
    "source": [
     "!mutyper variants {fasta} {vcf} | mutyper ksfs - | head | cut -f-5"
    ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
   },
   {
    "cell_type": "code",
