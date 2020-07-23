@@ -111,6 +111,7 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#spectra">spectra</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#Positional Arguments_repeat2">Positional Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Named Arguments_repeat2">Named Arguments</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#ksfs">ksfs</a><ul>
@@ -314,7 +315,7 @@
 <div class="section" id="spectra">
 <h3>spectra<a class="headerlink" href="#spectra" title="Permalink to this headline">¶</a></h3>
 <p>compute mutation spectra for each sample in VCF/BCF with mutation_type data and stream to stdout</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mutyper</span> <span class="n">spectra</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="n">vcf</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mutyper</span> <span class="n">spectra</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">population</span><span class="p">]</span> <span class="n">vcf</span>
 </pre></div>
 </div>
 <div class="section" id="Positional Arguments_repeat2">
@@ -322,6 +323,14 @@
 <dl class="option-list">
 <dt><kbd>vcf</kbd></dt>
 <dd><p>VCF/BCF file created by the variants subcommand (“-” for stdin)</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="Named Arguments_repeat2">
+<h4>Named Arguments<a class="headerlink" href="#Named Arguments_repeat2" title="Permalink to this headline">¶</a></h4>
+<dl class="option-list">
+<dt><kbd>--population</kbd></dt>
+<dd><p>population-wise spectrum, instead of individual</p>
 </dd>
 </dl>
 </div>
