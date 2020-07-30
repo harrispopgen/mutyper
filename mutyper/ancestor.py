@@ -26,7 +26,8 @@ class Ancestor(pyfaidx.Fasta):
                 (to allow lowercase nucleotides to be considered ancestrally
                 identified)
         """
-
+    acgt = set('ACGT')
+    ac = set('AC')
     def __init__(self, fasta: str, k: int = 3, target: int = None,
                  strand_file: Union[str, TextIO] = None, **kwargs):
         super(Ancestor, self).__init__(fasta, **kwargs)
@@ -50,7 +51,7 @@ class Ancestor(pyfaidx.Fasta):
             for line in bed:
                 chrom, start, end = line.rstrip().split('\t')
                 bisect.insort(self.strandedness[chrom], (int(start), int(end)))
-            self.strand_func = self._reverse_strand
+            self._revcomp_func = self._reverse_strand
 
     def _reverse_strand(self, chrom: str, pos: int):
         r"""return True if strand_file indicates reverse complementation at
@@ -62,14 +63,14 @@ class Ancestor(pyfaidx.Fasta):
 
     def _AC(self, chrom: str, pos: int):
         r"""return True if reverse complementation is needed at this site
-        this site to get state A or C"""
-        if self[chrom][pos].seq not in 'AC':
+        to get state A or C"""
+        if self[chrom][pos].seq not in self.ac:
             return True
         return False
 
     def mutation_type(self, chrom: str,
                       pos: int, ref: str, alt: str) -> Tuple[str, str]:
-        r"""mutation type of a given snp, oriented or collapsed by strand
+        r"""mutation type of a given snp, oriented or collapsed by strand,
         returns a tuple of ancestral and derived kmers
 
         Args:
@@ -120,12 +121,14 @@ class Ancestor(pyfaidx.Fasta):
             start: region start position (default to chromsome start)
             end: region end position (default to chromsome end)
         """
-        # NOTE: only valid for central target
         if start is None:
             start = 0
         if end is None:
             end = len(self[chrom])
         for pos in range(start, end):
+            if self[chrom][pos].seq not in self.acgt:
+                yield None
+                continue
             if not self._revcomp_func(chrom, pos):
                 context_start = pos - self.target
                 context_end = pos + self.k - self.target
