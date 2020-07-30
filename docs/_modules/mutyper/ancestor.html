@@ -198,7 +198,8 @@
 <span class="sd">                (to allow lowercase nucleotides to be considered ancestrally</span>
 <span class="sd">                identified)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
+    <span class="n">acgt</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="s1">&#39;ACGT&#39;</span><span class="p">)</span>
+    <span class="n">ac</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="s1">&#39;AC&#39;</span><span class="p">)</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fasta</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">strand_file</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">TextIO</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Ancestor</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">fasta</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -222,7 +223,7 @@
             <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">bed</span><span class="p">:</span>
                 <span class="n">chrom</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
                 <span class="n">bisect</span><span class="o">.</span><span class="n">insort</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strandedness</span><span class="p">[</span><span class="n">chrom</span><span class="p">],</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">start</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">end</span><span class="p">)))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">strand_func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reverse_strand</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_revcomp_func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reverse_strand</span>
 
     <span class="k">def</span> <span class="nf">_reverse_strand</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chrom</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">pos</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;return True if strand_file indicates reverse complementation at</span>
@@ -234,14 +235,14 @@
 
     <span class="k">def</span> <span class="nf">_AC</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chrom</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">pos</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;return True if reverse complementation is needed at this site</span>
-<span class="sd">        this site to get state A or C&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="p">[</span><span class="n">chrom</span><span class="p">][</span><span class="n">pos</span><span class="p">]</span><span class="o">.</span><span class="n">seq</span> <span class="ow">not</span> <span class="ow">in</span> <span class="s1">&#39;AC&#39;</span><span class="p">:</span>
+<span class="sd">        to get state A or C&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="p">[</span><span class="n">chrom</span><span class="p">][</span><span class="n">pos</span><span class="p">]</span><span class="o">.</span><span class="n">seq</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ac</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="kc">False</span>
 
 <div class="viewcode-block" id="Ancestor.mutation_type"><a class="viewcode-back" href="../../mutyper.html#mutyper.Ancestor.mutation_type">[docs]</a>    <span class="k">def</span> <span class="nf">mutation_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chrom</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                       <span class="n">pos</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">ref</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">alt</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;mutation type of a given snp, oriented or collapsed by strand</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;mutation type of a given snp, oriented or collapsed by strand,</span>
 <span class="sd">        returns a tuple of ancestral and derived kmers</span>
 
 <span class="sd">        Args:</span>
@@ -292,12 +293,14 @@
 <span class="sd">            start: region start position (default to chromsome start)</span>
 <span class="sd">            end: region end position (default to chromsome end)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># NOTE: only valid for central target</span>
         <span class="k">if</span> <span class="n">start</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">if</span> <span class="n">end</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">end</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">chrom</span><span class="p">])</span>
         <span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="p">[</span><span class="n">chrom</span><span class="p">][</span><span class="n">pos</span><span class="p">]</span><span class="o">.</span><span class="n">seq</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">acgt</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="kc">None</span>
+                <span class="k">continue</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_revcomp_func</span><span class="p">(</span><span class="n">chrom</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
                 <span class="n">context_start</span> <span class="o">=</span> <span class="n">pos</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span>
                 <span class="n">context_end</span> <span class="o">=</span> <span class="n">pos</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span>
