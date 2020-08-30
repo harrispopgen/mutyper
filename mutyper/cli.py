@@ -7,6 +7,10 @@ from collections import defaultdict, Counter
 import pandas as pd
 import signal
 import numpy as np
+from shutil import copyfile
+import pyfaidx
+from pyliftover import LiftOver
+from Bio.Seq import reverse_complement
 
 from mutyper import ancestor
 
@@ -20,6 +24,61 @@ def setup_ancestor(args):
                              x.split(args.sep)[args.chrom_pos],
                              read_ahead=10000,
                              sequence_always_upper=(not args.strict))
+
+
+def ancestral_fasta(args):
+    """subroutine for ancestor subcommand
+    """
+    # single chromosome fasta file for reference genome
+    ref = pyfaidx.Fasta(args.reference, read_ahead=10000)
+    # make a copy to build our ancestor for this chromosome
+    copyfile(args.reference, args.output)
+    anc = pyfaidx.Fasta(args.output, read_ahead=10000, mutable=True)
+    # reference genome for outgroup species (all chromosomes)
+    out = pyfaidx.Fasta(args.outgroup, read_ahead=10000)
+    # outgroup to reference alignment chain file
+    lo = LiftOver(args.chain)
+    # snps database for the same chromosome
+    vcf = cyvcf2.VCF(args.vcf)
+
+    # change regions outside of callability mask to all N bases
+    if args.bed:
+        if args.bed == '-':
+            bed = sys.stdin
+        else:
+            bed = open(args.bed, 'r')
+        last_end = 0
+        for line in bed:
+            chrom, start, end = line.rstrip().split('\t')[:3]
+            start = int(start)
+            anc[chrom][last_end:start] = 'N' * (start - last_end)
+            last_end = int(end)
+        anc[chrom][last_end:
+                   len(anc[chrom])] = 'N' * (len(anc[chrom]) - last_end)
+
+    for variant in vcf:
+        # change variants that are not biallelic SNPs to N bases
+        if not (variant.is_snp and len(variant.ALT) == 1):
+            anc[chrom][variant.start:
+                       variant.end] = 'N' * (variant.end - variant.start)
+        else:
+            out_coords = lo.convert_coordinate(variant.CHROM, variant.start)
+            # change ambiguously aligning sites to N bases
+            if out_coords is None or len(out_coords) > 1:
+                anc[chrom][variant.start] = 'N'
+            else:
+                assert variant.REF == ref[chrom]
+                out_chromosome, out_position, out_strand = out_coords[0][:3]
+                out_allele = out[out_chromosome][out_position]
+                # if negative strand, take reverse complement base
+                if out_strand == '-':
+                    out_allele = reverse_complement(out_allele)
+                # and finally, polarize
+                if out_allele == variant.ALT[0]:
+                    anc[chrom][variant.start] = variant.ALT[0]
+                elif out_allele != variant.REF:
+                    # triallelic
+                    anc[chrom][variant.start] = 'N'
 
 
 def variants(args):
@@ -151,6 +210,8 @@ def get_parser():
     subparsers = parser.add_subparsers(
         title='subcommands', description='specify one of these', required=True,
         help='additional help available for each subcommand')
+    parser_ancestor = subparsers.add_parser(
+        'ancestor', description='create an ancestral FASTA file')
     parser_variants = subparsers.add_parser(
         'variants', description='adds mutation_type to VCF/BCF INFO, polarizes'
                                 ' REF/ALT/AC according to ancestral/derived '
@@ -194,17 +255,33 @@ def get_parser():
                                      'considered ancestrally identified')
 
     # subcommands that require VCF input
-    for sub_parser in (parser_variants, parser_spectra, parser_ksfs):
+    for sub_parser in (parser_ancestor, parser_variants, parser_spectra,
+                       parser_ksfs):
         sub_parser.add_argument('vcf', type=str,
-                                help='VCF/BCF file created by the variants '
-                                     'subcommand ("-" for stdin)')
+                                help='VCF/BCF file ("-" for stdin)')
+
+    # subcommands that take BED input
+    for sub_parser in (parser_ancestor, parser_targets):
+        sub_parser.add_argument('--bed', type=str, default=None,
+                                help='path to BED file mask ("-" for stdin)')
+
+    # arguments specific to ancestor subcommand
+    parser_ancestor.add_argument('reference', type=str,
+                                 help='path to reference FASTA for one '
+                                      'chromosome')
+    parser_ancestor.add_argument('outgroup', type=str,
+                                 help='path to outgroup genome FASTA')
+    parser_ancestor.add_argument('chain', type=str,
+                                 help='path to alignment chain file')
+    parser_ancestor.add_argument('output', type=str,
+                                 help='path for output ancestral FASTA for '
+                                      'this chromosome')
+    parser_ancestor.set_defaults(func=ancestral_fasta)
 
     # arguments specific to variants subcommand
     parser_variants.set_defaults(func=variants)
 
     # arguments specific to targets subcommand
-    parser_targets.add_argument('--bed', type=str, default=None,
-                                help='path to BED file mask ("-" for stdin)')
     parser_targets.set_defaults(func=targets)
 
     # arguments specific to spectra subcommand
