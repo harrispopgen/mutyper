@@ -211,7 +211,9 @@ def get_parser():
         title='subcommands', description='specify one of these', required=True,
         help='additional help available for each subcommand')
     parser_ancestor = subparsers.add_parser(
-        'ancestor', description='create an ancestral FASTA file')
+        'ancestor', description='create an ancestral FASTA file, using an '
+                                'outgroup alignment, and a database of SNPs '
+                                'with a callability mask')
     parser_variants = subparsers.add_parser(
         'variants', description='adds mutation_type to VCF/BCF INFO, polarizes'
                                 ' REF/ALT/AC according to ancestral/derived '
