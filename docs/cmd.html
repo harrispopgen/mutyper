@@ -99,23 +99,28 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Command Line Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#Sub-commands:">Sub-commands:</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#variants">variants</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ancestor">ancestor</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#Positional Arguments">Positional Arguments</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Named Arguments">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#targets">targets</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#variants">variants</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#Positional Arguments_repeat1">Positional Arguments</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Named Arguments_repeat1">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#spectra">spectra</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#targets">targets</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#Positional Arguments_repeat2">Positional Arguments</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Named Arguments_repeat2">Named Arguments</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#ksfs">ksfs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#spectra">spectra</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#Positional Arguments_repeat3">Positional Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Named Arguments_repeat3">Named Arguments</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#ksfs">ksfs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Positional Arguments_repeat4">Positional Arguments</a></li>
 </ul>
 </li>
 </ul>
@@ -225,30 +230,65 @@
 <h1>Command Line Interface<a class="headerlink" href="#command-line-interface" title="Permalink to this headline">¶</a></h1>
 <p><p>mutyper: ancestral kmer mutation types for variant data</p>
 </p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">mutyper</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">{</span><span class="n">variants</span><span class="p">,</span><span class="n">targets</span><span class="p">,</span><span class="n">spectra</span><span class="p">,</span><span class="n">ksfs</span><span class="p">}</span> <span class="o">...</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">mutyper</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">{</span><span class="n">ancestor</span><span class="p">,</span><span class="n">variants</span><span class="p">,</span><span class="n">targets</span><span class="p">,</span><span class="n">spectra</span><span class="p">,</span><span class="n">ksfs</span><span class="p">}</span> <span class="o">...</span>
 </pre></div>
 </div>
 <div class="section" id="Sub-commands:">
 <h2>Sub-commands:<a class="headerlink" href="#Sub-commands:" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="ancestor">
+<h3>ancestor<a class="headerlink" href="#ancestor" title="Permalink to this headline">¶</a></h3>
+<p>create an ancestral FASTA file</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mutyper</span> <span class="n">ancestor</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">bed</span> <span class="n">BED</span><span class="p">]</span> <span class="n">vcf</span> <span class="n">reference</span> <span class="n">outgroup</span> <span class="n">chain</span> <span class="n">output</span>
+</pre></div>
+</div>
+<div class="section" id="Positional Arguments">
+<h4>Positional Arguments<a class="headerlink" href="#Positional Arguments" title="Permalink to this headline">¶</a></h4>
+<dl class="option-list">
+<dt><kbd>vcf</kbd></dt>
+<dd><p>VCF/BCF file, usually for a single chromosome (“-” for stdin)</p>
+</dd>
+<dt><kbd>reference</kbd></dt>
+<dd><p>path to reference FASTA for one chromosome</p>
+</dd>
+<dt><kbd>outgroup</kbd></dt>
+<dd><p>path to outgroup genome FASTA</p>
+</dd>
+<dt><kbd>chain</kbd></dt>
+<dd><p>path to alignment chain file (reference to outgroup)</p>
+</dd>
+<dt><kbd>output</kbd></dt>
+<dd><p>path for output ancestral FASTA for this chromosome</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="Named Arguments">
+<h4>Named Arguments<a class="headerlink" href="#Named Arguments" title="Permalink to this headline">¶</a></h4>
+<dl class="option-list">
+<dt><kbd>--bed</kbd></dt>
+<dd><p>path to BED file mask (“-” for stdin)</p>
+</dd>
+</dl>
+</div>
+</div>
 <div class="section" id="variants">
 <h3>variants<a class="headerlink" href="#variants" title="Permalink to this headline">¶</a></h3>
 <p>adds mutation_type to VCF/BCF INFO, polarizes REF/ALT/AC according to ancestral/derived states, and stream to stdout</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mutyper</span> <span class="n">variants</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">k</span> <span class="n">K</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">target</span> <span class="n">TARGET</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">sep</span> <span class="n">SEP</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">chrom_pos</span> <span class="n">CHROM_POS</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">strand_file</span> <span class="n">STRAND_FILE</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">strict</span><span class="p">]</span> <span class="n">fasta</span> <span class="n">vcf</span>
 </pre></div>
 </div>
-<div class="section" id="Positional Arguments">
-<h4>Positional Arguments<a class="headerlink" href="#Positional Arguments" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="Positional Arguments_repeat1">
+<h4>Positional Arguments<a class="headerlink" href="#Positional Arguments_repeat1" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>fasta</kbd></dt>
 <dd><p>path to ancestral FASTA</p>
 </dd>
 <dt><kbd>vcf</kbd></dt>
-<dd><p>VCF/BCF file created by the variants subcommand (“-” for stdin)</p>
+<dd><p>VCF/BCF file, usually for a single chromosome (“-” for stdin)</p>
 </dd>
 </dl>
 </div>
-<div class="section" id="Named Arguments">
-<h4>Named Arguments<a class="headerlink" href="#Named Arguments" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="Named Arguments_repeat1">
+<h4>Named Arguments<a class="headerlink" href="#Named Arguments_repeat1" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>--k</kbd></dt>
 <dd><p>k-mer context size (default 3)</p>
@@ -277,16 +317,16 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mutyper</span> <span class="n">targets</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">k</span> <span class="n">K</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">target</span> <span class="n">TARGET</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">sep</span> <span class="n">SEP</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">chrom_pos</span> <span class="n">CHROM_POS</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">strand_file</span> <span class="n">STRAND_FILE</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">strict</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">bed</span> <span class="n">BED</span><span class="p">]</span> <span class="n">fasta</span>
 </pre></div>
 </div>
-<div class="section" id="Positional Arguments_repeat1">
-<h4>Positional Arguments<a class="headerlink" href="#Positional Arguments_repeat1" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="Positional Arguments_repeat2">
+<h4>Positional Arguments<a class="headerlink" href="#Positional Arguments_repeat2" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>fasta</kbd></dt>
 <dd><p>path to ancestral FASTA</p>
 </dd>
 </dl>
 </div>
-<div class="section" id="Named Arguments_repeat1">
-<h4>Named Arguments<a class="headerlink" href="#Named Arguments_repeat1" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="Named Arguments_repeat2">
+<h4>Named Arguments<a class="headerlink" href="#Named Arguments_repeat2" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>--k</kbd></dt>
 <dd><p>k-mer context size (default 3)</p>
@@ -318,16 +358,16 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mutyper</span> <span class="n">spectra</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">population</span><span class="p">]</span> <span class="n">vcf</span>
 </pre></div>
 </div>
-<div class="section" id="Positional Arguments_repeat2">
-<h4>Positional Arguments<a class="headerlink" href="#Positional Arguments_repeat2" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="Positional Arguments_repeat3">
+<h4>Positional Arguments<a class="headerlink" href="#Positional Arguments_repeat3" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>vcf</kbd></dt>
-<dd><p>VCF/BCF file created by the variants subcommand (“-” for stdin)</p>
+<dd><p>VCF/BCF file, usually for a single chromosome (“-” for stdin)</p>
 </dd>
 </dl>
 </div>
-<div class="section" id="Named Arguments_repeat2">
-<h4>Named Arguments<a class="headerlink" href="#Named Arguments_repeat2" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="Named Arguments_repeat3">
+<h4>Named Arguments<a class="headerlink" href="#Named Arguments_repeat3" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>--population</kbd></dt>
 <dd><p>population-wise spectrum, instead of individual</p>
@@ -341,11 +381,11 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mutyper</span> <span class="n">ksfs</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="n">vcf</span>
 </pre></div>
 </div>
-<div class="section" id="Positional Arguments_repeat3">
-<h4>Positional Arguments<a class="headerlink" href="#Positional Arguments_repeat3" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="Positional Arguments_repeat4">
+<h4>Positional Arguments<a class="headerlink" href="#Positional Arguments_repeat4" title="Permalink to this headline">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>vcf</kbd></dt>
-<dd><p>VCF/BCF file created by the variants subcommand (“-” for stdin)</p>
+<dd><p>VCF/BCF file, usually for a single chromosome (“-” for stdin)</p>
 </dd>
 </dl>
 </div>

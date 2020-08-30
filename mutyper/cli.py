@@ -258,7 +258,8 @@ def get_parser():
     for sub_parser in (parser_ancestor, parser_variants, parser_spectra,
                        parser_ksfs):
         sub_parser.add_argument('vcf', type=str,
-                                help='VCF/BCF file ("-" for stdin)')
+                                help='VCF/BCF file, usually for a single '
+                                     'chromosome ("-" for stdin)')
 
     # subcommands that take BED input
     for sub_parser in (parser_ancestor, parser_targets):
@@ -272,7 +273,8 @@ def get_parser():
     parser_ancestor.add_argument('outgroup', type=str,
                                  help='path to outgroup genome FASTA')
     parser_ancestor.add_argument('chain', type=str,
-                                 help='path to alignment chain file')
+                                 help='path to alignment chain file '
+                                      '(reference to outgroup)')
     parser_ancestor.add_argument('output', type=str,
                                  help='path for output ancestral FASTA for '
                                       'this chromosome')

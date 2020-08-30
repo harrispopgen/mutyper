@@ -795,7 +795,7 @@ Counter({&#39;AAA&#39;: 6197,
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-usage: mutyper [-h] {variants,targets,spectra,ksfs} ...
+usage: mutyper [-h] {ancestor,variants,targets,spectra,ksfs} ...
 
 mutyper: ancestral kmer mutation types for variant data
 
@@ -805,7 +805,7 @@ optional arguments:
 subcommands:
   specify one of these
 
-  {variants,targets,spectra,ksfs}
+  {ancestor,variants,targets,spectra,ksfs}
                         additional help available for each subcommand
 </pre></div></div>
 </div>
@@ -836,8 +836,8 @@ ancestral/derived states, and stream to stdout
 
 positional arguments:
   fasta                 path to ancestral FASTA
-  vcf                   VCF/BCF file created by the variants subcommand (&#34;-&#34;
-                        for stdin)
+  vcf                   VCF/BCF file, usually for a single chromosome (&#34;-&#34; for
+                        stdin)
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -1036,8 +1036,7 @@ compute mutation spectra for each sample in VCF/BCF with mutation_type data
 and stream to stdout
 
 positional arguments:
-  vcf           VCF/BCF file created by the variants subcommand (&#34;-&#34; for
-                stdin)
+  vcf           VCF/BCF file, usually for a single chromosome (&#34;-&#34; for stdin)
 
 optional arguments:
   -h, --help    show this help message and exit
@@ -1116,7 +1115,7 @@ with mutation_type data (i.e. output from variants subcommand ) and stream to
 stdout
 
 positional arguments:
-  vcf         VCF/BCF file created by the variants subcommand (&#34;-&#34; for stdin)
+  vcf         VCF/BCF file, usually for a single chromosome (&#34;-&#34; for stdin)
 
 optional arguments:
   -h, --help  show this help message and exit
