@@ -795,7 +795,7 @@ Counter({&#39;AAA&#39;: 6197,
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-usage: mutyper [-h] {variants,targets,spectra,ksfs} ...
+usage: mutyper [-h] {ancestor,variants,targets,spectra,ksfs} ...
 
 mutyper: ancestral kmer mutation types for variant data
 
@@ -805,7 +805,7 @@ optional arguments:
 subcommands:
   specify one of these
 
-  {variants,targets,spectra,ksfs}
+  {ancestor,variants,targets,spectra,ksfs}
                         additional help available for each subcommand
 </pre></div></div>
 </div>
@@ -836,8 +836,8 @@ ancestral/derived states, and stream to stdout
 
 positional arguments:
   fasta                 path to ancestral FASTA
-  vcf                   VCF/BCF file created by the variants subcommand (&#34;-&#34;
-                        for stdin)
+  vcf                   VCF/BCF file, usually for a single chromosome (&#34;-&#34; for
+                        stdin)
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -847,7 +847,7 @@ optional arguments:
   --sep SEP             field delimiter in FASTA headers (default &#34;:&#34;)
   --chrom_pos CHROM_POS
                         0-based chromosome field position in FASTA headers
-                        (default 2)
+                        (default 0)
   --strand_file STRAND_FILE
                         path to bed file with regions where reverse strand
                         defines mutation context, e.g. direction of
@@ -905,11 +905,25 @@ optional arguments:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-1       10505   .       A       T       100     PASS    AC=5007;AF=0.000199681;AN=5008;NS=2504;DP=9632;EAS_AF=0;AMR_AF=0;AFR_AF=0.0008;EUR_AF=0;SAS_AF=0;AA=.|||;mutation_type=GAG&gt;GTG
-1       10506   .       C       G       100     PASS    AC=1;AF=0.000199681;AN=5008;NS=2504;DP=9676;EAS_AF=0;AMR_AF=0;AFR_AF=0.0008;EUR_AF=0;SAS_AF=0;AA=.|||;mutation_type=TCT&gt;TGT
-1       10542   .       A       G       100     PASS    AC=5007;AF=0.000199681;AN=5008;NS=2504;DP=9007;EAS_AF=0.001;AMR_AF=0;AFR_AF=0;EUR_AF=0;SAS_AF=0;AA=.|||;mutation_type=CAG&gt;CGG
-1       10642   .       A       G       100     PASS    AC=4987;AF=0.00419329;AN=5008;NS=2504;DP=1360;EAS_AF=0.003;AMR_AF=0.0014;AFR_AF=0.0129;EUR_AF=0;SAS_AF=0;AA=.|||;mutation_type=CAT&gt;CGT
-1       11008   .       C       G       100     PASS    AC=441;AF=0.0880591;AN=5008;NS=2504;DP=2232;EAS_AF=0.0367;AMR_AF=0.0965;AFR_AF=0.1346;EUR_AF=0.0885;SAS_AF=0.0716;AA=.|||;mutation_type=CCT&gt;CGT
+Traceback (most recent call last):
+  File &#34;/Users/williamdewitt/Applications/miniconda2/envs/mutyperdocs/bin/mutyper&#34;, line 33, in &lt;module&gt;
+    sys.exit(load_entry_point(&#39;mutyper&#39;, &#39;console_scripts&#39;, &#39;mutyper&#39;)())
+  File &#34;/Users/williamdewitt/Desktop/repos.nosync/mutyper/mutyper/cli.py&#34;, line 305, in main
+    args.func(args)
+  File &#34;/Users/williamdewitt/Desktop/repos.nosync/mutyper/mutyper/cli.py&#34;, line 87, in variants
+    ancestor = setup_ancestor(args)
+  File &#34;/Users/williamdewitt/Desktop/repos.nosync/mutyper/mutyper/cli.py&#34;, line 21, in setup_ancestor
+    return ancestor.Ancestor(args.fasta, k=args.k, target=args.target,
+  File &#34;/Users/williamdewitt/Desktop/repos.nosync/mutyper/mutyper/ancestor.py&#34;, line 34, in __init__
+    super(Ancestor, self).__init__(fasta, **kwargs)
+  File &#34;/Users/williamdewitt/Applications/miniconda2/envs/mutyperdocs/lib/python3.8/site-packages/pyfaidx/__init__.py&#34;, line 995, in __init__
+    self.faidx = Faidx(
+  File &#34;/Users/williamdewitt/Applications/miniconda2/envs/mutyperdocs/lib/python3.8/site-packages/pyfaidx/__init__.py&#34;, line 425, in __init__
+    self.read_fai()
+  File &#34;/Users/williamdewitt/Applications/miniconda2/envs/mutyperdocs/lib/python3.8/site-packages/pyfaidx/__init__.py&#34;, line 492, in read_fai
+    raise ValueError(&#39;Duplicate key &#34;%s&#34;&#39; % key)
+ValueError: Duplicate key &#34;ANCESTOR_for_chromosome&#34;
+Failed to read from standard input: unknown file type
 </pre></div></div>
 </div>
 </div>
@@ -948,7 +962,7 @@ optional arguments:
   --sep SEP             field delimiter in FASTA headers (default &#34;:&#34;)
   --chrom_pos CHROM_POS
                         0-based chromosome field position in FASTA headers
-                        (default 2)
+                        (default 0)
   --strand_file STRAND_FILE
                         path to bed file with regions where reverse strand
                         defines mutation context, e.g. direction of
@@ -973,16 +987,24 @@ optional arguments:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-AAA     6331
-AAC     2775
-AAG     3947
-AAT     4335
-ACA     4066
-ACC     2440
-ACG     632
-ACT     3082
-CAA     3506
-CAC     3391
+Traceback (most recent call last):
+  File &#34;/Users/williamdewitt/Applications/miniconda2/envs/mutyperdocs/bin/mutyper&#34;, line 33, in &lt;module&gt;
+    sys.exit(load_entry_point(&#39;mutyper&#39;, &#39;console_scripts&#39;, &#39;mutyper&#39;)())
+  File &#34;/Users/williamdewitt/Desktop/repos.nosync/mutyper/mutyper/cli.py&#34;, line 305, in main
+    args.func(args)
+  File &#34;/Users/williamdewitt/Desktop/repos.nosync/mutyper/mutyper/cli.py&#34;, line 128, in targets
+    ancestor = setup_ancestor(args)
+  File &#34;/Users/williamdewitt/Desktop/repos.nosync/mutyper/mutyper/cli.py&#34;, line 21, in setup_ancestor
+    return ancestor.Ancestor(args.fasta, k=args.k, target=args.target,
+  File &#34;/Users/williamdewitt/Desktop/repos.nosync/mutyper/mutyper/ancestor.py&#34;, line 34, in __init__
+    super(Ancestor, self).__init__(fasta, **kwargs)
+  File &#34;/Users/williamdewitt/Applications/miniconda2/envs/mutyperdocs/lib/python3.8/site-packages/pyfaidx/__init__.py&#34;, line 995, in __init__
+    self.faidx = Faidx(
+  File &#34;/Users/williamdewitt/Applications/miniconda2/envs/mutyperdocs/lib/python3.8/site-packages/pyfaidx/__init__.py&#34;, line 425, in __init__
+    self.read_fai()
+  File &#34;/Users/williamdewitt/Applications/miniconda2/envs/mutyperdocs/lib/python3.8/site-packages/pyfaidx/__init__.py&#34;, line 492, in read_fai
+    raise ValueError(&#39;Duplicate key &#34;%s&#34;&#39; % key)
+ValueError: Duplicate key &#34;ANCESTOR_for_chromosome&#34;
 </pre></div></div>
 </div>
 <p>The optional argument <code class="docutils literal notranslate"><span class="pre">--bed</span></code> resticts target size computation based on a BED mask file, and is useful of normalizing mutation spectra according to genomic region, or calibrating mutaiton rates.</p>
@@ -1000,16 +1022,24 @@ CAC     3391
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-AAA     7
-AAC     3
-AAG     1
-AAT     3
-ACA     2
-ACC     1
-ACG     2
-ACT     1
-CAA     2
-CAC     1
+Traceback (most recent call last):
+  File &#34;/Users/williamdewitt/Applications/miniconda2/envs/mutyperdocs/bin/mutyper&#34;, line 33, in &lt;module&gt;
+    sys.exit(load_entry_point(&#39;mutyper&#39;, &#39;console_scripts&#39;, &#39;mutyper&#39;)())
+  File &#34;/Users/williamdewitt/Desktop/repos.nosync/mutyper/mutyper/cli.py&#34;, line 305, in main
+    args.func(args)
+  File &#34;/Users/williamdewitt/Desktop/repos.nosync/mutyper/mutyper/cli.py&#34;, line 128, in targets
+    ancestor = setup_ancestor(args)
+  File &#34;/Users/williamdewitt/Desktop/repos.nosync/mutyper/mutyper/cli.py&#34;, line 21, in setup_ancestor
+    return ancestor.Ancestor(args.fasta, k=args.k, target=args.target,
+  File &#34;/Users/williamdewitt/Desktop/repos.nosync/mutyper/mutyper/ancestor.py&#34;, line 34, in __init__
+    super(Ancestor, self).__init__(fasta, **kwargs)
+  File &#34;/Users/williamdewitt/Applications/miniconda2/envs/mutyperdocs/lib/python3.8/site-packages/pyfaidx/__init__.py&#34;, line 995, in __init__
+    self.faidx = Faidx(
+  File &#34;/Users/williamdewitt/Applications/miniconda2/envs/mutyperdocs/lib/python3.8/site-packages/pyfaidx/__init__.py&#34;, line 425, in __init__
+    self.read_fai()
+  File &#34;/Users/williamdewitt/Applications/miniconda2/envs/mutyperdocs/lib/python3.8/site-packages/pyfaidx/__init__.py&#34;, line 492, in read_fai
+    raise ValueError(&#39;Duplicate key &#34;%s&#34;&#39; % key)
+ValueError: Duplicate key &#34;ANCESTOR_for_chromosome&#34;
 </pre></div></div>
 </div>
 </div>
@@ -1036,8 +1066,7 @@ compute mutation spectra for each sample in VCF/BCF with mutation_type data
 and stream to stdout
 
 positional arguments:
-  vcf           VCF/BCF file created by the variants subcommand (&#34;-&#34; for
-                stdin)
+  vcf           VCF/BCF file, usually for a single chromosome (&#34;-&#34; for stdin)
 
 optional arguments:
   -h, --help    show this help message and exit
@@ -1059,16 +1088,34 @@ optional arguments:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-sample  AAA&gt;AGA      AAT&gt;AGT      ACA&gt;AAA      ACA&gt;AGA
-HG00096 0       0       0       2
-HG00097 0       0       0       2
-HG00099 0       0       0       2
-HG00100 0       0       0       2
-HG00101 0       0       0       2
-HG00102 0       0       0       2
-HG00103 0       0       0       2
-HG00105 0       0       0       2
-HG00106 0       0       0       2
+Traceback (most recent call last):
+  File &#34;/Users/williamdewitt/Applications/miniconda2/envs/mutyperdocs/bin/mutyper&#34;, line 33, in &lt;module&gt;
+    sys.exit(load_entry_point(&#39;mutyper&#39;, &#39;console_scripts&#39;, &#39;mutyper&#39;)())
+  File &#34;/Users/williamdewitt/Desktop/repos.nosync/mutyper/mutyper/cli.py&#34;, line 305, in main
+    args.func(args)
+  File &#34;/Users/williamdewitt/Desktop/repos.nosync/mutyper/mutyper/cli.py&#34;, line 87, in variants
+    ancestor = setup_ancestor(args)
+  File &#34;/Users/williamdewitt/Desktop/repos.nosync/mutyper/mutyper/cli.py&#34;, line 21, in setup_ancestor
+    return ancestor.Ancestor(args.fasta, k=args.k, target=args.target,
+  File &#34;/Users/williamdewitt/Desktop/repos.nosync/mutyper/mutyper/ancestor.py&#34;, line 34, in __init__
+    super(Ancestor, self).__init__(fasta, **kwargs)
+  File &#34;/Users/williamdewitt/Applications/miniconda2/envs/mutyperdocs/lib/python3.8/site-packages/pyfaidx/__init__.py&#34;, line 995, in __init__
+    self.faidx = Faidx(
+  File &#34;/Users/williamdewitt/Applications/miniconda2/envs/mutyperdocs/lib/python3.8/site-packages/pyfaidx/__init__.py&#34;, line 425, in __init__
+    self.read_fai()
+  File &#34;/Users/williamdewitt/Applications/miniconda2/envs/mutyperdocs/lib/python3.8/site-packages/pyfaidx/__init__.py&#34;, line 492, in read_fai
+    raise ValueError(&#39;Duplicate key &#34;%s&#34;&#39; % key)
+ValueError: Duplicate key &#34;ANCESTOR_for_chromosome&#34;
+Traceback (most recent call last):
+  File &#34;/Users/williamdewitt/Applications/miniconda2/envs/mutyperdocs/bin/mutyper&#34;, line 33, in &lt;module&gt;
+    sys.exit(load_entry_point(&#39;mutyper&#39;, &#39;console_scripts&#39;, &#39;mutyper&#39;)())
+  File &#34;/Users/williamdewitt/Desktop/repos.nosync/mutyper/mutyper/cli.py&#34;, line 305, in main
+    args.func(args)
+  File &#34;/Users/williamdewitt/Desktop/repos.nosync/mutyper/mutyper/cli.py&#34;, line 145, in spectra
+    vcf = cyvcf2.VCF(args.vcf, gts012=True)
+  File &#34;cyvcf2/cyvcf2.pyx&#34;, line 265, in cyvcf2.cyvcf2.VCF.__init__
+  File &#34;cyvcf2/cyvcf2.pyx&#34;, line 200, in cyvcf2.cyvcf2.HTSFile._open_htsfile
+OSError: - is not valid bcf or vcf (format: 15 mode: r)
 </pre></div></div>
 </div>
 <p>Use the <code class="docutils literal notranslate"><span class="pre">--population</span></code> to get the spectrum for whole population, rather than each individual</p>
@@ -1086,9 +1133,34 @@ HG00106 0       0       0       2
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-AAA&gt;AGA      AAT&gt;AGT      ACA&gt;AAA      ACA&gt;AGA      ACA&gt;ATA
-2       1       1       2       3
-
+Traceback (most recent call last):
+  File &#34;/Users/williamdewitt/Applications/miniconda2/envs/mutyperdocs/bin/mutyper&#34;, line 33, in &lt;module&gt;
+    sys.exit(load_entry_point(&#39;mutyper&#39;, &#39;console_scripts&#39;, &#39;mutyper&#39;)())
+  File &#34;/Users/williamdewitt/Desktop/repos.nosync/mutyper/mutyper/cli.py&#34;, line 305, in main
+    args.func(args)
+  File &#34;/Users/williamdewitt/Desktop/repos.nosync/mutyper/mutyper/cli.py&#34;, line 87, in variants
+    ancestor = setup_ancestor(args)
+  File &#34;/Users/williamdewitt/Desktop/repos.nosync/mutyper/mutyper/cli.py&#34;, line 21, in setup_ancestor
+    return ancestor.Ancestor(args.fasta, k=args.k, target=args.target,
+  File &#34;/Users/williamdewitt/Desktop/repos.nosync/mutyper/mutyper/ancestor.py&#34;, line 34, in __init__
+    super(Ancestor, self).__init__(fasta, **kwargs)
+  File &#34;/Users/williamdewitt/Applications/miniconda2/envs/mutyperdocs/lib/python3.8/site-packages/pyfaidx/__init__.py&#34;, line 995, in __init__
+    self.faidx = Faidx(
+  File &#34;/Users/williamdewitt/Applications/miniconda2/envs/mutyperdocs/lib/python3.8/site-packages/pyfaidx/__init__.py&#34;, line 425, in __init__
+    self.read_fai()
+  File &#34;/Users/williamdewitt/Applications/miniconda2/envs/mutyperdocs/lib/python3.8/site-packages/pyfaidx/__init__.py&#34;, line 492, in read_fai
+    raise ValueError(&#39;Duplicate key &#34;%s&#34;&#39; % key)
+ValueError: Duplicate key &#34;ANCESTOR_for_chromosome&#34;
+Traceback (most recent call last):
+  File &#34;/Users/williamdewitt/Applications/miniconda2/envs/mutyperdocs/bin/mutyper&#34;, line 33, in &lt;module&gt;
+    sys.exit(load_entry_point(&#39;mutyper&#39;, &#39;console_scripts&#39;, &#39;mutyper&#39;)())
+  File &#34;/Users/williamdewitt/Desktop/repos.nosync/mutyper/mutyper/cli.py&#34;, line 305, in main
+    args.func(args)
+  File &#34;/Users/williamdewitt/Desktop/repos.nosync/mutyper/mutyper/cli.py&#34;, line 145, in spectra
+    vcf = cyvcf2.VCF(args.vcf, gts012=True)
+  File &#34;cyvcf2/cyvcf2.pyx&#34;, line 265, in cyvcf2.cyvcf2.VCF.__init__
+  File &#34;cyvcf2/cyvcf2.pyx&#34;, line 200, in cyvcf2.cyvcf2.HTSFile._open_htsfile
+OSError: - is not valid bcf or vcf (format: 15 mode: r)
 </pre></div></div>
 </div>
 </div>
@@ -1116,7 +1188,7 @@ with mutation_type data (i.e. output from variants subcommand ) and stream to
 stdout
 
 positional arguments:
-  vcf         VCF/BCF file created by the variants subcommand (&#34;-&#34; for stdin)
+  vcf         VCF/BCF file, usually for a single chromosome (&#34;-&#34; for stdin)
 
 optional arguments:
   -h, --help  show this help message and exit
@@ -1137,16 +1209,34 @@ optional arguments:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-sample_frequency        AAA&gt;AGA      AAT&gt;AGT      ACA&gt;AAA      ACA&gt;AGA
-1       0       0       0       0
-2       0       0       0       0
-3       0       0       0       0
-4       0       0       0       0
-5       0       0       0       0
-6       0       0       0       0
-7       0       0       0       0
-8       0       0       0       0
-9       0       0       0       0
+Traceback (most recent call last):
+  File &#34;/Users/williamdewitt/Applications/miniconda2/envs/mutyperdocs/bin/mutyper&#34;, line 33, in &lt;module&gt;
+    sys.exit(load_entry_point(&#39;mutyper&#39;, &#39;console_scripts&#39;, &#39;mutyper&#39;)())
+  File &#34;/Users/williamdewitt/Desktop/repos.nosync/mutyper/mutyper/cli.py&#34;, line 305, in main
+    args.func(args)
+  File &#34;/Users/williamdewitt/Desktop/repos.nosync/mutyper/mutyper/cli.py&#34;, line 87, in variants
+    ancestor = setup_ancestor(args)
+  File &#34;/Users/williamdewitt/Desktop/repos.nosync/mutyper/mutyper/cli.py&#34;, line 21, in setup_ancestor
+    return ancestor.Ancestor(args.fasta, k=args.k, target=args.target,
+  File &#34;/Users/williamdewitt/Desktop/repos.nosync/mutyper/mutyper/ancestor.py&#34;, line 34, in __init__
+    super(Ancestor, self).__init__(fasta, **kwargs)
+  File &#34;/Users/williamdewitt/Applications/miniconda2/envs/mutyperdocs/lib/python3.8/site-packages/pyfaidx/__init__.py&#34;, line 995, in __init__
+    self.faidx = Faidx(
+  File &#34;/Users/williamdewitt/Applications/miniconda2/envs/mutyperdocs/lib/python3.8/site-packages/pyfaidx/__init__.py&#34;, line 425, in __init__
+    self.read_fai()
+  File &#34;/Users/williamdewitt/Applications/miniconda2/envs/mutyperdocs/lib/python3.8/site-packages/pyfaidx/__init__.py&#34;, line 492, in read_fai
+    raise ValueError(&#39;Duplicate key &#34;%s&#34;&#39; % key)
+ValueError: Duplicate key &#34;ANCESTOR_for_chromosome&#34;
+Traceback (most recent call last):
+  File &#34;/Users/williamdewitt/Applications/miniconda2/envs/mutyperdocs/bin/mutyper&#34;, line 33, in &lt;module&gt;
+    sys.exit(load_entry_point(&#39;mutyper&#39;, &#39;console_scripts&#39;, &#39;mutyper&#39;)())
+  File &#34;/Users/williamdewitt/Desktop/repos.nosync/mutyper/mutyper/cli.py&#34;, line 305, in main
+    args.func(args)
+  File &#34;/Users/williamdewitt/Desktop/repos.nosync/mutyper/mutyper/cli.py&#34;, line 181, in ksfs
+    vcf = cyvcf2.VCF(args.vcf)
+  File &#34;cyvcf2/cyvcf2.pyx&#34;, line 265, in cyvcf2.cyvcf2.VCF.__init__
+  File &#34;cyvcf2/cyvcf2.pyx&#34;, line 200, in cyvcf2.cyvcf2.HTSFile._open_htsfile
+OSError: - is not valid bcf or vcf (format: 15 mode: r)
 </pre></div></div>
 </div>
 </div>

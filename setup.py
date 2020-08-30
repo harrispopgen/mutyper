@@ -28,6 +28,7 @@ setuptools.setup(
         'cyvcf2',
         'pyfaidx',
         'biopython',
-        'pandas'
+        'pandas',
+        'pyliftover'
     ]
 )

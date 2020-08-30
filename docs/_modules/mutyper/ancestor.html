@@ -107,6 +107,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../developer.html#update-documentation">Update documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developer.html#todo-list">Todo list</a></li>
 </ul>
+<p class="caption"><span class="caption-text">Notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../CHANGELOG.html">Change log</a></li>
+</ul>
 
             
           
@@ -200,6 +204,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
     <span class="n">acgt</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="s1">&#39;ACGT&#39;</span><span class="p">)</span>
     <span class="n">ac</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="s1">&#39;AC&#39;</span><span class="p">)</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fasta</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">strand_file</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">TextIO</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Ancestor</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">fasta</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>

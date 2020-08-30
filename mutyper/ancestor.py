@@ -28,6 +28,7 @@ class Ancestor(pyfaidx.Fasta):
         """
     acgt = set('ACGT')
     ac = set('AC')
+
     def __init__(self, fasta: str, k: int = 3, target: int = None,
                  strand_file: Union[str, TextIO] = None, **kwargs):
         super(Ancestor, self).__init__(fasta, **kwargs)
