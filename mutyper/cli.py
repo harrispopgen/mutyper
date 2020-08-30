@@ -241,9 +241,9 @@ def get_parser():
         sub_parser.add_argument('--sep', type=str, default=':',
                                 help='field delimiter in FASTA headers '
                                 '(default ":")')
-        sub_parser.add_argument('--chrom_pos', type=int, default=2,
+        sub_parser.add_argument('--chrom_pos', type=int, default=0,
                                 help='0-based chromosome field position in '
-                                'FASTA headers (default 2)')
+                                'FASTA headers (default 0)')
         sub_parser.add_argument('--strand_file', type=str, default=None,
                                 help='path to bed file with regions where '
                                      'reverse strand defines mutation '
