@@ -67,7 +67,7 @@ def ancestral_fasta(args):
             if out_coords is None or len(out_coords) > 1:
                 anc[chrom][variant.start] = 'N'
             else:
-                assert variant.REF == ref[chrom]
+                assert variant.REF == ref[chrom][variant.start]
                 out_chromosome, out_position, out_strand = out_coords[0][:3]
                 out_allele = out[out_chromosome][out_position]
                 # if negative strand, take reverse complement base
