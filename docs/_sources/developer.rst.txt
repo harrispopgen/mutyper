@@ -16,7 +16,7 @@ Go to the ``docsrc`` directory::
 Environment
 -----------
 
-Create and activate the ```mutyperdocs`` conda environment::
+Create and activate the ``mutyperdocs`` conda environment::
 
   conda env create -f env.yml
   conda activate mutyperdocs
