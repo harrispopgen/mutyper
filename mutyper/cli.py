@@ -12,7 +12,6 @@ import pyfaidx
 from random import choice
 from pyliftover import LiftOver
 from Bio.Seq import reverse_complement
-import pdb
 
 from mutyper import ancestor
 
@@ -169,9 +168,9 @@ def spectra(args):
 
         if args.randomize:
             for variant in vcf:
-            	curr_hap = choice([x for x, y in enumerate(variant.gt_types) 
+            	random_haplotype = choice([x for x, y in enumerate(variant.gt_types) 
             						 for _ in range(y)])
-            	spectra_data[variant.INFO['mutation_type']][curr_hap] += 1.
+            	spectra_data[variant.INFO['mutation_type']][random_haplotype] += 1.
         else:
             for variant in vcf:
                 spectra_data[variant.INFO['mutation_type']] += variant.gt_types
