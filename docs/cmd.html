@@ -359,7 +359,7 @@
 <div class="section" id="spectra">
 <h3>spectra<a class="headerlink" href="#spectra" title="Permalink to this headline">¶</a></h3>
 <p>compute mutation spectra for each sample in VCF/BCF with mutation_type data and stream to stdout</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mutyper</span> <span class="n">spectra</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">population</span><span class="p">]</span> <span class="n">vcf</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mutyper</span> <span class="n">spectra</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">population</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">randomize</span><span class="p">]</span> <span class="n">vcf</span>
 </pre></div>
 </div>
 <div class="section" id="Positional Arguments_repeat3">
@@ -375,6 +375,9 @@
 <dl class="option-list">
 <dt><kbd>--population</kbd></dt>
 <dd><p>population-wise spectrum, instead of individual</p>
+</dd>
+<dt><kbd>--randomize</kbd></dt>
+<dd><p>randomly assign mutation to a single haplotype</p>
 </dd>
 </dl>
 </div>
