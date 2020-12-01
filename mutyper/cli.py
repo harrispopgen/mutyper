@@ -316,6 +316,3 @@ def get_parser():
 def main(arg_list=None):
     args = get_parser().parse_args(arg_list)
     args.func(args)
-
-if __name__ == '__main__':
-	main()
