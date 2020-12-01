@@ -9,6 +9,7 @@ import signal
 import numpy as np
 from shutil import copyfile
 import pyfaidx
+from random import choice
 from pyliftover import LiftOver
 from Bio.Seq import reverse_complement
 
@@ -165,8 +166,14 @@ def spectra(args):
         spectra_data = defaultdict(lambda: np.zeros_like(vcf.samples,
                                                          dtype=int))
 
-        for variant in vcf:
-            spectra_data[variant.INFO['mutation_type']] += variant.gt_types
+        if args.randomize:
+            for variant in vcf:
+            	random_haplotype = choice([x for x, y in enumerate(variant.gt_types) 
+            						 for _ in range(y)])
+            	spectra_data[variant.INFO['mutation_type']][random_haplotype] += 1.
+        else:
+            for variant in vcf:
+                spectra_data[variant.INFO['mutation_type']] += variant.gt_types
 
         spectra = pd.DataFrame(spectra_data,
                                vcf.samples).reindex(sorted(spectra_data),
@@ -295,6 +302,8 @@ def get_parser():
     parser_spectra.add_argument('--population', action='store_true',
                                 help='population-wise spectrum, instead of '
                                      'individual')
+    parser_spectra.add_argument('--randomize', action='store_true',
+    							help='randomly assign mutation to a single haplotype')
     parser_spectra.set_defaults(func=spectra)
 
     # arguments specific to ksfs subcommand
