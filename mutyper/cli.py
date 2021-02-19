@@ -118,8 +118,17 @@ def variants(args):
             variant.INFO['AF'] = variant.INFO['AC'] / variant.INFO['AN']
             # cyvcf2 docs say we need to reassign genotypes like this for the
             # change to propagate (can't just update indexwise)
-            variant.genotypes = [[int(not gt[0]), int(not gt[1]), gt[2]]
-                                 for gt in variant.genotypes]
+            if len(variant.genotypes[0]) == 3:
+                # diploid
+                variant.genotypes = [[int(not gt[0]), int(not gt[1]), gt[2]]
+                                     for gt in variant.genotypes]
+            elif len(variant.genotypes[0]) == 2:
+                # haploid
+                variant.genotypes = [[int(not gt[0]), gt[1]]
+                                     for gt in variant.genotypes]
+            else:
+                raise ValueError(f"can't parse genotypes: {variant.genotypes}")
+
         elif not variant.REF == AA:
             raise ValueError(f'ancestral allele {AA} is not equal to '
                              f'reference {variant.REF} or alternative '
@@ -174,9 +183,9 @@ def spectra(args):
 
         if args.randomize:
             for variant in vcf:
-            	random_haplotype = choice([x for x, y in enumerate(variant.gt_types) 
-            						 for _ in range(y)])
-            	spectra_data[variant.INFO['mutation_type']][random_haplotype] += 1.
+                random_haplotype = choice([x for x, y in enumerate(variant.gt_types)
+                                           for _ in range(y)])
+                spectra_data[variant.INFO['mutation_type']][random_haplotype] += 1.
         else:
             for variant in vcf:
                 spectra_data[variant.INFO['mutation_type']] += variant.gt_types
@@ -309,7 +318,8 @@ def get_parser():
                                 help='population-wise spectrum, instead of '
                                      'individual')
     parser_spectra.add_argument('--randomize', action='store_true',
-    							help='randomly assign mutation to a single haplotype')
+                                help='randomly assign mutation to a single '
+                                     'haplotype')
     parser_spectra.set_defaults(func=spectra)
 
     # arguments specific to ksfs subcommand
