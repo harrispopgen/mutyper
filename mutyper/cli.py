@@ -174,9 +174,9 @@ def spectra(args):
 
         if args.randomize:
             for variant in vcf:
-            	random_haplotype = choice([x for x, y in enumerate(variant.gt_types) 
-            						 for _ in range(y)])
-            	spectra_data[variant.INFO['mutation_type']][random_haplotype] += 1.
+                random_haplotype = choice([x for x, y in enumerate(variant.gt_types)
+                                           for _ in range(y)])
+                spectra_data[variant.INFO['mutation_type']][random_haplotype] += 1.
         else:
             for variant in vcf:
                 spectra_data[variant.INFO['mutation_type']] += variant.gt_types
@@ -309,7 +309,8 @@ def get_parser():
                                 help='population-wise spectrum, instead of '
                                      'individual')
     parser_spectra.add_argument('--randomize', action='store_true',
-    							help='randomly assign mutation to a single haplotype')
+                                help='randomly assign mutation to a single '
+                                     'haplotype')
     parser_spectra.set_defaults(func=spectra)
 
     # arguments specific to ksfs subcommand
