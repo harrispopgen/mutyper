@@ -118,8 +118,17 @@ def variants(args):
             variant.INFO['AF'] = variant.INFO['AC'] / variant.INFO['AN']
             # cyvcf2 docs say we need to reassign genotypes like this for the
             # change to propagate (can't just update indexwise)
-            variant.genotypes = [[int(not gt[0]), int(not gt[1]), gt[2]]
-                                 for gt in variant.genotypes]
+            if len(variant.genotypes[0]) == 3:
+                # diploid
+                variant.genotypes = [[int(not gt[0]), int(not gt[1]), gt[2]]
+                                     for gt in variant.genotypes]
+            elif len(variant.genotypes[0]) == 2:
+                # haploid
+                variant.genotypes = [[int(not gt[0]), gt[1]]
+                                     for gt in variant.genotypes]
+            else:
+                raise ValueError(f"can't parse genotypes: {variant.genotypes}")
+
         elif not variant.REF == AA:
             raise ValueError(f'ancestral allele {AA} is not equal to '
                              f'reference {variant.REF} or alternative '
