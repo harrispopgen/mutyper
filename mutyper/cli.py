@@ -60,7 +60,7 @@ def ancestral_fasta(args):
     for variant in vcf:
         # change variants that are not biallelic SNPs to N bases
         if not (variant.is_snp and len(variant.ALT) == 1):
-            anc[chrom][variant.start:
+            anc[variant.CHROM][variant.start:
                        variant.end] = 'N' * (variant.end - variant.start)
         else:
             out_coords = lo.convert_coordinate(variant.CHROM, variant.start)
