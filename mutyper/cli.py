@@ -60,18 +60,18 @@ def ancestral_fasta(args):
     for variant in vcf:
         # change variants that are not biallelic SNPs to N bases
         if not (variant.is_snp and len(variant.ALT) == 1):
-            anc[chrom][variant.start:
+            anc[variant.CHROM][variant.start:
                        variant.end] = 'N' * (variant.end - variant.start)
         else:
             out_coords = lo.convert_coordinate(variant.CHROM, variant.start)
             # change ambiguously aligning sites to N bases
             if out_coords is None or len(out_coords) != 1:
-                anc[chrom][variant.start] = 'N'
+                anc[variant.CHROM][variant.start] = 'N'
             else:
-                if variant.REF != ref[chrom][variant.start].seq.upper():
+                if variant.REF != ref[variant.CHROM][variant.start].seq.upper():
                     raise ValueError(f'variant reference allele {variant.REF} '
                                      f'mismatches reference sequence '
-                                     f'{ref[chrom][variant.start]}')
+                                     f'{ref[variant.CHROM][variant.start]}')
                 out_chromosome, out_position, out_strand = out_coords[0][:3]
                 out_allele = out[out_chromosome][out_position].seq
                 # if negative strand, take reverse complement base
@@ -79,10 +79,10 @@ def ancestral_fasta(args):
                     out_allele = reverse_complement(out_allele)
                 # and finally, polarize
                 if out_allele.upper() == variant.ALT[0]:
-                    anc[chrom][variant.start] = out_allele
+                    anc[variant.CHROM][variant.start] = out_allele
                 elif out_allele.upper() != variant.REF:
                     # triallelic
-                    anc[chrom][variant.start] = 'N'
+                    anc[variant.CHROM][variant.start] = 'N'
 
 
 def variants(args):
