@@ -57,7 +57,7 @@ class Ancestor(pyfaidx.Fasta):
     def _reverse_strand(self, chrom: str, pos: int):
         r"""return True if strand_file indicates reverse complementation at
         this site"""
-        closest_idx = bisect.bisect(self.strandedness[chrom], (pos, -1))
+        closest_idx = bisect.bisect(self.strandedness[chrom], (pos, -1)) - 1
         if pos < self.strandedness[chrom][closest_idx][1]:
             return True
         return False
