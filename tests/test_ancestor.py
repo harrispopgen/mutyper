@@ -7,6 +7,8 @@ from mutyper.ancestor import Ancestor
 class TestAncestor(unittest.TestCase):
     def setUp(self):
         self.anc = Ancestor('tests/test_data/ancestor.fa')
+        self.anc_stranded = Ancestor('tests/test_data/ancestor.fa',
+                                     strand_file='tests/test_data/strandedness.bed')
 
     def test_seq(self):
         anc_seq = self.anc['foo'][:].seq
@@ -16,6 +18,11 @@ class TestAncestor(unittest.TestCase):
     def test_context(self):
         self.assertEqual(list(self.anc.region_contexts('foo')),
                          [None, 'AAA', 'AAC', 'ACC', 'CCC', None, None, None,
+                          None, None, 'AAA', None])
+
+        # same as above but using strand polarized ancestor
+        self.assertEqual(list(self.anc_stranded.region_contexts('foo')),
+                         [None, 'AAA', 'AAC', 'ACC', 'GGG', None, None, None,
                           None, None, 'AAA', None])
 
         self.assertEqual(list(self.anc.region_contexts('foo', 1, 3)),
@@ -35,6 +42,9 @@ class TestAncestor(unittest.TestCase):
                          (None, None))
         # reverse complement
         self.assertEqual(self.anc.mutation_type('foo', 10, 'G', 'T'),
+                         ('AAA', 'ACA'))
+        # same as above but using strand polarized ancestor
+        self.assertEqual(self.anc_stranded.mutation_type('foo', 10, 'G', 'T'),
                          ('AAA', 'ACA'))
 
 
