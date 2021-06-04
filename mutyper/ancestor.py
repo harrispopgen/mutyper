@@ -6,6 +6,7 @@ from Bio.Seq import reverse_complement
 from typing import Generator, Tuple, Dict, Union, TextIO
 from collections import Counter, defaultdict
 import bisect
+import numpy as np
 
 
 class Ancestor(pyfaidx.Fasta):
@@ -17,9 +18,12 @@ class Ancestor(pyfaidx.Fasta):
         target: which position for the site within the kmer (default middle)
         strand_file: path to bed file (or I/O object) with regions where
                      reverse strand defines mutation context, e.g. direction of
-                     replication or transcription. Sites not in theses regions
+                     replication or transcription. Sites not in these regions
                      are assigned forward strand context. If not provided,
-                     collapse by reverse complement.
+                     collapse by reverse complement, with the target base as ``A``
+                     or ``C``. Note that bed file regions should be
+                     `0-based and right-open
+                     <https://en.wikipedia.org/wiki/BED_(file_format)#Coordinate_system>`_.
         kwargs: additional keyword arguments passed to base class. Useful
                 ones are ``key_function`` (for chromosome name parsing),
                 ``read_ahead`` (for buffering), and ``sequence_always_upper``
@@ -51,14 +55,16 @@ class Ancestor(pyfaidx.Fasta):
                 bed = open(strand_file, 'r')
             for line in bed:
                 chrom, start, end = line.rstrip().split('\t')
-                bisect.insort(self.strandedness[chrom], (int(start), int(end)))
+                bisect.insort(self.strandedness[chrom], [int(start), int(end)])
+            for chrom in self.strandedness:
+                self.strandedness[chrom] = np.array(self.strandedness[chrom])
             self._revcomp_func = self._reverse_strand
 
     def _reverse_strand(self, chrom: str, pos: int):
         r"""return True if strand_file indicates reverse complementation at
         this site"""
-        closest_idx = bisect.bisect(self.strandedness[chrom], (pos, -1)) - 1
-        if pos < self.strandedness[chrom][closest_idx][1]:
+        closest_idx = bisect.bisect(self.strandedness[chrom][:, 0], pos) - 1
+        if closest_idx != -1 and pos < self.strandedness[chrom][closest_idx, 1]:
             return True
         return False
 

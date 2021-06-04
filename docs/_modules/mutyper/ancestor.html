@@ -182,6 +182,7 @@
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">TextIO</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span><span class="p">,</span> <span class="n">defaultdict</span>
 <span class="kn">import</span> <span class="nn">bisect</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 
 <div class="viewcode-block" id="Ancestor"><a class="viewcode-back" href="../../mutyper.html#mutyper.Ancestor">[docs]</a><span class="k">class</span> <span class="nc">Ancestor</span><span class="p">(</span><span class="n">pyfaidx</span><span class="o">.</span><span class="n">Fasta</span><span class="p">):</span>
@@ -193,9 +194,12 @@
 <span class="sd">        target: which position for the site within the kmer (default middle)</span>
 <span class="sd">        strand_file: path to bed file (or I/O object) with regions where</span>
 <span class="sd">                     reverse strand defines mutation context, e.g. direction of</span>
-<span class="sd">                     replication or transcription. Sites not in theses regions</span>
+<span class="sd">                     replication or transcription. Sites not in these regions</span>
 <span class="sd">                     are assigned forward strand context. If not provided,</span>
-<span class="sd">                     collapse by reverse complement.</span>
+<span class="sd">                     collapse by reverse complement, with the target base as ``A``</span>
+<span class="sd">                     or ``C``. Note that bed file regions should be</span>
+<span class="sd">                     `0-based and right-open</span>
+<span class="sd">                     &lt;https://en.wikipedia.org/wiki/BED_(file_format)#Coordinate_system&gt;`_.</span>
 <span class="sd">        kwargs: additional keyword arguments passed to base class. Useful</span>
 <span class="sd">                ones are ``key_function`` (for chromosome name parsing),</span>
 <span class="sd">                ``read_ahead`` (for buffering), and ``sequence_always_upper``</span>
@@ -227,14 +231,16 @@
                 <span class="n">bed</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">strand_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">bed</span><span class="p">:</span>
                 <span class="n">chrom</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
-                <span class="n">bisect</span><span class="o">.</span><span class="n">insort</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strandedness</span><span class="p">[</span><span class="n">chrom</span><span class="p">],</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">start</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">end</span><span class="p">)))</span>
+                <span class="n">bisect</span><span class="o">.</span><span class="n">insort</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strandedness</span><span class="p">[</span><span class="n">chrom</span><span class="p">],</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">start</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">end</span><span class="p">)])</span>
+            <span class="k">for</span> <span class="n">chrom</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">strandedness</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">strandedness</span><span class="p">[</span><span class="n">chrom</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strandedness</span><span class="p">[</span><span class="n">chrom</span><span class="p">])</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_revcomp_func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reverse_strand</span>
 
     <span class="k">def</span> <span class="nf">_reverse_strand</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chrom</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">pos</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;return True if strand_file indicates reverse complementation at</span>
 <span class="sd">        this site&quot;&quot;&quot;</span>
-        <span class="n">closest_idx</span> <span class="o">=</span> <span class="n">bisect</span><span class="o">.</span><span class="n">bisect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strandedness</span><span class="p">[</span><span class="n">chrom</span><span class="p">],</span> <span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
-        <span class="k">if</span> <span class="n">pos</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">strandedness</span><span class="p">[</span><span class="n">chrom</span><span class="p">][</span><span class="n">closest_idx</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="n">closest_idx</span> <span class="o">=</span> <span class="n">bisect</span><span class="o">.</span><span class="n">bisect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strandedness</span><span class="p">[</span><span class="n">chrom</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">pos</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">closest_idx</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">pos</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">strandedness</span><span class="p">[</span><span class="n">chrom</span><span class="p">][</span><span class="n">closest_idx</span><span class="p">,</span> <span class="mi">1</span><span class="p">]:</span>
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="kc">False</span>
 
