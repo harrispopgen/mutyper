@@ -216,9 +216,11 @@
 <li><p><strong>target</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]) – which position for the site within the kmer (default middle)</p></li>
 <li><p><strong>strand_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TextIO" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextIO</span></code></a>, <code class="docutils literal notranslate"><span class="pre">None</span></code>]) – path to bed file (or I/O object) with regions where
 reverse strand defines mutation context, e.g. direction of
-replication or transcription. Sites not in theses regions
+replication or transcription. Sites not in these regions
 are assigned forward strand context. If not provided,
-collapse by reverse complement.</p></li>
+collapse by reverse complement, with the target base as <code class="docutils literal notranslate"><span class="pre">A</span></code>
+or <code class="docutils literal notranslate"><span class="pre">C</span></code>. Note that bed file regions should be
+<a class="reference external" href="https://en.wikipedia.org/wiki/BED_(file_format)#Coordinate_system">0-based and right-open</a>.</p></li>
 <li><p><strong>kwargs</strong> – additional keyword arguments passed to base class. Useful
 ones are <code class="docutils literal notranslate"><span class="pre">key_function</span></code> (for chromosome name parsing),
 <code class="docutils literal notranslate"><span class="pre">read_ahead</span></code> (for buffering), and <code class="docutils literal notranslate"><span class="pre">sequence_always_upper</span></code>
