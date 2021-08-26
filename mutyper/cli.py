@@ -54,7 +54,7 @@ def copy_fasta(file, outfile):
         raise ValueError(
             f"{outfile} target cannot be compressed because pafaidx needs a mutable file type (remove .gz)!"
         )
-    # check if input is compressed and make decomprssed copy
+    # check if input is compressed and make decompressed copy
     if is_compressed(file):
         with gzip.open(file, "r") as f_in:
             with open(outfile, "wb") as f_out:
@@ -212,7 +212,7 @@ def variants(args):
         signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
     if num_vars == 0:
-        logging.warning
+        logging.warning("No variants processed. Check that input vcf is not empty.")
 
 
 def targets(args):
