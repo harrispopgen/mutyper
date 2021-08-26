@@ -4,6 +4,7 @@ A Python package and command line utility for annotating the local ancestral seq
 
 ![build and test](https://github.com/harrispopgen/mutyper/workflows/build%20and%20test/badge.svg)
 ![Python package](https://github.com/harrispopgen/mutyper/workflows/Python%20package/badge.svg)
+![Snakemake CI](https://github.com/harrispopgen/mutyper/workflows/Snakemake%20CI/badge.svg)
 
 #### See [documentation](https://harrispopgen.github.io/mutyper) for install and usage information.
 

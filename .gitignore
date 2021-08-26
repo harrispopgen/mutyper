@@ -114,3 +114,7 @@ scons_output*
 *.fa.fai
 
 _build
+
+# Snakemake 
+results/**
+.snakemake/**

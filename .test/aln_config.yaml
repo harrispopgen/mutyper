@@ -1,0 +1,3 @@
+vcf: .test/ref.bcf
+reference: .test/ref.fa.gz
+outgroup: .test/out.fa.gz
