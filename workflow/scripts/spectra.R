@@ -40,7 +40,7 @@ make_spectra_long <- function(spectra) {
 
 
 read_spectra <- function(f) {
-    spectra <- fread(spectra_f, sep = "\t")
+    spectra <- fread(f, sep = "\t")
     spectra.m <- make_spectra_matrix(spectra)
     pca_res <- prcomp(spectra.m, center = TRUE, scale. = TRUE)
     spectra$PC1 <- pca_res$x[, 1]
