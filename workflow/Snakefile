@@ -44,21 +44,31 @@ else:
     ), f"ancestor fasta index file not found! {ANCESTOR_FAI}"
     CHRS = [line.split()[0] for line in open(ANCESTOR_FAI).readlines()]
 
+if "stratify" in config:
+    RGNS = config["stratify"].keys()
+else:
+    RGNS = []
+
 
 #
 #
 #
 wildcard_constraints:
     chrm="|".join(CHRS),
+    rng="|".join(RGNS),
 
 
 #
 # rules
 #
 include: "rules/mutyper.smk"
+include: "rules/plot.smk"
 
 
 rule all:
     input:
         rules.mutyper_vcf.output,
         rules.mutyper_spectra.output,
+        expand(rules.mutyper_spectra_stratify.output, rgn=RGNS),
+        rules.plot_spectra.output,
+        expand(rules.plot_spectra_stratify.output, rgn=RGNS),

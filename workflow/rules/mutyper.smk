@@ -195,6 +195,24 @@ rule mutyper_spectra:
         """
 
 
+rule mutyper_spectra_stratify:
+    input:
+        bcf=rules.mutyper_vcf.output.bcf,
+        bed=lambda wc: config["stratify"][wc.rgn],
+    output:
+        spectra="results/spectra/stratify/{rgn}_spectra.txt",
+    log:
+        "logs/spectra.{rgn}.log",
+    conda:
+        "../envs/env.yml"
+    shell:
+        """
+        bcftools view --regions-file {input.bed} {input.bcf} \
+            | mutyper spectra - \
+            > {output.spectra}
+        """
+
+
 rule mutyper:
     input:
         rules.mutyper_vcf.output,

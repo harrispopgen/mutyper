@@ -118,3 +118,4 @@ _build
 # Snakemake 
 results/**
 .snakemake/**
+.vscode/**
