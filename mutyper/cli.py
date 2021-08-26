@@ -16,8 +16,7 @@ import logging  # mrv addition
 import gzip  # mrv addition
 from mutyper import ancestor
 
-# mrv addition
-LOG_FORMAT = "[%(levelname)s][Time elapsed (ms) %(relativeCreated)d]: %(message)s"
+LOG_FORMAT = "[%(levelname)s][Time elapsed (ms) %(relativeCreated)d]: %(message)s"  # mrv addition
 
 
 def setup_ancestor(args):
@@ -71,8 +70,7 @@ def ancestral_fasta(args):
     # single chromosome fasta file for reference genome
     ref = pyfaidx.Fasta(args.reference, read_ahead=10000)
     # make a copy to build our ancestor for this chromosome
-    # mrv addition, copyfile -> copyfasta
-    copy_fasta(args.reference, args.output)
+    copy_fasta(args.reference, args.output)  # mrv addition, copyfile -> copy_fasta
     anc = pyfaidx.Fasta(args.output, read_ahead=10000, mutable=True)
     # reference genome for outgroup species (all chromosomes)
     out = pyfaidx.Fasta(args.outgroup, read_ahead=10000)
@@ -140,6 +138,7 @@ def ancestral_fasta(args):
                 else:
                     num_unchanged += 1  # mrv addition
 
+    # start mrv addition
     logging.info(f"{num_vars} total variant positions.")
     logging.info(f"{num_unchanged} variant positions unchanged.")
     logging.info(f"{num_changed} variant positions changed.")
@@ -152,6 +151,7 @@ def ancestral_fasta(args):
             f"of variant positions are missing or ambiguous liftOvers."
             f"Check that your chain file is correct."
         )
+    # end mrv addition
 
 
 def variants(args):
@@ -169,9 +169,9 @@ def variants(args):
     )
     vcf_writer = cyvcf2.Writer("-", vcf)
     vcf_writer.write_header()
-    num_vars = 0
+    num_vars = 0  # mrv addition
     for variant in vcf:
-        num_vars += 1
+        num_vars += 1  # mrv addition
         # biallelic snps only
         if not (variant.is_snp and len(variant.ALT) == 1):
             continue
@@ -218,9 +218,10 @@ def variants(args):
         # this line required to exit on a SIGTERM in a pipe, e.g. from head
         signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
-    # mrv addition
+    # start mrv addition
     if num_vars == 0:
         logging.warning("No variants processed. Check that input vcf is not empty.")
+    # end mrv addition
 
 
 def targets(args):
@@ -348,6 +349,7 @@ def get_parser():
         "subcommand ) and stream to stdout",
     )
 
+    # start mrv addition
     # arguments for all subparsers
     for sub_parser in (
         parser_ancestor,
@@ -359,6 +361,7 @@ def get_parser():
         sub_parser.add_argument(
             "--verbose", help="increase logging verbosity", action="store_true"
         )
+    # end mrv addition
 
     # arguments that require FASTA input
     for sub_parser in (parser_variants, parser_targets):
@@ -464,9 +467,10 @@ def get_parser():
 
 def main(arg_list=None):
     args = get_parser().parse_args(arg_list)
-    print(args)
+    # start mrv addition
     if args.verbose:
         logging.basicConfig(format=LOG_FORMAT, level=logging.DEBUG)
     else:
         logging.basicConfig(format=LOG_FORMAT)
+    # end mrv addition
     args.func(args)
