@@ -115,7 +115,4 @@ scons_output*
 
 _build
 
-# Snakemake 
-results/**
-.snakemake/**
 .vscode/**

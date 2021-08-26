@@ -1,5 +1,0 @@
-vcf: .test/ref.bcf
-ancestor: .test/ancestral.fa.gz
-stratify:
-  SD: .test/SD.bed
-  Unique: .test/Unique.bed

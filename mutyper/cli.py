@@ -7,15 +7,16 @@ from collections import defaultdict, Counter
 import pandas as pd
 import signal
 import numpy as np
-from shutil import copyfile, copyfileobj
+from shutil import copyfile, copyfileobj  # mrv addition
 import pyfaidx
 from random import choice
 from pyliftover import LiftOver
 from Bio.Seq import reverse_complement
-import logging
-import gzip
+import logging  # mrv addition
+import gzip  # mrv addition
 from mutyper import ancestor
 
+# mrv addition
 LOG_FORMAT = "[%(levelname)s][Time elapsed (ms) %(relativeCreated)d]: %(message)s"
 
 
@@ -33,6 +34,7 @@ def setup_ancestor(args):
     )
 
 
+# mrv addition, whole function
 def is_compressed(file):
     """returns true if file is compressed"""
     f = open(file, "rb")
@@ -43,6 +45,7 @@ def is_compressed(file):
     return compressed
 
 
+# mrv addition, whole function
 def copy_fasta(file, outfile):
     """copy fasta file to outfile and decompress if needed.
     This is necessary because pyfaidx does not support mutable compressed
@@ -68,6 +71,7 @@ def ancestral_fasta(args):
     # single chromosome fasta file for reference genome
     ref = pyfaidx.Fasta(args.reference, read_ahead=10000)
     # make a copy to build our ancestor for this chromosome
+    # mrv addition, copyfile -> copyfasta
     copy_fasta(args.reference, args.output)
     anc = pyfaidx.Fasta(args.output, read_ahead=10000, mutable=True)
     # reference genome for outgroup species (all chromosomes)
@@ -91,25 +95,28 @@ def ancestral_fasta(args):
             last_end = int(end)
         anc[chrom][last_end : len(anc[chrom])] = "N" * (len(anc[chrom]) - last_end)
 
-    # valriables for counting liftover cases
+    # start mrv addition
+    # variables for counting liftover cases
     num_vars = 0
     num_changed = 0
     num_unchanged = 0
     num_unknown = 0
+    # end mrv addition
+
     for variant in vcf:
-        num_vars += 1
+        num_vars += 1  # mrv addition
         # change variants that are not biallelic SNPs to N bases
         if not (variant.is_snp and len(variant.ALT) == 1):
             anc[variant.CHROM][variant.start : variant.end] = "N" * (
                 variant.end - variant.start
             )
-            num_unknown += 1
+            num_unknown += 1  # mrv addition
         else:
             out_coords = lo.convert_coordinate(variant.CHROM, variant.start)
             # change ambiguously aligning sites to N bases
             if out_coords is None or len(out_coords) != 1:
                 anc[variant.CHROM][variant.start] = "N"
-                num_unknown += 1
+                num_unknown += 1  # mrv addition
             else:
                 if variant.REF != ref[variant.CHROM][variant.start].seq.upper():
                     raise ValueError(
@@ -129,9 +136,9 @@ def ancestral_fasta(args):
                 elif out_allele.upper() != variant.REF:
                     # triallelic
                     anc[variant.CHROM][variant.start] = "N"
-                    num_unknown += 1
+                    num_unknown += 1  # mrv addition
                 else:
-                    num_unchanged += 1
+                    num_unchanged += 1  # mrv addition
 
     logging.info(f"{num_vars} total variant positions.")
     logging.info(f"{num_unchanged} variant positions unchanged.")
@@ -211,6 +218,7 @@ def variants(args):
         # this line required to exit on a SIGTERM in a pipe, e.g. from head
         signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
+    # mrv addition
     if num_vars == 0:
         logging.warning("No variants processed. Check that input vcf is not empty.")
 

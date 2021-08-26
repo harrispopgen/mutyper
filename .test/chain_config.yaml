@@ -1,4 +1,0 @@
-vcf: .test/ref.bcf
-reference: .test/ref.fa.gz
-outgroup: .test/out.fa.gz
-chain: .test/ref-to-out.chain
