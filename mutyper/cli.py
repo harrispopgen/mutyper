@@ -49,6 +49,12 @@ def copy_fasta(file, outfile):
     so we cannot just copy the input if compressed.
         pyfaidx.UnsupportedCompressionFormat: BGZF compressed FASTA is not supported for MutableFastaRecord. Please decompress your FASTA file.
     """
+    # outfile cannot be compressed
+    if outfile.endswith(".gz"):
+        raise ValueError(
+            f"{outfile} target cannot be compressed because pafaidx needs a mutable file type (remove .gz)!"
+        )
+    # check if input is compressed and make decomprssed copy
     if is_compressed(file):
         with gzip.open(file, "r") as f_in:
             with open(outfile, "wb") as f_out:
