@@ -114,5 +114,3 @@ scons_output*
 *.fa.fai
 
 _build
-
-.vscode/**
