@@ -55,8 +55,8 @@ def copy_fasta(file, outfile):
         )
     # check if input is compressed and make decompressed copy
     if is_compressed(file):
-        with gzip.open(file, "r") as f_in, with open(outfile, "wb") as f_out:
-                copyfileobj(f_in, f_out)
+        with gzip.open(file, "r") as f_in, open(outfile, "wb") as f_out:
+            copyfileobj(f_in, f_out)
     else:
         copyfile(file, outfile)
 
