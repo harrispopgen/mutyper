@@ -29,7 +29,7 @@ class Ancestor(pyfaidx.Fasta):
                 ``read_ahead`` (for buffering), and ``sequence_always_upper``
                 (to allow lowercase nucleotides to be considered ancestrally
                 identified)
-        """
+    """
     acgt = set("ACGT")
     ac = set("AC")
 
