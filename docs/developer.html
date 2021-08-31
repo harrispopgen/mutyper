@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Open source code repository &mdash; mutyper  documentation</title>
   
@@ -13,11 +13,16 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/style.css" type="text/css" />
 
   
   
+
   
+  
+
   
 
   
@@ -27,13 +32,11 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -89,32 +92,27 @@
               
             
             
-              <p class="caption"><span class="caption-text">User Guide</span></p>
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="notebooks/quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cite.html">Citing <code class="docutils literal notranslate"><span class="pre">mutyper</span></code></a></li>
 </ul>
-<p class="caption"><span class="caption-text">CLI Documentation</span></p>
+<p class="caption" role="heading"><span class="caption-text">CLI Documentation</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="cmd.html">Command Line Interface</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API Documentation</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="mutyper.html">Python API: <code class="docutils literal notranslate"><span class="pre">mutyper</span></code> package</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developer Documentation</span></p>
+<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Open source code repository</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#update-documentation">Update documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#environment">Environment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#local-build">Local build</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#github-pages-build">Github Pages build</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="#developer-tools">Developer tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#todo-list">Todo list</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Notes</span></p>
+<p class="caption" role="heading"><span class="caption-text">Notes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html">Change log</a></li>
 </ul>
@@ -157,6 +155,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -168,7 +168,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="_sources/developer.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -210,47 +210,36 @@
 <h1>Open source code repository<a class="headerlink" href="#open-source-code-repository" title="Permalink to this headline">¶</a></h1>
 <p>All code is freely available at <a class="reference external" href="https://github.com/harrispopgen/mutyper">https://github.com/harrispopgen/mutyper</a></p>
 </div>
-<div class="section" id="update-documentation">
-<h1>Update documentation<a class="headerlink" href="#update-documentation" title="Permalink to this headline">¶</a></h1>
-<p>Inspired by: <a class="reference external" href="https://www.docslikecode.com/articles/github-pages-python-sphinx/">https://www.docslikecode.com/articles/github-pages-python-sphinx/</a></p>
-<p>Go to the <code class="docutils literal notranslate"><span class="pre">docsrc</span></code> directory:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">docsrc</span>
-</pre></div>
-</div>
-<div class="section" id="environment">
-<h2>Environment<a class="headerlink" href="#environment" title="Permalink to this headline">¶</a></h2>
-<p>Create and activate the <code class="docutils literal notranslate"><span class="pre">mutyperdocs</span></code> conda environment:</p>
+<div class="section" id="developer-tools">
+<h1>Developer tools<a class="headerlink" href="#developer-tools" title="Permalink to this headline">¶</a></h1>
+<p>Install and activate Conda developer environment:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">env</span> <span class="n">create</span> <span class="o">-</span><span class="n">f</span> <span class="n">env</span><span class="o">.</span><span class="n">yml</span>
 <span class="n">conda</span> <span class="n">activate</span> <span class="n">mutyperdocs</span>
 </pre></div>
 </div>
-<p>Install <code class="docutils literal notranslate"><span class="pre">`mutyper</span></code> itself from the local copy in the parent directory:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">..</span>
+<p>Local install of <code class="docutils literal notranslate"><span class="pre">mutyper</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">.</span>
 </pre></div>
 </div>
-<p>Modify notebooks in the <code class="docutils literal notranslate"><span class="pre">notebooks</span></code> directory as needed.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Executing builds (below) after modifying notebooks can take a very long time
-if compute-heavy notebooks need to be recompiled.</p>
-</div>
-</div>
-<div class="section" id="local-build">
-<h2>Local build<a class="headerlink" href="#local-build" title="Permalink to this headline">¶</a></h2>
-<p>From the <code class="docutils literal notranslate"><span class="pre">docsrc</span></code> dir:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">html</span>
+<p>Run tests:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">test</span>
 </pre></div>
 </div>
-<p>You can then see the generated documentation in <code class="docutils literal notranslate"><span class="pre">docsrc/_build/index.html</span></code>.</p>
-</div>
-<div class="section" id="github-pages-build">
-<h2>Github Pages build<a class="headerlink" href="#github-pages-build" title="Permalink to this headline">¶</a></h2>
-<p>From the <code class="docutils literal notranslate"><span class="pre">docsrc</span></code> dir:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">github</span>
+<p>Format code:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="nb">format</span>
 </pre></div>
 </div>
-<p>You can then see the generated documentation in
-<code class="docutils literal notranslate"><span class="pre">docs/index.html</span></code>.</p>
+<p>Lint:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">lint</span>
+</pre></div>
+</div>
+<p>Build docs locally (you can then see the generated documentation in <code class="docutils literal notranslate"><span class="pre">docsrc/_build/html/index.html</span></code>.):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">docs</span>
+</pre></div>
+</div>
+<p>Deploy docs to <code class="docutils literal notranslate"><span class="pre">docs/</span></code> directory for GitHub Pages:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">deploy</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="todo-list">
@@ -267,37 +256,29 @@ if compute-heavy notebooks need to be recompiled.</p>
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="CHANGELOG.html" class="btn btn-neutral float-right" title="Change log" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="mutyper.html" class="btn btn-neutral float-left" title="Python API: mutyper package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="CHANGELOG.html" class="btn btn-neutral float-right" title="Change log" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="mutyper.html" class="btn btn-neutral float-left" title="Python API: mutyper package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2020, William DeWitt
+        &#169; Copyright 2020, William DeWitt.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 
