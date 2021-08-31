@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>mutyper.ancestor &mdash; mutyper  documentation</title>
   
@@ -13,11 +13,16 @@
   
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
 
   
   
+
   
+  
+
   
 
   
@@ -27,13 +32,11 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/language_data.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -87,27 +90,27 @@
               
             
             
-              <p class="caption"><span class="caption-text">User Guide</span></p>
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../notebooks/quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../cite.html">Citing <code class="docutils literal notranslate"><span class="pre">mutyper</span></code></a></li>
 </ul>
-<p class="caption"><span class="caption-text">CLI Documentation</span></p>
+<p class="caption" role="heading"><span class="caption-text">CLI Documentation</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../cmd.html">Command Line Interface</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API Documentation</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../mutyper.html">Python API: <code class="docutils literal notranslate"><span class="pre">mutyper</span></code> package</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developer Documentation</span></p>
+<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../developer.html">Open source code repository</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developer.html#update-documentation">Update documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer.html#developer-tools">Developer tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developer.html#todo-list">Todo list</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Notes</span></p>
+<p class="caption" role="heading"><span class="caption-text">Notes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../CHANGELOG.html">Change log</a></li>
 </ul>
@@ -135,6 +138,8 @@
         <div class="rst-content">
         
           
+
+
 
 
 
@@ -205,32 +210,39 @@
 <span class="sd">                ``read_ahead`` (for buffering), and ``sequence_always_upper``</span>
 <span class="sd">                (to allow lowercase nucleotides to be considered ancestrally</span>
 <span class="sd">                identified)</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-    <span class="n">acgt</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="s1">&#39;ACGT&#39;</span><span class="p">)</span>
-    <span class="n">ac</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="s1">&#39;AC&#39;</span><span class="p">)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">acgt</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="s2">&quot;ACGT&quot;</span><span class="p">)</span>
+    <span class="n">ac</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="s2">&quot;AC&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fasta</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">strand_file</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">TextIO</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">fasta</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="n">target</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">strand_file</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">TextIO</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Ancestor</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">fasta</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">target</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="n">k</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;k = </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1"> must be odd for default middle target&#39;</span>
+            <span class="k">assert</span> <span class="n">k</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;k = </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2"> must be odd for default middle target&quot;</span>
             <span class="n">target</span> <span class="o">=</span> <span class="n">k</span> <span class="o">//</span> <span class="mi">2</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;target must be None (default)&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;target must be None (default)&quot;</span><span class="p">)</span>
         <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">target</span> <span class="o">&lt;</span> <span class="n">k</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">target</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span>
         <span class="k">if</span> <span class="n">strand_file</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_revcomp_func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_AC</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">//</span> <span class="mi">2</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;non-central target </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="si">}</span><span class="s1"> requires &#39;</span>
-                                 <span class="s1">&#39;strand_file&#39;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;non-central target </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="si">}</span><span class="s2"> requires &quot;</span> <span class="s2">&quot;strand_file&quot;</span>
+                <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">strandedness</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">strand_file</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-                <span class="n">bed</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">strand_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+                <span class="n">bed</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">strand_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">bed</span><span class="p">:</span>
-                <span class="n">chrom</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="n">chrom</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="n">bisect</span><span class="o">.</span><span class="n">insort</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strandedness</span><span class="p">[</span><span class="n">chrom</span><span class="p">],</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">start</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">end</span><span class="p">)])</span>
             <span class="k">for</span> <span class="n">chrom</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">strandedness</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">strandedness</span><span class="p">[</span><span class="n">chrom</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strandedness</span><span class="p">[</span><span class="n">chrom</span><span class="p">])</span>
@@ -251,8 +263,9 @@
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="kc">False</span>
 
-<div class="viewcode-block" id="Ancestor.mutation_type"><a class="viewcode-back" href="../../mutyper.html#mutyper.Ancestor.mutation_type">[docs]</a>    <span class="k">def</span> <span class="nf">mutation_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chrom</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-                      <span class="n">pos</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">ref</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">alt</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<div class="viewcode-block" id="Ancestor.mutation_type"><a class="viewcode-back" href="../../mutyper.html#mutyper.Ancestor.mutation_type">[docs]</a>    <span class="k">def</span> <span class="nf">mutation_type</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">chrom</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">pos</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">ref</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">alt</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;mutation type of a given snp, oriented or collapsed by strand,</span>
 <span class="sd">        returns a tuple of ancestral and derived kmers</span>
 
@@ -278,22 +291,20 @@
         <span class="k">assert</span> <span class="n">start</span> <span class="o">&lt;=</span> <span class="n">end</span>
 
         <span class="n">context</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">chrom</span><span class="p">][</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span>
-        <span class="n">anc_kmer</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">context</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">]</span><span class="si">}{</span><span class="n">anc</span><span class="si">}{</span><span class="n">context</span><span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):]</span><span class="si">}</span><span class="s1">&#39;</span>
-        <span class="n">der_kmer</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">context</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">]</span><span class="si">}{</span><span class="n">der</span><span class="si">}{</span><span class="n">context</span><span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):]</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="n">anc_kmer</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">context</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">]</span><span class="si">}{</span><span class="n">anc</span><span class="si">}{</span><span class="n">context</span><span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):]</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">der_kmer</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">context</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">]</span><span class="si">}{</span><span class="n">der</span><span class="si">}{</span><span class="n">context</span><span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):]</span><span class="si">}</span><span class="s2">&quot;</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">&#39;^[ACGT]+$&#39;</span><span class="p">,</span> <span class="n">anc_kmer</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">&#39;^[ACGT]+$&#39;</span><span class="p">,</span>
-                                                               <span class="n">der_kmer</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;^[ACGT]+$&quot;</span><span class="p">,</span> <span class="n">anc_kmer</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;^[ACGT]+$&quot;</span><span class="p">,</span> <span class="n">der_kmer</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_revcomp_func</span><span class="p">(</span><span class="n">chrom</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">anc_kmer</span><span class="p">,</span> <span class="n">der_kmer</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">(</span><span class="n">reverse_complement</span><span class="p">(</span><span class="n">anc_kmer</span><span class="p">),</span>
-                    <span class="n">reverse_complement</span><span class="p">(</span><span class="n">der_kmer</span><span class="p">))</span></div>
+            <span class="k">return</span> <span class="p">(</span><span class="n">reverse_complement</span><span class="p">(</span><span class="n">anc_kmer</span><span class="p">),</span> <span class="n">reverse_complement</span><span class="p">(</span><span class="n">der_kmer</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Ancestor.region_contexts"><a class="viewcode-back" href="../../mutyper.html#mutyper.Ancestor.region_contexts">[docs]</a>    <span class="k">def</span> <span class="nf">region_contexts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chrom</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-                        <span class="n">start</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                        <span class="n">end</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+<div class="viewcode-block" id="Ancestor.region_contexts"><a class="viewcode-back" href="../../mutyper.html#mutyper.Ancestor.region_contexts">[docs]</a>    <span class="k">def</span> <span class="nf">region_contexts</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">chrom</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;ancestral context of each site in a BED style region (0-based,</span>
 <span class="sd">        half-open), oriented according to self.strandedness or collapsed by</span>
 <span class="sd">        reverse complementation (returns None if ancestral state at target not</span>
@@ -327,14 +338,14 @@
                     <span class="k">yield</span> <span class="kc">None</span>
                     <span class="k">continue</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">context</span> <span class="o">=</span> <span class="n">reverse_complement</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">chrom</span><span class="p">][</span><span class="n">context_start</span><span class="p">:</span>
-                                                             <span class="n">context_end</span><span class="p">]</span><span class="o">.</span><span class="n">seq</span><span class="p">)</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">&#39;^[ACGT]+$&#39;</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+                    <span class="n">context</span> <span class="o">=</span> <span class="n">reverse_complement</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="p">[</span><span class="n">chrom</span><span class="p">][</span><span class="n">context_start</span><span class="p">:</span><span class="n">context_end</span><span class="p">]</span><span class="o">.</span><span class="n">seq</span>
+                    <span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;^[ACGT]+$&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
                 <span class="n">context</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">yield</span> <span class="n">context</span></div>
 
-<div class="viewcode-block" id="Ancestor.targets"><a class="viewcode-back" href="../../mutyper.html#mutyper.Ancestor.targets">[docs]</a>    <span class="k">def</span> <span class="nf">targets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                <span class="n">bed</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">TextIO</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<div class="viewcode-block" id="Ancestor.targets"><a class="viewcode-back" href="../../mutyper.html#mutyper.Ancestor.targets">[docs]</a>    <span class="k">def</span> <span class="nf">targets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bed</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">TextIO</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;return a dictionary of the number of sites of each k-mer</span>
 
 <span class="sd">        Args:</span>
@@ -345,9 +356,9 @@
                 <span class="n">sizes</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">region_contexts</span><span class="p">(</span><span class="n">chrom</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">bed</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-                <span class="n">bed</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">bed</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+                <span class="n">bed</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">bed</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">bed</span><span class="p">:</span>
-                <span class="n">chrom</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="n">chrom</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="n">sizes</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">region_contexts</span><span class="p">(</span><span class="n">chrom</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">start</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">end</span><span class="p">)))</span>
         <span class="k">del</span> <span class="n">sizes</span><span class="p">[</span><span class="kc">None</span><span class="p">]</span>
 
@@ -358,28 +369,25 @@
            
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2020, William DeWitt
+        &#169; Copyright 2020, William DeWitt.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 

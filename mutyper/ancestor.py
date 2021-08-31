@@ -29,32 +29,39 @@ class Ancestor(pyfaidx.Fasta):
                 ``read_ahead`` (for buffering), and ``sequence_always_upper``
                 (to allow lowercase nucleotides to be considered ancestrally
                 identified)
-        """
-    acgt = set('ACGT')
-    ac = set('AC')
+    """
+    acgt = set("ACGT")
+    ac = set("AC")
 
-    def __init__(self, fasta: str, k: int = 3, target: int = None,
-                 strand_file: Union[str, TextIO] = None, **kwargs):
+    def __init__(
+        self,
+        fasta: str,
+        k: int = 3,
+        target: int = None,
+        strand_file: Union[str, TextIO] = None,
+        **kwargs,
+    ):
         super(Ancestor, self).__init__(fasta, **kwargs)
         if target is None:
-            assert k % 2 == 1, f'k = {k} must be odd for default middle target'
+            assert k % 2 == 1, f"k = {k} must be odd for default middle target"
             target = k // 2
         else:
-            raise NotImplementedError('target must be None (default)')
+            raise NotImplementedError("target must be None (default)")
         assert 0 <= target < k
         self.target = target
         self.k = k
         if strand_file is None:
             self._revcomp_func = self._AC
             if self.target != self.k // 2:
-                raise ValueError(f'non-central target {self.target} requires '
-                                 'strand_file')
+                raise ValueError(
+                    f"non-central target {self.target} requires " "strand_file"
+                )
         else:
             self.strandedness = defaultdict(list)
             if isinstance(strand_file, str):
-                bed = open(strand_file, 'r')
+                bed = open(strand_file, "r")
             for line in bed:
-                chrom, start, end = line.rstrip().split('\t')
+                chrom, start, end = line.rstrip().split("\t")
                 bisect.insort(self.strandedness[chrom], [int(start), int(end)])
             for chrom in self.strandedness:
                 self.strandedness[chrom] = np.array(self.strandedness[chrom])
@@ -75,8 +82,9 @@ class Ancestor(pyfaidx.Fasta):
             return True
         return False
 
-    def mutation_type(self, chrom: str,
-                      pos: int, ref: str, alt: str) -> Tuple[str, str]:
+    def mutation_type(
+        self, chrom: str, pos: int, ref: str, alt: str
+    ) -> Tuple[str, str]:
         r"""mutation type of a given snp, oriented or collapsed by strand,
         returns a tuple of ancestral and derived kmers
 
@@ -102,22 +110,20 @@ class Ancestor(pyfaidx.Fasta):
         assert start <= end
 
         context = self[chrom][start:end]
-        anc_kmer = f'{context[:self.target]}{anc}{context[(self.target + 1):]}'
-        der_kmer = f'{context[:self.target]}{der}{context[(self.target + 1):]}'
+        anc_kmer = f"{context[:self.target]}{anc}{context[(self.target + 1):]}"
+        der_kmer = f"{context[:self.target]}{der}{context[(self.target + 1):]}"
 
-        if not re.match('^[ACGT]+$', anc_kmer) or not re.match('^[ACGT]+$',
-                                                               der_kmer):
+        if not re.match("^[ACGT]+$", anc_kmer) or not re.match("^[ACGT]+$", der_kmer):
             return None, None
 
         if not self._revcomp_func(chrom, pos):
             return anc_kmer, der_kmer
         else:
-            return (reverse_complement(anc_kmer),
-                    reverse_complement(der_kmer))
+            return (reverse_complement(anc_kmer), reverse_complement(der_kmer))
 
-    def region_contexts(self, chrom: str,
-                        start: int = None,
-                        end: int = None) -> Generator[str, None, None]:
+    def region_contexts(
+        self, chrom: str, start: int = None, end: int = None
+    ) -> Generator[str, None, None]:
         r"""ancestral context of each site in a BED style region (0-based,
         half-open), oriented according to self.strandedness or collapsed by
         reverse complementation (returns None if ancestral state at target not
@@ -151,14 +157,14 @@ class Ancestor(pyfaidx.Fasta):
                     yield None
                     continue
                 else:
-                    context = reverse_complement(self[chrom][context_start:
-                                                             context_end].seq)
-            if not re.match('^[ACGT]+$', context):
+                    context = reverse_complement(
+                        self[chrom][context_start:context_end].seq
+                    )
+            if not re.match("^[ACGT]+$", context):
                 context = None
             yield context
 
-    def targets(self,
-                bed: Union[str, TextIO] = None) -> Dict[str, int]:
+    def targets(self, bed: Union[str, TextIO] = None) -> Dict[str, int]:
         r"""return a dictionary of the number of sites of each k-mer
 
         Args:
@@ -169,9 +175,9 @@ class Ancestor(pyfaidx.Fasta):
                 sizes.update(self.region_contexts(chrom))
         else:
             if isinstance(bed, str):
-                bed = open(bed, 'r')
+                bed = open(bed, "r")
             for line in bed:
-                chrom, start, end = line.rstrip().split('\t')
+                chrom, start, end = line.rstrip().split("\t")
                 sizes.update(self.region_contexts(chrom, int(start), int(end)))
         del sizes[None]
 

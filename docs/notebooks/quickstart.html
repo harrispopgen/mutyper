@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Quickstart &mdash; mutyper  documentation</title>
   
@@ -13,11 +13,16 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/style.css" type="text/css" />
 
   
   
+
   
+  
+
   
 
   
@@ -27,13 +32,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -89,7 +94,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">User Guide</span></p>
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Quickstart</a><ul>
@@ -105,21 +110,21 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../cite.html">Citing <code class="docutils literal notranslate"><span class="pre">mutyper</span></code></a></li>
 </ul>
-<p class="caption"><span class="caption-text">CLI Documentation</span></p>
+<p class="caption" role="heading"><span class="caption-text">CLI Documentation</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../cmd.html">Command Line Interface</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API Documentation</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mutyper.html">Python API: <code class="docutils literal notranslate"><span class="pre">mutyper</span></code> package</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developer Documentation</span></p>
+<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../developer.html">Open source code repository</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../developer.html#update-documentation">Update documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer.html#developer-tools">Developer tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developer.html#todo-list">Todo list</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Notes</span></p>
+<p class="caption" role="heading"><span class="caption-text">Notes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../CHANGELOG.html">Change log</a></li>
 </ul>
@@ -162,6 +167,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -173,7 +180,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="../_sources/notebooks/quickstart.ipynb.txt" rel="nofollow"> View page source</a>
           
         
@@ -192,21 +199,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -307,7 +328,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -373,6 +394,7 @@ div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
     padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -830,7 +852,7 @@ subcommands:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-usage: mutyper variants [-h] [--k K] [--target TARGET] [--sep SEP]
+usage: mutyper variants [-h] [--verbose] [--k K] [--target TARGET] [--sep SEP]
                         [--chrom_pos CHROM_POS] [--strand_file STRAND_FILE]
                         [--strict]
                         fasta vcf
@@ -845,6 +867,7 @@ positional arguments:
 
 optional arguments:
   -h, --help            show this help message and exit
+  --verbose             increase logging verbosity
   --k K                 k-mer context size (default 3)
   --target TARGET       0-based mutation target position in kmer (default
                         middle)
@@ -909,10 +932,10 @@ optional arguments:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-1       10505   .       A       T       100     PASS    AC=5007;AF=0.000199681;AN=5008;NS=2504;DP=9632;EAS_AF=0;AMR_AF=0;AFR_AF=0.0008;EUR_AF=0;SAS_AF=0;AA=.|||;mutation_type=GAG&gt;GTG
+1       10505   .       A       T       100     PASS    AC=5007;AF=0.9998;AN=5008;NS=2504;DP=9632;EAS_AF=0;AMR_AF=0;AFR_AF=0.0008;EUR_AF=0;SAS_AF=0;AA=.|||;mutation_type=GAG&gt;GTG
 1       10506   .       C       G       100     PASS    AC=1;AF=0.000199681;AN=5008;NS=2504;DP=9676;EAS_AF=0;AMR_AF=0;AFR_AF=0.0008;EUR_AF=0;SAS_AF=0;AA=.|||;mutation_type=TCT&gt;TGT
-1       10542   .       A       G       100     PASS    AC=5007;AF=0.000199681;AN=5008;NS=2504;DP=9007;EAS_AF=0.001;AMR_AF=0;AFR_AF=0;EUR_AF=0;SAS_AF=0;AA=.|||;mutation_type=CAG&gt;CGG
-1       10642   .       A       G       100     PASS    AC=4987;AF=0.00419329;AN=5008;NS=2504;DP=1360;EAS_AF=0.003;AMR_AF=0.0014;AFR_AF=0.0129;EUR_AF=0;SAS_AF=0;AA=.|||;mutation_type=CAT&gt;CGT
+1       10542   .       A       G       100     PASS    AC=5007;AF=0.9998;AN=5008;NS=2504;DP=9007;EAS_AF=0.001;AMR_AF=0;AFR_AF=0;EUR_AF=0;SAS_AF=0;AA=.|||;mutation_type=CAG&gt;CGG
+1       10642   .       A       G       100     PASS    AC=4987;AF=0.995807;AN=5008;NS=2504;DP=1360;EAS_AF=0.003;AMR_AF=0.0014;AFR_AF=0.0129;EUR_AF=0;SAS_AF=0;AA=.|||;mutation_type=CAT&gt;CGT
 1       11008   .       C       G       100     PASS    AC=441;AF=0.0880591;AN=5008;NS=2504;DP=2232;EAS_AF=0.0367;AMR_AF=0.0965;AFR_AF=0.1346;EUR_AF=0.0885;SAS_AF=0.0716;AA=.|||;mutation_type=CCT&gt;CGT
 </pre></div></div>
 </div>
@@ -934,7 +957,7 @@ optional arguments:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-usage: mutyper targets [-h] [--k K] [--target TARGET] [--sep SEP]
+usage: mutyper targets [-h] [--verbose] [--k K] [--target TARGET] [--sep SEP]
                        [--chrom_pos CHROM_POS] [--strand_file STRAND_FILE]
                        [--strict] [--bed BED]
                        fasta
@@ -946,6 +969,7 @@ positional arguments:
 
 optional arguments:
   -h, --help            show this help message and exit
+  --verbose             increase logging verbosity
   --k K                 k-mer context size (default 3)
   --target TARGET       0-based mutation target position in kmer (default
                         middle)
@@ -1034,7 +1058,7 @@ CAC     1
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-usage: mutyper spectra [-h] [--population] [--randomize] vcf
+usage: mutyper spectra [-h] [--verbose] [--population] [--randomize] vcf
 
 compute mutation spectra for each sample in VCF/BCF with mutation_type data
 and stream to stdout
@@ -1044,6 +1068,7 @@ positional arguments:
 
 optional arguments:
   -h, --help    show this help message and exit
+  --verbose     increase logging verbosity
   --population  population-wise spectrum, instead of individual
   --randomize   randomly assign mutation to a single haplotype
 </pre></div></div>
@@ -1064,15 +1089,15 @@ optional arguments:
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 sample  AAA&gt;AGA      AAT&gt;AGT      ACA&gt;AAA      ACA&gt;AGA
-HG00096 0       0       0       2
-HG00097 0       0       0       2
-HG00099 0       0       0       2
-HG00100 0       0       0       2
-HG00101 0       0       0       2
-HG00102 0       0       0       2
-HG00103 0       0       0       2
-HG00105 0       0       0       2
-HG00106 0       0       0       2
+HG00096 2       2       2       2
+HG00097 2       2       2       2
+HG00099 2       2       2       2
+HG00100 2       2       2       2
+HG00101 2       2       2       2
+HG00102 2       2       2       2
+HG00103 2       2       2       2
+HG00105 2       2       2       2
+HG00106 2       2       2       2
 </pre></div></div>
 </div>
 <p>Use the <code class="docutils literal notranslate"><span class="pre">--population</span></code> to get the spectrum for whole population, rather than each individual</p>
@@ -1113,7 +1138,7 @@ AAA&gt;AGA      AAT&gt;AGT      ACA&gt;AAA      ACA&gt;AGA      ACA&gt;ATA
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-usage: mutyper ksfs [-h] vcf
+usage: mutyper ksfs [-h] [--verbose] vcf
 
 compute sample frequency spectrum for each mutation type from a VCF/BCF file
 with mutation_type data (i.e. output from variants subcommand ) and stream to
@@ -1124,6 +1149,7 @@ positional arguments:
 
 optional arguments:
   -h, --help  show this help message and exit
+  --verbose   increase logging verbosity
 </pre></div></div>
 </div>
 <p>Similar to the previous subcommand, but now we are generating a sample frequency spectrum (SFS) for each mutation type.</p>
@@ -1162,37 +1188,29 @@ sample_frequency        AAA&gt;AGA      AAT&gt;AGT      ACA&gt;AAA      ACA&gt;A
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../cite.html" class="btn btn-neutral float-right" title="Citing mutyper" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="../install.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="../cite.html" class="btn btn-neutral float-right" title="Citing mutyper" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../install.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2020, William DeWitt
+        &#169; Copyright 2020, William DeWitt.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 

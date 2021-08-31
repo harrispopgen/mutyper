@@ -3,54 +3,37 @@ Open source code repository
 
 All code is freely available at `<https://github.com/harrispopgen/mutyper>`_
 
+Developer tools
+===============
 
-Update documentation
-====================
-
-Inspired by: https://www.docslikecode.com/articles/github-pages-python-sphinx/
-
-Go to the ``docsrc`` directory::
-
-  cd docsrc
-
-Environment
------------
-
-Create and activate the ``mutyperdocs`` conda environment::
+Install and activate Conda developer environment::
 
   conda env create -f env.yml
   conda activate mutyperdocs
 
-Install ```mutyper`` itself from the local copy in the parent directory::
+Local install of ``mutyper``::
 
-  pip install -e ..
+  pip install -e .
 
-Modify notebooks in the ``notebooks`` directory as needed.
+Run tests::
 
-.. note::
+  make test
 
-  Executing builds (below) after modifying notebooks can take a very long time
-  if compute-heavy notebooks need to be recompiled.
+Format code::
 
-Local build
------------
+  make format
 
-From the ``docsrc`` dir::
+Lint::
 
-  make html
+  make lint
 
-You can then see the generated documentation in ``docsrc/_build/index.html``.
+Build docs locally (you can then see the generated documentation in ``docsrc/_build/html/index.html``.)::
 
-Github Pages build
-------------------
+  make docs
 
-From the ``docsrc`` dir::
+Deploy docs to ``docs/`` directory for GitHub Pages::
 
-  make github
-
-You can then see the generated documentation in
-``docs/index.html``.
-
+  make deploy
 
 
 Todo list
