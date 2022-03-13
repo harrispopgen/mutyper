@@ -8,5 +8,5 @@ dependencies:
   - tabix
   - pip
   - pip:
-    - requirements.txt
+    - -r requirements.txt
     - . # installs package from current directory
