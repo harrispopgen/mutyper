@@ -250,7 +250,7 @@ def spectra(args):
 
     else:
         spectra_data = defaultdict(lambda: np.zeros_like(vcf.samples, dtype=int))
-
+        seen_ambiguous = False
         if args.randomize:
             for variant in vcf:
                 random_haplotype = choice(
@@ -262,6 +262,17 @@ def spectra(args):
                 if variant.ploidy == 1:
                     # haploid ALT are coded as 2 (homozygous ALT)
                     variant.gt_types[variant.gt_types == 2] = 1
+                # from the cyvcf2 docs:
+                #   gt_types is array of 0,1,2,3==HOM_REF, HET, UNKNOWN, HOM_ALT
+                #   gts012 (bool) – if True, then gt_types will be 0=HOM_REF, 1=HET, 2=HOM_ALT, 3=UNKNOWN. If False, 3, 2 are flipped.
+                # but for our case unknown should be 0, not 3.
+                ambiguous_genotypes = variant.gt_types == 3
+                if not seen_ambiguous and any(ambiguous_genotypes):
+                    logging.warning(
+                        "Ambiguous genotypes found! Continuing by assuming reference genotypes for these variants."
+                    )
+                    seen_ambiguous = True
+                variant.gt_types[ambiguous_genotypes] = 0
                 spectra_data[variant.INFO["mutation_type"]] += variant.gt_types
 
         spectra = pd.DataFrame(spectra_data, vcf.samples).reindex(
