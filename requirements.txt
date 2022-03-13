@@ -1,0 +1,12 @@
+jupyter
+pandas
+black
+docformatter
+flake8
+pytest
+sphinx
+sphinx-argparse
+sphinx_rtd_theme
+sphinx-autodoc-typehints
+sphinxcontrib-programoutput
+nbsphinx

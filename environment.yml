@@ -1,0 +1,12 @@
+name: mutyper
+channels:
+  - conda-forge
+  - defaults
+  - bioconda
+dependencies:
+  - bcftools
+  - tabix
+  - pip
+  - pip:
+    - -r requirements.txt
+    - . # installs package from current directory
