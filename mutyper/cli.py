@@ -31,7 +31,6 @@ def setup_ancestor(args):
     )
 
 
-# mrv addition, whole function
 def is_compressed(file):
     """returns true if file is compressed."""
     f = open(file, "rb")
