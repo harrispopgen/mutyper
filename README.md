@@ -1,4 +1,4 @@
-![](docsrc/_static/logo.png)
+![](docs/_static/logo.png)
 
 A Python package and command line utility for annotating the local ancestral sequence context of biallelic SNPs
 
