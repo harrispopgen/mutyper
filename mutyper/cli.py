@@ -250,7 +250,7 @@ def spectra(args):
 
     else:
         spectra_data = defaultdict(lambda: np.zeros_like(vcf.samples, dtype=int))
-
+        seen_ambiguous = False
         if args.randomize:
             for variant in vcf:
                 random_haplotype = choice(
@@ -266,6 +266,11 @@ def spectra(args):
                 #   gt_types is array of 0,1,2,3==HOM_REF, HET, UNKNOWN, HOM_ALT
                 #   gts012 (bool) – if True, then gt_types will be 0=HOM_REF, 1=HET, 2=HOM_ALT, 3=UNKNOWN. If False, 3, 2 are flipped.
                 # but for our case unknown should be 0, not 3.
+                if not seen_ambiguous and sum(variant.gt_types > 2) > 0:
+                    logging.warning(
+                        "Ambiguous genotypes found! Continuing by assuming reference genotypes for these variants."
+                    )
+                    seen_ambiguous = True
                 variant.gt_types[variant.gt_types > 2] = 0
                 spectra_data[variant.INFO["mutation_type"]] += variant.gt_types
 
