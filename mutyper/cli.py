@@ -153,7 +153,7 @@ def variants(args):
     vcf.add_info_to_header(
         {
             "ID": "mutation_type",
-            "Description": f"ancestral {args.k}-mer mutation " "type",
+            "Description": f"ancestral {args.k}-mer mutation type",
             "Type": "Character",
             "Number": "1",
         }
@@ -333,7 +333,7 @@ def get_parser():
         "states, and stream to stdout",
     )
     parser_targets = subparsers.add_parser(
-        "targets", description="compute 𝑘-mer target sizes and stream to " "stdout"
+        "targets", description="compute 𝑘-mer target sizes and stream to stdout"
     )
     parser_spectra = subparsers.add_parser(
         "spectra",
@@ -371,19 +371,19 @@ def get_parser():
             "--target",
             type=int,
             default=None,
-            help="0-based mutation target position in kmer" " (default middle)",
+            help="0-based mutation target position in kmer (default middle)",
         )
         sub_parser.add_argument(
             "--sep",
             type=str,
             default=":",
-            help="field delimiter in FASTA headers " '(default ":")',
+            help='field delimiter in FASTA headers (default ":")',
         )
         sub_parser.add_argument(
             "--chrom_pos",
             type=int,
             default=0,
-            help="0-based chromosome field position in " "FASTA headers (default 0)",
+            help="0-based chromosome field position in FASTA headers (default 0)",
         )
         sub_parser.add_argument(
             "--strand_file",
@@ -421,7 +421,7 @@ def get_parser():
 
     # arguments specific to ancestor subcommand
     parser_ancestor.add_argument(
-        "reference", type=str, help="path to reference FASTA for one " "chromosome"
+        "reference", type=str, help="path to reference FASTA for one chromosome"
     )
     parser_ancestor.add_argument(
         "outgroup", type=str, help="path to outgroup genome FASTA"
@@ -429,12 +429,12 @@ def get_parser():
     parser_ancestor.add_argument(
         "chain",
         type=str,
-        help="path to alignment chain file " "(reference to outgroup)",
+        help="path to alignment chain file (reference to outgroup)",
     )
     parser_ancestor.add_argument(
         "output",
         type=str,
-        help="path for output ancestral FASTA for " "this chromosome",
+        help="path for output ancestral FASTA for this chromosome",
     )
     parser_ancestor.set_defaults(func=ancestral_fasta)
 
@@ -448,12 +448,12 @@ def get_parser():
     parser_spectra.add_argument(
         "--population",
         action="store_true",
-        help="population-wise spectrum, instead of " "individual",
+        help="population-wise spectrum, instead of individual",
     )
     parser_spectra.add_argument(
         "--randomize",
         action="store_true",
-        help="randomly assign mutation to a single " "haplotype",
+        help="randomly assign mutation to a single haplotype",
     )
     parser_spectra.set_defaults(func=spectra)
 
