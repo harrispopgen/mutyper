@@ -16,7 +16,7 @@ setuptools.setup(
     long_description_content_type='text/markdown',
     url='https://github.com/harrispopgen/mutyper',
     entry_points={'console_scripts': ['mutyper=mutyper.cli:main']},
-    # packages=setuptools.find_packages(exclude=['tests', 'docs', 'docs']),
+    # packages=setuptools.find_packages(exclude=['tests', 'docs']),
     packages=['mutyper'],
     classifiers=[
         'Programming Language :: Python :: 3',

@@ -9,7 +9,6 @@ import signal
 import numpy as np
 from shutil import copyfile, copyfileobj
 import pyfaidx
-from random import choice
 from pyliftover import LiftOver
 from Bio.Seq import reverse_complement
 import logging
@@ -31,7 +30,6 @@ def setup_ancestor(args):
     )
 
 
-# mrv addition, whole function
 def is_compressed(file):
     """returns true if file is compressed."""
     f = open(file, "rb")
@@ -154,7 +152,7 @@ def variants(args):
     vcf.add_info_to_header(
         {
             "ID": "mutation_type",
-            "Description": f"ancestral {args.k}-mer mutation " "type",
+            "Description": f"ancestral {args.k}-mer mutation type",
             "Type": "Character",
             "Number": "1",
         }
@@ -232,13 +230,29 @@ def targets(args):
 
 def spectra(args):
     """subroutine for spectra subcommand."""
-    vcf = cyvcf2.VCF(args.vcf, gts012=True)
+
+    # NOTE: vcf must be instantiated with gts012=False (the default) due to cyvcf2
+    # num_unknown property bug https://github.com/brentp/cyvcf2/issues/236
+    vcf = cyvcf2.VCF(args.vcf, strict_gt=True)
+
+    def iterate_with_ambiguity_warning():
+        """In several places we want to check for genotype ambiguity as we
+        iterate over vcf variants, so we define this generator wrapper."""
+        for variant in vcf:
+            yield variant
+            if variant.num_unknown:
+                logging.warning(
+                    "Ambiguous genotypes found! Continuing by assuming reference genotypes for these variants."
+                )
+                break
+        yield from vcf
 
     if args.population:
         spectra_data = Counter()
 
-        for variant in vcf:
-            spectra_data[variant.INFO["mutation_type"]] += 1
+        for variant in iterate_with_ambiguity_warning():
+            if variant.aaf:
+                spectra_data[variant.INFO["mutation_type"]] += 1
 
         spectra = pd.DataFrame(spectra_data, ["population"]).reindex(
             sorted(spectra_data), axis="columns"
@@ -250,30 +264,16 @@ def spectra(args):
 
     else:
         spectra_data = defaultdict(lambda: np.zeros_like(vcf.samples, dtype=int))
-        seen_ambiguous = False
         if args.randomize:
-            for variant in vcf:
-                random_haplotype = choice(
-                    [x for x, y in enumerate(variant.gt_types) for _ in range(y)]
-                )
+            for variant in iterate_with_ambiguity_warning():
+                counts = np.array([gt.count(1) for gt in variant.genotypes])
+                rng = np.random.default_rng()
+                random_haplotype = rng.choice(len(counts), p=counts / counts.sum())
                 spectra_data[variant.INFO["mutation_type"]][random_haplotype] += 1.0
         else:
-            for variant in vcf:
-                if variant.ploidy == 1:
-                    # haploid ALT are coded as 2 (homozygous ALT)
-                    variant.gt_types[variant.gt_types == 2] = 1
-                # from the cyvcf2 docs:
-                #   gt_types is array of 0,1,2,3==HOM_REF, HET, UNKNOWN, HOM_ALT
-                #   gts012 (bool) – if True, then gt_types will be 0=HOM_REF, 1=HET, 2=HOM_ALT, 3=UNKNOWN. If False, 3, 2 are flipped.
-                # but for our case unknown should be 0, not 3.
-                ambiguous_genotypes = variant.gt_types == 3
-                if not seen_ambiguous and any(ambiguous_genotypes):
-                    logging.warning(
-                        "Ambiguous genotypes found! Continuing by assuming reference genotypes for these variants."
-                    )
-                    seen_ambiguous = True
-                variant.gt_types[ambiguous_genotypes] = 0
-                spectra_data[variant.INFO["mutation_type"]] += variant.gt_types
+            for variant in iterate_with_ambiguity_warning():
+                counts = np.array([gt.count(1) for gt in variant.genotypes])
+                spectra_data[variant.INFO["mutation_type"]] += counts
 
         spectra = pd.DataFrame(spectra_data, vcf.samples).reindex(
             sorted(spectra_data), axis="columns"
@@ -334,7 +334,7 @@ def get_parser():
         "states, and stream to stdout",
     )
     parser_targets = subparsers.add_parser(
-        "targets", description="compute 𝑘-mer target sizes and stream to " "stdout"
+        "targets", description="compute 𝑘-mer target sizes and stream to stdout"
     )
     parser_spectra = subparsers.add_parser(
         "spectra",
@@ -372,19 +372,19 @@ def get_parser():
             "--target",
             type=int,
             default=None,
-            help="0-based mutation target position in kmer" " (default middle)",
+            help="0-based mutation target position in kmer (default middle)",
         )
         sub_parser.add_argument(
             "--sep",
             type=str,
             default=":",
-            help="field delimiter in FASTA headers " '(default ":")',
+            help='field delimiter in FASTA headers (default ":")',
         )
         sub_parser.add_argument(
             "--chrom_pos",
             type=int,
             default=0,
-            help="0-based chromosome field position in " "FASTA headers (default 0)",
+            help="0-based chromosome field position in FASTA headers (default 0)",
         )
         sub_parser.add_argument(
             "--strand_file",
@@ -422,7 +422,7 @@ def get_parser():
 
     # arguments specific to ancestor subcommand
     parser_ancestor.add_argument(
-        "reference", type=str, help="path to reference FASTA for one " "chromosome"
+        "reference", type=str, help="path to reference FASTA for one chromosome"
     )
     parser_ancestor.add_argument(
         "outgroup", type=str, help="path to outgroup genome FASTA"
@@ -430,12 +430,12 @@ def get_parser():
     parser_ancestor.add_argument(
         "chain",
         type=str,
-        help="path to alignment chain file " "(reference to outgroup)",
+        help="path to alignment chain file (reference to outgroup)",
     )
     parser_ancestor.add_argument(
         "output",
         type=str,
-        help="path for output ancestral FASTA for " "this chromosome",
+        help="path for output ancestral FASTA for this chromosome",
     )
     parser_ancestor.set_defaults(func=ancestral_fasta)
 
@@ -449,12 +449,12 @@ def get_parser():
     parser_spectra.add_argument(
         "--population",
         action="store_true",
-        help="population-wise spectrum, instead of " "individual",
+        help="population-wise spectrum, instead of individual",
     )
     parser_spectra.add_argument(
         "--randomize",
         action="store_true",
-        help="randomly assign mutation to a single " "haplotype",
+        help="randomly assign mutation to a single haplotype",
     )
     parser_spectra.set_defaults(func=spectra)
 
