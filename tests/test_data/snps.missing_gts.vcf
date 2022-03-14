@@ -1,0 +1,12 @@
+##fileformat=VCFv4.2
+##FILTER=<ID=PASS,Description="All filters passed">
+##contig=<ID=chr1,length=248387328>
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+##INFO=<ID=AN,Number=1,Type=Integer,Description="Total number of alleles in called genotypes">
+##INFO=<ID=AC,Number=A,Type=Integer,Description="Allele count in genotypes">
+##INFO=<ID=mutation_type,Number=1,Type=Character,Description="ancestral 3-mer mutation type">
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	sample1	sample2
+chr1	10	.	C	T	30	PASS	AN=4;AC=0;mutation_type=ACA>ATA	GT	0/0	0/0
+chr1	20	.	C	T	30	PASS	AN=4;AC=1;mutation_type=ACC>ATC	GT	0/1	0/0
+chr1	30	.	C	T	30	PASS	AN=3;AC=1;mutation_type=ACG>ATG	GT	1/.	0/0
+chr1	40	.	C	T	30	PASS	AN=3;AC=1;mutation_type=ACT>ATT	GT	./1	0/0
