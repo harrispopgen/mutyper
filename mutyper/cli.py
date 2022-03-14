@@ -59,19 +59,6 @@ def copy_fasta(file, outfile):
         copyfile(file, outfile)
 
 
-def iterate_with_ambiguity_warning(vcf):
-    """In several places we want to check for genotype ambiguity as we iterate
-    over vcf variants, so we define this wrapper generator."""
-    for variant in vcf:
-        yield variant
-        if variant.num_unknown:
-            logging.warning(
-                "Ambiguous genotypes found! Continuing by assuming reference genotypes for these variants."
-            )
-            break
-    yield from vcf
-
-
 def ancestral_fasta(args):
     """subroutine for ancestor subcommand."""
     # single chromosome fasta file for reference genome
@@ -243,12 +230,27 @@ def targets(args):
 
 def spectra(args):
     """subroutine for spectra subcommand."""
+
+    # NOTE: vcf must be instantiated with gts012=False (the default) due to cyvcf2
+    # num_unknown property bug https://github.com/brentp/cyvcf2/issues/236
     vcf = cyvcf2.VCF(args.vcf, strict_gt=True)
+
+    def iterate_with_ambiguity_warning():
+        """In several places we want to check for genotype ambiguity as we
+        iterate over vcf variants, so we define this generator wrapper."""
+        for variant in vcf:
+            yield variant
+            if variant.num_unknown:
+                logging.warning(
+                    "Ambiguous genotypes found! Continuing by assuming reference genotypes for these variants."
+                )
+                break
+        yield from vcf
 
     if args.population:
         spectra_data = Counter()
 
-        for variant in iterate_with_ambiguity_warning(vcf):
+        for variant in iterate_with_ambiguity_warning():
             if variant.aaf:
                 spectra_data[variant.INFO["mutation_type"]] += 1
 
@@ -263,13 +265,13 @@ def spectra(args):
     else:
         spectra_data = defaultdict(lambda: np.zeros_like(vcf.samples, dtype=int))
         if args.randomize:
-            for variant in iterate_with_ambiguity_warning(vcf):
+            for variant in iterate_with_ambiguity_warning():
                 counts = np.array([gt.count(1) for gt in variant.genotypes])
                 rng = np.random.default_rng()
                 random_haplotype = rng.choice(len(counts), p=counts / counts.sum())
                 spectra_data[variant.INFO["mutation_type"]][random_haplotype] += 1.0
         else:
-            for variant in iterate_with_ambiguity_warning(vcf):
+            for variant in iterate_with_ambiguity_warning():
                 counts = np.array([gt.count(1) for gt in variant.genotypes])
                 spectra_data[variant.INFO["mutation_type"]] += counts
 
