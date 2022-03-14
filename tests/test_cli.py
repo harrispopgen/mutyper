@@ -3,7 +3,6 @@
 import pytest
 from mutyper import cli
 import argparse
-import cyvcf2
 import pandas as pd
 import io
 
