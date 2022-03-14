@@ -10,3 +10,4 @@ chr1	10	.	C	T	30	PASS	AN=4;AC=1;mutation_type=ACA>ATA	GT	0/0	1/0
 chr1	20	.	C	T	30	PASS	AN=4;AC=1;mutation_type=ACC>ATC	GT	0/1	0/0
 chr1	30	.	C	T	30	PASS	AN=3;AC=2;mutation_type=ACG>ATG	GT	1/.	1/0
 chr1	40	.	C	T	30	PASS	AN=3;AC=1;mutation_type=ACT>ATT	GT	./1	0/0
+chr1	50	.	C	T	30	PASS	AN=2;AC=1;mutation_type=ACT>ATT	GT	./.	1/0
