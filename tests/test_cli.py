@@ -66,7 +66,7 @@ def test_spectra_missing_gts(capsys, caplog):
     captured = capsys.readouterr()
     df = pd.read_csv(io.StringIO(captured.out), sep="\t", index_col=0)
     df_target = pd.DataFrame(
-        {"ACA>ATA": [0, 1], "ACC>ATC": [1, 0], "ACG>ATG": [1, 1], "ACT>ATT": [1, 0]},
+        {"ACA>ATA": [0, 1], "ACC>ATC": [1, 0], "ACG>ATG": [1, 1], "ACT>ATT": [1, 1]},
         index=pd.Index(["sample1", "sample2"], name="sample"),
     )
     pd.testing.assert_frame_equal(df, df_target)
