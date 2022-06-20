@@ -231,8 +231,6 @@ def targets(args):
 def spectra(args):
     """subroutine for spectra subcommand."""
 
-    # NOTE: vcf must be instantiated with gts012=False (the default) due to cyvcf2
-    # num_unknown property bug https://github.com/brentp/cyvcf2/issues/236
     vcf = cyvcf2.VCF(args.vcf, strict_gt=True)
 
     def iterate_with_ambiguity_warning():
