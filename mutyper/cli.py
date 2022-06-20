@@ -266,7 +266,7 @@ def spectra(args):
         spectra_data = defaultdict(lambda: np.zeros_like(vcf.samples, dtype=int))
         if args.randomize:
             for variant in iterate_with_ambiguity_warning():
-                counts = np.array([gt.count(1) for gt in variant.genotypes])
+                counts = np.array([gt[:-1].count(1) for gt in variant.genotypes])
                 rng = np.random.default_rng()
                 random_haplotype = rng.choice(len(counts), p=counts / counts.sum())
                 spectra_data[variant.INFO["mutation_type"]][random_haplotype] += 1.0
