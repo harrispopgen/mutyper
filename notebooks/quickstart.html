@@ -15,6 +15,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
@@ -316,6 +317,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* Some additional styling taken form the Jupyter notebook CSS */
+.jp-RenderedHTMLCommon table,
 div.rendered_html table {
   border: none;
   border-collapse: collapse;
@@ -324,10 +326,14 @@ div.rendered_html table {
   font-size: 12px;
   table-layout: fixed;
 }
+.jp-RenderedHTMLCommon thead,
 div.rendered_html thead {
   border-bottom: 1px solid black;
   vertical-align: bottom;
 }
+.jp-RenderedHTMLCommon tr,
+.jp-RenderedHTMLCommon th,
+.jp-RenderedHTMLCommon td,
 div.rendered_html tr,
 div.rendered_html th,
 div.rendered_html td {
@@ -339,12 +345,15 @@ div.rendered_html td {
   max-width: none;
   border: none;
 }
+.jp-RenderedHTMLCommon th,
 div.rendered_html th {
   font-weight: bold;
 }
+.jp-RenderedHTMLCommon tbody tr:nth-child(odd),
 div.rendered_html tbody tr:nth-child(odd) {
   background: #f5f5f5;
 }
+.jp-RenderedHTMLCommon tbody tr:hover,
 div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
@@ -372,10 +381,10 @@ div.rendered_html tbody tr:hover {
 }
 </style>
 <section id="Quickstart">
-<h1>Quickstart<a class="headerlink" href="#Quickstart" title="Permalink to this headline"></a></h1>
+<h1>Quickstart<a class="headerlink" href="#Quickstart" title="Permalink to this heading"></a></h1>
 <p>This notebook demonstrates how to use <code class="docutils literal notranslate"><span class="pre">mutyper</span></code> for computing mutation type data for VCF/BCF data</p>
 <section id="Python-API-demo">
-<h2>Python API demo<a class="headerlink" href="#Python-API-demo" title="Permalink to this headline"></a></h2>
+<h2>Python API demo<a class="headerlink" href="#Python-API-demo" title="Permalink to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -695,7 +704,7 @@ Counter({&#39;AAA&#39;: 6197,
 </div>
 </section>
 <section id="Command-line-interface-demo">
-<h2>Command line interface demo<a class="headerlink" href="#Command-line-interface-demo" title="Permalink to this headline"></a></h2>
+<h2>Command line interface demo<a class="headerlink" href="#Command-line-interface-demo" title="Permalink to this heading"></a></h2>
 <p>Note that command line cells begin with <code class="docutils literal notranslate"><span class="pre">!</span></code> in Jupyter notebooks.</p>
 <p>Display usage information for the mutyper command</p>
 <div class="nbinput docutils container">
@@ -726,7 +735,7 @@ subcommands:
 </pre></div></div>
 </div>
 <section id="variants-subcommand">
-<h3><code class="docutils literal notranslate"><span class="pre">variants</span></code> subcommand<a class="headerlink" href="#variants-subcommand" title="Permalink to this headline"></a></h3>
+<h3><code class="docutils literal notranslate"><span class="pre">variants</span></code> subcommand<a class="headerlink" href="#variants-subcommand" title="Permalink to this heading"></a></h3>
 <p>Usage:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
@@ -828,7 +837,7 @@ optional arguments:
 </div>
 </section>
 <section id="targets-subcommand">
-<h3><code class="docutils literal notranslate"><span class="pre">targets</span></code> subcommand<a class="headerlink" href="#targets-subcommand" title="Permalink to this headline"></a></h3>
+<h3><code class="docutils literal notranslate"><span class="pre">targets</span></code> subcommand<a class="headerlink" href="#targets-subcommand" title="Permalink to this heading"></a></h3>
 <p>Usage:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
@@ -926,7 +935,7 @@ CAC     1
 </div>
 </section>
 <section id="spectra-subcommand">
-<h3><code class="docutils literal notranslate"><span class="pre">spectra</span></code> subcommand<a class="headerlink" href="#spectra-subcommand" title="Permalink to this headline"></a></h3>
+<h3><code class="docutils literal notranslate"><span class="pre">spectra</span></code> subcommand<a class="headerlink" href="#spectra-subcommand" title="Permalink to this heading"></a></h3>
 <p>Usage:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
@@ -971,15 +980,15 @@ optional arguments:
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 sample  AAA&gt;AGA      AAT&gt;AGT      ACA&gt;AAA      ACA&gt;AGA
-HG00096 4       3       3       4
-HG00097 4       3       3       4
-HG00099 4       3       3       4
-HG00100 4       3       3       4
-HG00101 4       3       3       4
-HG00102 4       3       3       4
-HG00103 4       3       3       4
-HG00105 4       3       3       4
-HG00106 4       3       3       4
+HG00096 2       2       2       2
+HG00097 2       2       2       2
+HG00099 2       2       2       2
+HG00100 2       2       2       2
+HG00101 2       2       2       2
+HG00102 2       2       2       2
+HG00103 2       2       2       2
+HG00105 2       2       2       2
+HG00106 2       2       2       2
 </pre></div></div>
 </div>
 <p>Use the <code class="docutils literal notranslate"><span class="pre">--population</span></code> to get the spectrum for whole population, rather than each individual</p>
@@ -1003,7 +1012,7 @@ AAA&gt;AGA      AAT&gt;AGT      ACA&gt;AAA      ACA&gt;AGA      ACA&gt;ATA
 </div>
 </section>
 <section id="ksfs-subcommand">
-<h3><code class="docutils literal notranslate"><span class="pre">ksfs</span></code> subcommand<a class="headerlink" href="#ksfs-subcommand" title="Permalink to this headline"></a></h3>
+<h3><code class="docutils literal notranslate"><span class="pre">ksfs</span></code> subcommand<a class="headerlink" href="#ksfs-subcommand" title="Permalink to this heading"></a></h3>
 <p>Usage:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
