@@ -231,8 +231,6 @@ def targets(args):
 def spectra(args):
     """subroutine for spectra subcommand."""
 
-    # NOTE: vcf must be instantiated with gts012=False (the default) due to cyvcf2
-    # num_unknown property bug https://github.com/brentp/cyvcf2/issues/236
     vcf = cyvcf2.VCF(args.vcf, strict_gt=True)
 
     def iterate_with_ambiguity_warning():
@@ -266,13 +264,13 @@ def spectra(args):
         spectra_data = defaultdict(lambda: np.zeros_like(vcf.samples, dtype=int))
         if args.randomize:
             for variant in iterate_with_ambiguity_warning():
-                counts = np.array([gt.count(1) for gt in variant.genotypes])
+                counts = np.array([gt[:-1].count(1) for gt in variant.genotypes])
                 rng = np.random.default_rng()
                 random_haplotype = rng.choice(len(counts), p=counts / counts.sum())
                 spectra_data[variant.INFO["mutation_type"]][random_haplotype] += 1.0
         else:
             for variant in iterate_with_ambiguity_warning():
-                counts = np.array([gt.count(1) for gt in variant.genotypes])
+                counts = np.array([gt[:-1].count(1) for gt in variant.genotypes])
                 spectra_data[variant.INFO["mutation_type"]] += counts
 
         spectra = pd.DataFrame(spectra_data, vcf.samples).reindex(
