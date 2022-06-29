@@ -154,7 +154,7 @@ def variants(args):
             "ID": "mutation_type",
             "Description": f"ancestral {args.k}-mer mutation type",
             "Type": "Character",
-            "Number": "1",
+            "Number": "A",
         }
     )
     vcf_writer = cyvcf2.Writer("-", vcf)
