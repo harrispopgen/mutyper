@@ -14,6 +14,7 @@ from Bio.Seq import reverse_complement
 import logging
 import gzip
 from mutyper import ancestor
+from time import sleep
 
 
 def setup_ancestor(args):
@@ -157,8 +158,9 @@ def variants(args):
             "Number": "A",
         }
     )
-    vcf_writer = cyvcf2.Writer("-", vcf)
-    vcf_writer.write_header()
+    # vcf_writer = cyvcf2.Writer("-", vcf)
+    # vcf_writer.write_header()
+    print(vcf.raw_header, end="")
     num_vars = 0
     for variant in vcf:
         num_vars += 1
@@ -184,14 +186,22 @@ def variants(args):
             # change to propagate (can't just update indexwise)
             if variant.ploidy == 2:
                 # diploid
-                variant.genotypes = [
-                    [int(not gt[0]), int(not gt[1]), gt[2]] for gt in variant.genotypes
-                ]
+                genotype_array = variant.genotype.array()
+                # missing genotype will get converted from -1 -> 2
+                genotype_array[:,:2] = 1 - genotype_array[:,:2]
+                genotype_array[:,:2][genotype_array[:,:2]==2] = -1
+                variant.genotypes = genotype_array
+                # variant.genotypes = [
+                #     [int(not gt[0]), int(not gt[1]), gt[2]] for gt in variant.genotypes
+                # ]
             elif variant.ploidy == 1:
                 # haploid
-                variant.genotypes = [
-                    [int(not gt[0]), gt[1]] for gt in variant.genotypes
-                ]
+                genotype_array = variant.genotype.array()
+                genotype_array[:,0] = 1 - genotype_array[:,0]
+                genotype_array[:,0][genotype_array[:,0]==2] = -1
+                # variant.genotypes = [
+                #     [int(not gt[0]), gt[1]] for gt in variant.genotypes
+                # ]
             else:
                 raise ValueError(f"invalid ploidy {variant.ploidy}")
 
@@ -204,13 +214,14 @@ def variants(args):
         # set REF to ancestral allele and ALT to derived allele
         variant.REF = anc_kmer[ancestor.target]
         variant.ALT = der_kmer[ancestor.target]
-        vcf_writer.write_record(variant)
+        print(variant, end="")
+        # vcf_writer.write_record(variant)
+
         # this line required to exit on a SIGTERM in a pipe, e.g. from head
         signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
     if num_vars == 0:
         logging.warning("No variants processed. Check that input vcf is not empty.")
-
 
 def targets(args):
     """subroutine for targets subcommand."""
@@ -264,12 +275,14 @@ def spectra(args):
         spectra_data = defaultdict(lambda: np.zeros_like(vcf.samples, dtype=int))
         if args.randomize:
             for variant in iterate_with_ambiguity_warning():
+                # counts = (variant.genotype.array()[:,:-1] == 1).sum(axis=1)
                 counts = np.array([gt[:-1].count(1) for gt in variant.genotypes])
                 rng = np.random.default_rng()
                 random_haplotype = rng.choice(len(counts), p=counts / counts.sum())
                 spectra_data[variant.INFO["mutation_type"]][random_haplotype] += 1.0
         else:
             for variant in iterate_with_ambiguity_warning():
+                # counts = (variant.genotype.array()[:,:-1] == 1).sum(axis=1)
                 counts = np.array([gt[:-1].count(1) for gt in variant.genotypes])
                 spectra_data[variant.INFO["mutation_type"]] += counts
 
