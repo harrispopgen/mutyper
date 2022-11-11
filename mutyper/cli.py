@@ -14,7 +14,6 @@ from Bio.Seq import reverse_complement
 import logging
 import gzip
 from mutyper import ancestor
-from time import sleep
 
 
 def setup_ancestor(args):
