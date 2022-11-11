@@ -164,6 +164,12 @@ def variants(args):
         # biallelic snps only
         if not (variant.is_snp and len(variant.ALT) == 1):
             continue
+
+        if variant.ploidy not in valid_ploidy:
+            raise ValueError(
+                f"invalid ploidy {variant.ploidy}, diploids and haploids only"
+            )
+
         # mutation type as ancestral kmer and derived kmer
         anc_kmer, der_kmer = ancestor.mutation_type(
             variant.CHROM, variant.start, variant.REF, variant.ALT[0]
@@ -181,16 +187,12 @@ def variants(args):
             variant.INFO["AC"] = variant.INFO["AN"] - variant.INFO["AC"]
             variant.INFO["AF"] = variant.INFO["AC"] / variant.INFO["AN"]
 
-            if variant.ploidy not in valid_ploidy:
-                raise ValueError(f"invalid ploidy {variant.ploidy}")
-
-            # diploid or haploids
             genotype_array = variant.genotype.array()
             # checks that all genotype elements are from the set of {-1,0,1}
             # each element in the last column is a 0,1 indicator for phasing status
             unique_gts = set(np.unique(genotype_array[:, :-1]))
             if not unique_gts <= set([-1, 0, 1]):
-                raise ValueError("invalid genotypes")
+                raise ValueError(f"invalid genotypes {unique_gts - set([-1,0,1])}")
             # cyvcf2 docs say we need to reassign genotypes like this for the
             # change to propagate (can't just update indexwise)
             genotype_array[:, :-1] = np.select(
