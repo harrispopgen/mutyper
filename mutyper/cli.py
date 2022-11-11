@@ -185,14 +185,14 @@ def variants(args):
                 # diploid
                 genotype_array = variant.genotype.array()
                 # missing genotype will get converted from -1 -> 2
-                genotype_array[:,:2] = 1 - genotype_array[:,:2]
-                genotype_array[:,:2][genotype_array[:,:2] == 2] = -1
+                genotype_array[:, :2] = 1 - genotype_array[:, :2]
+                genotype_array[:, :2][genotype_array[:, :2] == 2] = -1
                 variant.genotypes = genotype_array
             elif variant.ploidy == 1:
                 # haploid
                 genotype_array = variant.genotype.array()
-                genotype_array[:,0] = 1 - genotype_array[:,0]
-                genotype_array[:,0][genotype_array[:,0] == 2] = -1
+                genotype_array[:, 0] = 1 - genotype_array[:, 0]
+                genotype_array[:, 0][genotype_array[:, 0] == 2] = -1
             else:
                 raise ValueError(f"invalid ploidy {variant.ploidy}")
 
