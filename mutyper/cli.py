@@ -16,8 +16,8 @@ from mutyper import ancestor
 
 
 def setup_ancestor(args):
-    """utility for initializing an Ancestor object for use in different '
-    'subroutines."""
+    """Utility for initializing an Ancestor object for use in different 
+    subroutines."""
     return ancestor.Ancestor(
         args.fasta,
         k=args.k,
@@ -30,7 +30,7 @@ def setup_ancestor(args):
 
 
 def is_compressed(file):
-    """returns true if file is compressed."""
+    """Returns ``True`` if file is compressed."""
     f = open(file, "rb")
     # The first two bytes of a gzip file are: 1f 8b
     compressed = f.read(2) == b"\x1f\x8b"
@@ -40,7 +40,7 @@ def is_compressed(file):
 
 
 def copy_fasta(file, outfile):
-    """copy fasta file to outfile and decompress if needed.
+    """Copy FASTA file to ``outfile`` and decompress if needed.
 
     This is necessary because pyfaidx does not support mutable
     compressed, so we cannot just copy the input if compressed.
@@ -59,7 +59,7 @@ def copy_fasta(file, outfile):
 
 
 def ancestral_fasta(args):
-    """subroutine for ancestor subcommand."""
+    """Subroutine for ancestor subcommand."""
     # single chromosome fasta file for reference genome
     ref = pyfaidx.Fasta(args.reference, read_ahead=10000)
     # make a copy to build our ancestor for this chromosome
@@ -144,7 +144,7 @@ def ancestral_fasta(args):
 
 
 def variants(args):
-    """subroutine for variants subcommand."""
+    """Subroutine for variants subcommand."""
     ancestor = setup_ancestor(args)
 
     vcf = cyvcf2.VCF(args.vcf)
@@ -217,7 +217,7 @@ def variants(args):
 
 
 def targets(args):
-    """subroutine for targets subcommand."""
+    """Subroutine for targets subcommand."""
     ancestor = setup_ancestor(args)
 
     if args.bed == "-":
@@ -233,7 +233,7 @@ def targets(args):
 
 
 def spectra(args):
-    """subroutine for spectra subcommand."""
+    """Subroutine for spectra subcommand."""
 
     vcf = cyvcf2.VCF(args.vcf, strict_gt=True)
 
@@ -287,7 +287,7 @@ def spectra(args):
 
 
 def ksfs(args):
-    """subroutine for ksfs subcommand."""
+    """Subroutine for ksfs subcommand."""
     vcf = cyvcf2.VCF(args.vcf)
 
     ksfs_data = defaultdict(lambda: Counter())
