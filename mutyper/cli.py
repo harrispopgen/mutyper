@@ -170,13 +170,6 @@ def variants(args):
                 f"invalid ploidy {variant.ploidy}, diploids and haploids only"
             )
 
-        # checks that all genotype elements are from the set of {-1,0,1}
-        # each element in the last column is a 0,1 indicator for phasing status
-        genotype_array = variant.genotype.array()
-        unique_gts = set(np.unique(genotype_array[:, :-1]))
-        if not unique_gts <= set([-1, 0, 1]):
-            raise ValueError(f"invalid genotypes {unique_gts - set([-1,0,1])}")
-
         # mutation type as ancestral kmer and derived kmer
         anc_kmer, der_kmer = ancestor.mutation_type(
             variant.CHROM, variant.start, variant.REF, variant.ALT[0]
@@ -185,6 +178,14 @@ def variants(args):
             continue
         mutation_type = f"{anc_kmer}>{der_kmer}"
         variant.INFO["mutation_type"] = mutation_type
+
+        # checks that all genotype elements are from the set of {-1,0,1}
+        # each element in the last column is a 0,1 indicator for phasing status
+        genotype_array = variant.genotype.array()
+        unique_gts = set(np.unique(genotype_array[:, :-1]))
+        if not unique_gts <= set([-1, 0, 1]):
+            raise ValueError(f"invalid genotypes {unique_gts - set([-1,0,1])}")
+
         # ancestral allele
         AA = ancestor[variant.CHROM][variant.start].seq
 
