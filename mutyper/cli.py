@@ -5,7 +5,6 @@ import argparse
 import sys
 from collections import defaultdict, Counter
 import pandas as pd
-import signal
 import numpy as np
 from shutil import copyfile, copyfileobj
 import pyfaidx
@@ -159,6 +158,7 @@ def variants(args):
     )
     print(vcf.raw_header, end="")
     num_vars = 0
+    valid_ploidy = set([1, 2])
     for variant in vcf:
         num_vars += 1
         # biallelic snps only
@@ -174,28 +174,29 @@ def variants(args):
         variant.INFO["mutation_type"] = mutation_type
         # ancestral allele
         AA = ancestor[variant.CHROM][variant.start].seq
+
         # polarize genotypes (and associated INFO) if alternative allele is
         # ancestral
         if variant.ALT[0] == AA:
             variant.INFO["AC"] = variant.INFO["AN"] - variant.INFO["AC"]
             variant.INFO["AF"] = variant.INFO["AC"] / variant.INFO["AN"]
-            # cyvcf2 docs say we need to reassign genotypes like this for the
-            # change to propagate (can't just update indexwise)
-            if variant.ploidy == 2:
-                # diploid
-                genotype_array = variant.genotype.array()
-                # missing genotype will get converted from -1 -> 2
-                genotype_array[:, :2] = 1 - genotype_array[:, :2]
-                genotype_array[:, :2][genotype_array[:, :2] == 2] = -1
-                variant.genotypes = genotype_array
-            elif variant.ploidy == 1:
-                # haploid
-                genotype_array = variant.genotype.array()
-                genotype_array[:, 0] = 1 - genotype_array[:, 0]
-                genotype_array[:, 0][genotype_array[:, 0] == 2] = -1
-            else:
+
+            if variant.ploidy not in valid_ploidy:
                 raise ValueError(f"invalid ploidy {variant.ploidy}")
 
+            # diploid or haploids
+            genotype_array = variant.genotype.array()
+            # checks that all genotype elements are from the set of {-1,0.1}
+            # each element in the last column is a 0,1 indicator for phasing status
+            unique_gts = set(np.unique(genotype_array[:, :-1]))
+            if not unique_gts <= set([-1, 0, 1]):
+                raise ValueError("invalid genotypes")
+            # cyvcf2 docs say we need to reassign genotypes like this for the
+            # change to propagate (can't just update indexwise)
+            genotype_array[:, :-1] = np.select(
+                [genotype_array[:, :-1] == state for state in [-1, 0, 1]], [-1, 1, 0]
+            )
+            variant.genotypes = genotype_array
         elif not variant.REF == AA:
             raise ValueError(
                 f"ancestral allele {AA} is not equal to "
@@ -205,10 +206,7 @@ def variants(args):
         # set REF to ancestral allele and ALT to derived allele
         variant.REF = anc_kmer[ancestor.target]
         variant.ALT = der_kmer[ancestor.target]
-        print(variant, end="")
-
-        # this line required to exit on a SIGTERM in a pipe, e.g. from head
-        signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+        print(str(variant), end="")
 
     if num_vars == 0:
         logging.warning("No variants processed. Check that input vcf is not empty.")
@@ -266,14 +264,12 @@ def spectra(args):
         spectra_data = defaultdict(lambda: np.zeros_like(vcf.samples, dtype=int))
         if args.randomize:
             for variant in iterate_with_ambiguity_warning():
-                # counts = (variant.genotype.array()[:,:-1] == 1).sum(axis=1)
                 counts = np.array([gt[:-1].count(1) for gt in variant.genotypes])
                 rng = np.random.default_rng()
                 random_haplotype = rng.choice(len(counts), p=counts / counts.sum())
                 spectra_data[variant.INFO["mutation_type"]][random_haplotype] += 1.0
         else:
             for variant in iterate_with_ambiguity_warning():
-                # counts = (variant.genotype.array()[:,:-1] == 1).sum(axis=1)
                 counts = np.array([gt[:-1].count(1) for gt in variant.genotypes])
                 spectra_data[variant.INFO["mutation_type"]] += counts
 
