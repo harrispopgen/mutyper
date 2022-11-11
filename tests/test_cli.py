@@ -72,10 +72,10 @@ def test_spectra_missing_gts(capsys, caplog):
     pd.testing.assert_frame_equal(df, df_target)
     assert "Ambiguous genotypes found" in caplog.text
 
+
 def test_variant_missing_gts_nonstrict(capsys):
     args = argparse.Namespace(
-        fasta="tests/test_data/ancestor.fa", vcf="tests/test_data/snps.missing_gts.variants.vcf", 
-        k=3, target=None, sep=":", chrom_pos=1, strand_file=None, strict=False
+        fasta="tests/test_data/ancestor.fa", vcf="tests/test_data/snps.missing_gts.variants.vcf", k=3, target=None, sep=":", chrom_pos=1, strand_file=None, strict=False
     )
     cli.variants(args)
     captured = capsys.readouterr()
@@ -98,10 +98,10 @@ def test_variant_missing_gts_nonstrict(capsys):
     )
     pd.testing.assert_frame_equal(df_subset, df_target)
 
+
 def test_variant_missing_gts_strict(capsys):
     args = argparse.Namespace(
-        fasta="tests/test_data/ancestor.fa", vcf="tests/test_data/snps.missing_gts.variants.vcf", 
-        k=3, target=None, sep=":", chrom_pos=1, strand_file=None, strict=True
+        fasta="tests/test_data/ancestor.fa", vcf="tests/test_data/snps.missing_gts.variants.vcf", k=3, target=None, sep=":", chrom_pos=1, strand_file=None, strict=True
     )
     cli.variants(args)
     captured = capsys.readouterr()
@@ -123,6 +123,7 @@ def test_variant_missing_gts_strict(capsys):
         }
     )
     pd.testing.assert_frame_equal(df_subset, df_strict_target)
+
 
 def test_ksfs(capsys):
     args = argparse.Namespace(vcf="tests/test_data/snps.vcf", k=3)
@@ -147,4 +148,3 @@ def test_ksfs_missing_gts():
         ValueError, match=r"different AN [0-9]* and [0-9]* indicates missing genotypes"
     ):
         cli.ksfs(args)
-
