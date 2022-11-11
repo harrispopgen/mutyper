@@ -75,7 +75,7 @@ def test_spectra_missing_gts(capsys, caplog):
 
 def test_variant_missing_gts_nonstrict(capsys):
     args = argparse.Namespace(
-        fasta="tests/test_data/ancestor.fa", vcf="tests/test_data/snps.missing_gts.variants.vcf", k=3, target=None, sep=":", chrom_pos=1, strand_file=None, strict=False
+        fasta="tests/test_data/ancestor.fa", vcf="tests/test_data/snps.missing_gts.variants.vcf", k=3, target=None, sep=":", chrom_pos=0, strand_file=None, strict=False
     )
     cli.variants(args)
     captured = capsys.readouterr()
@@ -101,7 +101,7 @@ def test_variant_missing_gts_nonstrict(capsys):
 
 def test_variant_missing_gts_strict(capsys):
     args = argparse.Namespace(
-        fasta="tests/test_data/ancestor.fa", vcf="tests/test_data/snps.missing_gts.variants.vcf", k=3, target=None, sep=":", chrom_pos=1, strand_file=None, strict=True
+        fasta="tests/test_data/ancestor.fa", vcf="tests/test_data/snps.missing_gts.variants.vcf", k=3, target=None, sep=":", chrom_pos=0, strand_file=None, strict=True
     )
     cli.variants(args)
     captured = capsys.readouterr()
