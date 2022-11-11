@@ -186,7 +186,7 @@ def variants(args):
 
             # diploid or haploids
             genotype_array = variant.genotype.array()
-            # checks that all genotype elements are from the set of {-1,0.1}
+            # checks that all genotype elements are from the set of {-1,0,1}
             # each element in the last column is a 0,1 indicator for phasing status
             unique_gts = set(np.unique(genotype_array[:, :-1]))
             if not unique_gts <= set([-1, 0, 1]):
