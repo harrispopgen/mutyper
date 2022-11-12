@@ -5,7 +5,6 @@ import argparse
 import sys
 from collections import defaultdict, Counter
 import pandas as pd
-import signal
 import numpy as np
 from shutil import copyfile, copyfileobj
 import pyfaidx
@@ -17,8 +16,8 @@ from mutyper import ancestor
 
 
 def setup_ancestor(args):
-    """utility for initializing an Ancestor object for use in different '
-    'subroutines."""
+    """Utility for initializing an Ancestor object for use in different
+    subroutines."""
     return ancestor.Ancestor(
         args.fasta,
         k=args.k,
@@ -31,7 +30,7 @@ def setup_ancestor(args):
 
 
 def is_compressed(file):
-    """returns true if file is compressed."""
+    """Returns ``True`` if file is compressed."""
     f = open(file, "rb")
     # The first two bytes of a gzip file are: 1f 8b
     compressed = f.read(2) == b"\x1f\x8b"
@@ -41,7 +40,7 @@ def is_compressed(file):
 
 
 def copy_fasta(file, outfile):
-    """copy fasta file to outfile and decompress if needed.
+    """Copy FASTA file to ``outfile`` and decompress if needed.
 
     This is necessary because pyfaidx does not support mutable
     compressed, so we cannot just copy the input if compressed.
@@ -60,7 +59,7 @@ def copy_fasta(file, outfile):
 
 
 def ancestral_fasta(args):
-    """subroutine for ancestor subcommand."""
+    """Subroutine for ancestor subcommand."""
     # single chromosome fasta file for reference genome
     ref = pyfaidx.Fasta(args.reference, read_ahead=10000)
     # make a copy to build our ancestor for this chromosome
@@ -145,7 +144,7 @@ def ancestral_fasta(args):
 
 
 def variants(args):
-    """subroutine for variants subcommand."""
+    """Subroutine for variants subcommand."""
     ancestor = setup_ancestor(args)
 
     vcf = cyvcf2.VCF(args.vcf)
@@ -157,14 +156,20 @@ def variants(args):
             "Number": "A",
         }
     )
-    vcf_writer = cyvcf2.Writer("-", vcf)
-    vcf_writer.write_header()
+    print(vcf.raw_header, end="")
     num_vars = 0
+    valid_ploidy = set([1, 2])
     for variant in vcf:
         num_vars += 1
         # biallelic snps only
         if not (variant.is_snp and len(variant.ALT) == 1):
             continue
+
+        if variant.ploidy not in valid_ploidy:
+            raise ValueError(
+                f"invalid ploidy {variant.ploidy}, diploids and haploids only"
+            )
+
         # mutation type as ancestral kmer and derived kmer
         anc_kmer, der_kmer = ancestor.mutation_type(
             variant.CHROM, variant.start, variant.REF, variant.ALT[0]
@@ -173,28 +178,29 @@ def variants(args):
             continue
         mutation_type = f"{anc_kmer}>{der_kmer}"
         variant.INFO["mutation_type"] = mutation_type
+
+        # checks that all genotype elements are from the set of {-1,0,1}
+        # each element in the last column is a 0,1 indicator for phasing status
+        genotype_array = variant.genotype.array()
+        unique_gts = set(np.unique(genotype_array[:, :-1]))
+        if not unique_gts <= set([-1, 0, 1]):
+            raise ValueError(f"invalid genotypes {unique_gts - set([-1,0,1])}")
+
         # ancestral allele
         AA = ancestor[variant.CHROM][variant.start].seq
+
         # polarize genotypes (and associated INFO) if alternative allele is
         # ancestral
         if variant.ALT[0] == AA:
             variant.INFO["AC"] = variant.INFO["AN"] - variant.INFO["AC"]
             variant.INFO["AF"] = variant.INFO["AC"] / variant.INFO["AN"]
+
             # cyvcf2 docs say we need to reassign genotypes like this for the
             # change to propagate (can't just update indexwise)
-            if variant.ploidy == 2:
-                # diploid
-                variant.genotypes = [
-                    [int(not gt[0]), int(not gt[1]), gt[2]] for gt in variant.genotypes
-                ]
-            elif variant.ploidy == 1:
-                # haploid
-                variant.genotypes = [
-                    [int(not gt[0]), gt[1]] for gt in variant.genotypes
-                ]
-            else:
-                raise ValueError(f"invalid ploidy {variant.ploidy}")
-
+            genotype_array[:, :-1] = np.select(
+                [genotype_array[:, :-1] == state for state in [-1, 0, 1]], [-1, 1, 0]
+            )
+            variant.genotypes = genotype_array
         elif not variant.REF == AA:
             raise ValueError(
                 f"ancestral allele {AA} is not equal to "
@@ -204,16 +210,14 @@ def variants(args):
         # set REF to ancestral allele and ALT to derived allele
         variant.REF = anc_kmer[ancestor.target]
         variant.ALT = der_kmer[ancestor.target]
-        vcf_writer.write_record(variant)
-        # this line required to exit on a SIGTERM in a pipe, e.g. from head
-        signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+        print(str(variant), end="")
 
     if num_vars == 0:
         logging.warning("No variants processed. Check that input vcf is not empty.")
 
 
 def targets(args):
-    """subroutine for targets subcommand."""
+    """Subroutine for targets subcommand."""
     ancestor = setup_ancestor(args)
 
     if args.bed == "-":
@@ -229,7 +233,7 @@ def targets(args):
 
 
 def spectra(args):
-    """subroutine for spectra subcommand."""
+    """Subroutine for spectra subcommand."""
 
     vcf = cyvcf2.VCF(args.vcf, strict_gt=True)
 
@@ -283,7 +287,7 @@ def spectra(args):
 
 
 def ksfs(args):
-    """subroutine for ksfs subcommand."""
+    """Subroutine for ksfs subcommand."""
     vcf = cyvcf2.VCF(args.vcf)
 
     ksfs_data = defaultdict(lambda: Counter())

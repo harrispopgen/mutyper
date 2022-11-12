@@ -73,6 +73,89 @@ def test_spectra_missing_gts(capsys, caplog):
     assert "Ambiguous genotypes found" in caplog.text
 
 
+def test_variants_missing_gts_nonstrict(capsys):
+    args = argparse.Namespace(
+        fasta="tests/test_data/ancestor.fa",
+        vcf="tests/test_data/snps.missing_gts.variants.vcf",
+        k=3,
+        target=None,
+        sep=":",
+        chrom_pos=0,
+        strand_file=None,
+        strict=False,
+    )
+    cli.variants(args)
+    captured = capsys.readouterr()
+    df = pd.read_csv(io.StringIO(captured.out), skiprows=8, sep="\t")
+    df_info_expand = df["INFO"].str.split(";", expand=True)
+    df_info_expand.columns = ["AN", "AC", "AF", "mutation_type"]
+    df_subset = pd.concat(
+        [df[["POS", "REF", "ALT", "sample1", "sample2"]], df_info_expand], axis=1
+    )
+    df_target = pd.DataFrame(
+        {
+            "POS": [2, 3, 4, 7, 8, 11],
+            "REF": ["A", "A", "C", "C", "C", "A"],
+            "ALT": ["T", "C", "T", "T", "T", "G"],
+            "sample1": ["1|.", ".", ".|.", "0|1", "1|1", "0/0"],
+            "sample2": ["1/0", "1", "0/1", "1/0", "1|1", "0/0"],
+            "AN": [f"AN={an}" for an in [3, 1, 2, 4, 4, 4]],
+            "AC": [f"AC={ac}" for ac in [2, 1, 1, 2, 4, 0]],
+            "AF": [f"AF={af}" for af in [0.67, 1, 0.5, 0.50, 1, 0]],
+            "mutation_type": [
+                f"mutation_type={type}"
+                for type in [
+                    "AAA>ATA",
+                    "AAC>ACC",
+                    "ACC>ATC",
+                    "CCG>CTG",
+                    "CCC>CTC",
+                    "AAA>AGA",
+                ]
+            ],
+        }
+    )
+    pd.testing.assert_frame_equal(df_subset, df_target)
+
+
+def test_variants_missing_gts_strict(capsys):
+    args = argparse.Namespace(
+        fasta="tests/test_data/ancestor.fa",
+        vcf="tests/test_data/snps.missing_gts.variants.vcf",
+        k=3,
+        target=None,
+        sep=":",
+        chrom_pos=0,
+        strand_file=None,
+        strict=True,
+    )
+    cli.variants(args)
+    captured = capsys.readouterr()
+    df = pd.read_csv(io.StringIO(captured.out), skiprows=8, sep="\t")
+    df_info_expand = df["INFO"].str.split(";", expand=True)
+    df_info_expand.columns = ["AN", "AC", "AF", "mutation_type"]
+    df_subset = pd.concat(
+        [df[["POS", "REF", "ALT", "sample1", "sample2"]], df_info_expand], axis=1
+    )
+    df_strict_target = pd.DataFrame(
+        {
+            "POS": [2, 3, 4, 11],
+            "REF": ["A", "A", "C", "A"],
+            "ALT": ["T", "C", "T", "G"],
+            "sample1": ["1|.", ".", ".|.", "0/0"],
+            "sample2": ["1/0", "1", "0/1", "0/0"],
+            "AN": [f"AN={an}" for an in [3, 1, 2, 4]],
+            "AC": [f"AC={ac}" for ac in [2, 1, 1, 0]],
+            "AF": [f"AF={af}" for af in [0.67, 1, 0.5, 0]],
+            "mutation_type": [
+                f"mutation_type={type}"
+                for type in ["AAA>ATA", "AAC>ACC", "ACC>ATC", "AAA>AGA"]
+            ],
+        }
+    )
+    pd.testing.assert_frame_equal(df_subset, df_strict_target)
+
+
 def test_ksfs(capsys):
     args = argparse.Namespace(vcf="tests/test_data/snps.vcf", k=3)
     cli.ksfs(args)

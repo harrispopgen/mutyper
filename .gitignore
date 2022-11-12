@@ -110,6 +110,10 @@ venv.bak/
 manuscript/_build
 scons_output*
 
+# vim temporary files
+*.swp
+*.swo
+
 .DS_Store
 *.fa.fai
 
