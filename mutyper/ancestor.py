@@ -68,8 +68,8 @@ class Ancestor(pyfaidx.Fasta):
             self._revcomp_func = self._reverse_strand
 
     def _reverse_strand(self, chrom: str, pos: int):
-        r"""Return ``True`` if ``strand_file`` indicates reverse complementation at
-        this site."""
+        r"""Return ``True`` if ``strand_file`` indicates reverse
+        complementation at this site."""
         closest_idx = bisect.bisect(self.strandedness[chrom][:, 0], pos) - 1
         if closest_idx != -1 and pos < self.strandedness[chrom][closest_idx, 1]:
             return True
