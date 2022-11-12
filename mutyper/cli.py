@@ -268,13 +268,13 @@ def spectra(args):
         spectra_data = defaultdict(lambda: np.zeros_like(vcf.samples, dtype=int))
         if args.randomize:
             for variant in iterate_with_ambiguity_warning():
-                counts = np.array([gt[:-1].count(1) for gt in variant.genotypes])
+                counts = (variant.genotype.array()[:, :-1] == 1).sum(axis=1)
                 rng = np.random.default_rng()
                 random_haplotype = rng.choice(len(counts), p=counts / counts.sum())
                 spectra_data[variant.INFO["mutation_type"]][random_haplotype] += 1.0
         else:
             for variant in iterate_with_ambiguity_warning():
-                counts = np.array([gt[:-1].count(1) for gt in variant.genotypes])
+                counts = (variant.genotype.array()[:, :-1] == 1).sum(axis=1)
                 spectra_data[variant.INFO["mutation_type"]] += counts
 
         spectra = pd.DataFrame(spectra_data, vcf.samples).reindex(
