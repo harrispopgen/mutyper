@@ -159,8 +159,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_revcomp_func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reverse_strand</span>
 
     <span class="k">def</span> <span class="nf">_reverse_strand</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chrom</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">pos</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return ``True`` if ``strand_file`` indicates reverse complementation at</span>
-<span class="sd">        this site.&quot;&quot;&quot;</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return ``True`` if ``strand_file`` indicates reverse</span>
+<span class="sd">        complementation at this site.&quot;&quot;&quot;</span>
         <span class="n">closest_idx</span> <span class="o">=</span> <span class="n">bisect</span><span class="o">.</span><span class="n">bisect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strandedness</span><span class="p">[</span><span class="n">chrom</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">pos</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
         <span class="k">if</span> <span class="n">closest_idx</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">pos</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">strandedness</span><span class="p">[</span><span class="n">chrom</span><span class="p">][</span><span class="n">closest_idx</span><span class="p">,</span> <span class="mi">1</span><span class="p">]:</span>
             <span class="k">return</span> <span class="kc">True</span>
