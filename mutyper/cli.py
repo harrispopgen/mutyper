@@ -16,7 +16,7 @@ from mutyper import ancestor
 
 
 def setup_ancestor(args):
-    """Utility for initializing an Ancestor object for use in different 
+    """Utility for initializing an Ancestor object for use in different
     subroutines."""
     return ancestor.Ancestor(
         args.fasta,
