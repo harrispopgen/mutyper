@@ -16,6 +16,7 @@
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -76,9 +77,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../index.html">Module code</a> &raquo;</li>
-      <li>mutyper.ancestor</li>
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mutyper.ancestor</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -100,7 +101,7 @@
 
 
 <div class="viewcode-block" id="Ancestor"><a class="viewcode-back" href="../../mutyper.html#mutyper.Ancestor">[docs]</a><span class="k">class</span> <span class="nc">Ancestor</span><span class="p">(</span><span class="n">pyfaidx</span><span class="o">.</span><span class="n">Fasta</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;ancestral state of a chromosome</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Ancestral state of a chromosome.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        fasta: path to ancestral sequence FASTA</span>
@@ -158,16 +159,16 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_revcomp_func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reverse_strand</span>
 
     <span class="k">def</span> <span class="nf">_reverse_strand</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chrom</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">pos</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;return True if strand_file indicates reverse complementation at</span>
-<span class="sd">        this site&quot;&quot;&quot;</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return ``True`` if ``strand_file`` indicates reverse complementation at</span>
+<span class="sd">        this site.&quot;&quot;&quot;</span>
         <span class="n">closest_idx</span> <span class="o">=</span> <span class="n">bisect</span><span class="o">.</span><span class="n">bisect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strandedness</span><span class="p">[</span><span class="n">chrom</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">pos</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
         <span class="k">if</span> <span class="n">closest_idx</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">pos</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">strandedness</span><span class="p">[</span><span class="n">chrom</span><span class="p">][</span><span class="n">closest_idx</span><span class="p">,</span> <span class="mi">1</span><span class="p">]:</span>
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">_AC</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chrom</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">pos</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;return True if reverse complementation is needed at this site</span>
-<span class="sd">        to get state A or C&quot;&quot;&quot;</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return True if reverse complementation is needed at this site to</span>
+<span class="sd">        get state A or C.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="p">[</span><span class="n">chrom</span><span class="p">][</span><span class="n">pos</span><span class="p">]</span><span class="o">.</span><span class="n">seq</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ac</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="kc">False</span>
@@ -175,8 +176,8 @@
 <div class="viewcode-block" id="Ancestor.mutation_type"><a class="viewcode-back" href="../../mutyper.html#mutyper.Ancestor.mutation_type">[docs]</a>    <span class="k">def</span> <span class="nf">mutation_type</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">chrom</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">pos</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">ref</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">alt</span><span class="p">:</span> <span class="nb">str</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;mutation type of a given snp, oriented or collapsed by strand,</span>
-<span class="sd">        returns a tuple of ancestral and derived kmers</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Mutation type of a given snp, oriented or collapsed by strand,</span>
+<span class="sd">        returns a tuple of ancestral and derived kmers.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            chrom: FASTA record chromosome identifier</span>
@@ -214,10 +215,10 @@
 <div class="viewcode-block" id="Ancestor.region_contexts"><a class="viewcode-back" href="../../mutyper.html#mutyper.Ancestor.region_contexts">[docs]</a>    <span class="k">def</span> <span class="nf">region_contexts</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">chrom</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;ancestral context of each site in a BED style region (0-based,</span>
-<span class="sd">        half-open), oriented according to self.strandedness or collapsed by</span>
-<span class="sd">        reverse complementation (returns None if ancestral state at target not</span>
-<span class="sd">        in capital ACGT)</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Ancestral context of each site in a BED style region (0-based, half-</span>
+<span class="sd">        open), oriented according to self.strandedness or collapsed by reverse</span>
+<span class="sd">        complementation (returns ``None`` if ancestral state at target not in</span>
+<span class="sd">        capital ACGT)</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            chrom: chromosome name</span>
@@ -255,10 +256,11 @@
             <span class="k">yield</span> <span class="n">context</span></div>
 
 <div class="viewcode-block" id="Ancestor.targets"><a class="viewcode-back" href="../../mutyper.html#mutyper.Ancestor.targets">[docs]</a>    <span class="k">def</span> <span class="nf">targets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bed</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">TextIO</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;return a dictionary of the number of sites of each k-mer</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return a dictionary of the number of sites of each k-mer.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            bed: optional path to BED mask file, or I/O object&quot;&quot;&quot;</span>
+<span class="sd">            bed: optional path to BED mask file, or I/O object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">sizes</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">bed</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">chrom</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>

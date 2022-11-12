@@ -17,6 +17,7 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -80,8 +81,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
-      <li>Ancestral <span class="math notranslate nohighlight">\(k\)</span>-mer Mutation Types for SNP Data</li>
+      <li><a href="#" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Ancestral <span class="math notranslate nohighlight">\(k\)</span>-mer Mutation Types for SNP Data</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -134,7 +135,7 @@ The Python API can be used for exploratory mutation type analysis in Python scri
 <p class="caption" role="heading"><span class="caption-text">CLI Documentation</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="cmd.html">Command Line Interface</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="cmd.html#Sub-commands:">Sub-commands:</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cmd.html#Sub-commands">Sub-commands</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="cmd.html#ancestor">ancestor</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cmd.html#variants">variants</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cmd.html#targets">targets</a></li>
@@ -149,7 +150,15 @@ The Python API can be used for exploratory mutation type analysis in Python scri
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="mutyper.html">Python API: <code class="docutils literal notranslate"><span class="pre">mutyper</span></code> package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mutyper.html">Python API: <code class="docutils literal notranslate"><span class="pre">mutyper</span></code> package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mutyper.html#mutyper.Ancestor"><code class="docutils literal notranslate"><span class="pre">Ancestor</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mutyper.html#mutyper.Ancestor.mutation_type"><code class="docutils literal notranslate"><span class="pre">Ancestor.mutation_type()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mutyper.html#mutyper.Ancestor.region_contexts"><code class="docutils literal notranslate"><span class="pre">Ancestor.region_contexts()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mutyper.html#mutyper.Ancestor.targets"><code class="docutils literal notranslate"><span class="pre">Ancestor.targets()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">

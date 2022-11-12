@@ -17,6 +17,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -91,8 +92,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Quickstart</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Quickstart</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/notebooks/quickstart.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
@@ -833,6 +834,14 @@ optional arguments:
 1       10642   .       A       G       100     PASS    AC=4987;AF=0.995807;AN=5008;NS=2504;DP=1360;EAS_AF=0.003;AMR_AF=0.0014;AFR_AF=0.0129;EUR_AF=0;SAS_AF=0;AA=.|||;mutation_type=CAT&gt;CGT
 1       11008   .       C       G       100     PASS    AC=441;AF=0.0880591;AN=5008;NS=2504;DP=2232;EAS_AF=0.0367;AMR_AF=0.0965;AFR_AF=0.1346;EUR_AF=0.0885;SAS_AF=0.0716;AA=.|||;mutation_type=CCT&gt;CGT
 [main_vcfview] Error: cannot write to (null)
+Traceback (most recent call last):
+  File &#34;/usr/share/miniconda/envs/mutyper/bin/mutyper&#34;, line 8, in &lt;module&gt;
+    sys.exit(main())
+  File &#34;/usr/share/miniconda/envs/mutyper/lib/python3.9/site-packages/mutyper/cli.py&#34;, line 474, in main
+    args.func(args)
+  File &#34;/usr/share/miniconda/envs/mutyper/lib/python3.9/site-packages/mutyper/cli.py&#34;, line 213, in variants
+    print(str(variant), end=&#34;&#34;)
+BrokenPipeError: [Errno 32] Broken pipe
 </pre></div></div>
 </div>
 </section>
