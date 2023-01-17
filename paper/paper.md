@@ -1,5 +1,5 @@
 ---
-title: 'Mutyper: assigning and summarizing mutation types for analyzing germline mutation spectra'
+title: '`mutyper`: assigning and summarizing mutation types for analyzing germline mutation spectra'
 tags:
   - genomics
   - computational biology
@@ -56,55 +56,54 @@ The *mutation spectrum* of an individual or population is the relative distribut
 Inter- and intra-specific germline mutation spectrum variation has revealed a dynamic and evolving germline mutation process shaping modern genomic diversity.
 Parsing mutation spectra temporally (i.e. according to allele frequency) and spatially (i.e. in different genomic compartments) has revealed the history and present of various mutational processes, and applying such analysis to *de novo* mutation data may be clinically informative for rare or undiagnosed genetic diseases.
 
-Here we describe mutyper, a command-line utility and Python package that uses an ancestral genome estimate to assign mutation types to SNP data, compute mutation spectra for individuals and populations, and compute sample frequency spectra resolved by mutation type for population genetic inference.
+Here we describe `mutyper`, a command-line utility and Python package that uses an ancestral genome estimate to assign mutation types to SNP data, compute mutation spectra for individuals and populations, and compute sample frequency spectra resolved by mutation type for population genetic inference.
 Documentation is provided at [https://harrispopgen.github.io/mutyper](); source code is available at [https://github.com/harrispopgen/mutyper]().
 
 # Statement of need
 
 Despite many exciting findings to date, there is a lack of software for general-purpose germline mutation type partitioning and mutation spectrum generation from population-scale genomic variation data.
 There is a need for efficient and well-tested software for both larger bioinformatics pipelines and simple exploratory analysis.
-To address this need, we developed mutyper, an open-source command-line utility and Python package.
+To address this need, we developed `mutyper`, an open-source command-line utility and Python package.
 
-The literature on cancer somatic mutation signatures includes several software tools (many implemented as R packages) for clustering and dimensionality reduction that are not directly amenable to population-scale germline variation data, but the package Helmsman @[Carlson2018-uq] enables interoperability with these tools.
-Complementing this integrative work, mutyper is a flexible and extensible software package designed for population genomics researchers to generate the raw material needed to advance new analyses of germline mutation spectrum variation.
+The literature on cancer somatic mutation signatures includes several software tools (many implemented as R packages) for clustering and dimensionality reduction that are not directly amenable to population-scale germline variation data, but the package `helmsman` [@Carlson2018-uq] enables interoperability with these tools.
+Complementing this integrative work, `mutyper` is a flexible and extensible software package designed for population genomics researchers to generate the raw material needed to advance new analyses of germline mutation spectrum variation.
 
 The literature has seen a recent and rapid expansion of studies of germline mutation spectrum variation and evolution.
-This motivates the development of computational tools to make these analyses more standardized, reproducible, and accessible.
-Mutyper meets this need.
+This motivates the development of computational tools to make these analyses more standardized, reproducible, and accessible; `mutyper` meets this need.
 
 # Implementation
 
 ## CLI
 
-Mutyper is a Python package with a command-line interface (CLI) that implements the core functionality of assigning ancestral mutation types to SNPs that are input (or piped) in VCF/BCF format.
-Fast processing of VCF input @[Danecek2011-ng] is achieved with cyvcf2 @[Pedersen2017-xu], and mutation types are assigned via the INFO field for each variant, e.g. by including a key-value pair such as `mutation_type=GAG>GTG`.
+`mutyper` is a Python package with a command-line interface (CLI) that implements the core functionality of assigning ancestral mutation types to SNPs that are input (or piped) in VCF/BCF format.
+Fast processing of VCF input [@Danecek2011-ng] is achieved with `cyvcf2` [@Pedersen2017-xu], and mutation types are assigned via the INFO field for each variant, e.g. by including a key-value pair such as `mutation_type=GAG>GTG`.
 The user may specify the $k$-mer context size desired (e.g. 3 for triplet mutation types and spectra).
 As in previous work, mutation types are, by default, collapsed by reverse complementation such that the ancestral state is either `A` or `C`.
 Alternatively, a BED file can be supplied to define the strand orientation for nucleotide context at each site (e.g. based on direction of replication or transcription).
 
 To polarize ancestral and derived allelic states, and define ancestral $k$-mer backgrounds, an input FASTA defining the ancestral genome estimate is required.
-Mutyper uses the package pyfaidx @[Shirley2015-nf] for fast random access to ancestral genomic content, with minimal memory requirements.
+Mutyper uses the package `pyfaidx` [@Shirley2015-nf] for fast random access to ancestral genomic content, with minimal memory requirements.
 Ancestral genomes can be specified by various means.
-The ancestral FASTA sequence provided by the 1000 Genomes Project @[1000_Genomes_Project_Consortium2015-ek] was estimated from a multi-species alignment using Ortheus @[Paten2008-ny].
+The ancestral FASTA sequence provided by the 1000 Genomes Project [@1000_Genomes_Project_Consortium2015-ek] was estimated from a multi-species alignment using `ortheus` [@Paten2008-ny].
 In such a case, the ancestral FASTA can be passed to mutyper directly.
 Alternatively, ancestral states can be simply estimated by polarizing SNPs using an outgroup genome aligned to the reference (e.g. the chimp genome liftover to the human genome).
 
-More complex analyses can be achieved by filtering input SNPs (i.e. with bcftools @[Li2011-ca]), and piping to mutyper.
-The mutyper command-line utility is fully compatible with standard command-line pipelines for filtering SNPs or samples, masking regions, and merging/concatenating VCFs.
+More complex analyses can be achieved by filtering input SNPs (i.e. with `bcftools` [@Li2011-ca]), and piping to `mutyper`.
+The `mutyper` command-line utility is fully compatible with standard command-line pipelines for filtering SNPs or samples, masking regions, and merging/concatenating VCFs.
 In addition to this core functionality, the CLI includes several other subcommands that facilitate research that aims to characterize modern mutation spectrum variation, and infer its evolutionary history.
 
 ## Python API
 
-The mutyper Python API enables one to perform the functions above in an interactive notebook session, or to implement custom analyses of mutation type data by interfacing with the strong ecosystem of scientific computing packages available in Python.
-For example, dimensionality reduction (such as principal components analysis or non-negative matrix factorization) is often used to summarize mutation spectra, and the scikit-learn package @[scikit-learn] can be used in conjunction with the mutyper API for this purpose.
-The mutyper API produces mutation spectra or SFS matrices as pandas dataframes @[mckinney-proc-scipy-2010], which can be easily manipulated, visualized, and analyzed with standard python scientific computing packages.
+The `mutyper` Python API enables one to perform the functions above in an interactive notebook session, or to implement custom analyses of mutation type data by interfacing with the strong ecosystem of scientific computing packages available in Python.
+For example, dimensionality reduction (such as principal components analysis or non-negative matrix factorization) is often used to summarize mutation spectra, and the `scikit-learn` package [@scikit-learn] can be used in conjunction with the `mutyper` API for this purpose.
+The `mutyper` API produces mutation spectra or SFS matrices as `pandas` data frames [@mckinney-proc-scipy-2010], which can be easily manipulated, visualized, and analyzed with standard python scientific computing packages.
 
 # Applications
 
-Mutyper was first used by @DeWitt2021 alongside the Python package mushi to infer mutation rate histories from mutation spectra using coalescent theory.
-@sasani2022 used mutyper in work reporting the discovery of a mutator allele in a unique mouse model system.
-@Vollger2022 used mutyper to analyze long-read sequencing data from humans, finding elevated mutation rates and distinct mutation spectra in segmentally duplicated regions.
-As of this writing, mutyper is being used in several ongoing studies in multiple labs.
+`mutyper` was first used by @DeWitt2021 alongside the Python package `mushi` to infer mutation rate histories from mutation spectra using coalescent theory.
+@sasani2022 used `mutyper` in work reporting the discovery of a mutator allele in a unique mouse model system.
+@Vollger2022 used `mutyper` to analyze long-read sequencing data from humans, finding elevated mutation rates and distinct mutation spectra in segmentally duplicated regions.
+As of this writing, `mutyper` is being used in several ongoing studies in multiple labs.
 
 # Acknowledgements
 
