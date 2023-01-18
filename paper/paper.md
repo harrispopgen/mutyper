@@ -23,7 +23,7 @@ authors:
   - name: Andrea Talenti
     orcid: 0000-0003-1309-3667
     affiliation: 4
-  - name: Annabel Beichman
+  - name: Annabel C. Beichman
     orcid: 0000-0002-6991-587X
     affiliation: 2
   - name: Kelley Harris
@@ -75,22 +75,23 @@ This motivates the development of computational tools to make these analyses mor
 
 ## CLI
 
-`mutyper` is a Python package with a command-line interface (CLI) that implements the core functionality of assigning ancestral mutation types to SNPs that are input (or piped) in VCF/BCF format.
-Fast processing of VCF input [@Danecek2011-ng] is achieved with `cyvcf2` [@Pedersen2017-xu], and mutation types are assigned via the INFO field for each variant, e.g. by including a key-value pair such as `mutation_type=GAG>GTG`.
-The user may specify the $k$-mer context size desired (e.g. 3 for triplet mutation types and spectra).
-As in previous work, mutation types are, by default, collapsed by reverse complementation such that the ancestral state is either `A` or `C`.
-Alternatively, a BED file can be supplied to define the strand orientation for nucleotide context at each site (e.g. based on direction of replication or transcription).
+`mutyper` is a Python package with a command-line interface (CLI) whose core functionality is to augment SNP data (input or piped in VCF/BCF format) with ancestral mutation type annotations and stream to `stdout`.
+Fast processing of VCF input [@Danecek2011-ng] is achieved with `cyvcf2` [@Pedersen2017-xu], and mutation types are assigned via the INFO field for each variant via a key-value pair such as `mutation_type=GAG>GTG`.
+Reference and alternative alleles are polarized to the ancestral and derived states, respectively, and genotype counts are updated accordingly.
+The `mutyper` CLI is fully compatible with standard CLIs (i.e. `bcftools` [@Li2011-ca]) for filtering SNPs or samples, masking regions, and merging/concatenating VCFs.
 
-To polarize ancestral and derived allelic states, and define ancestral $k$-mer backgrounds, an input FASTA defining the ancestral genome estimate is required.
+To polarize ancestral and derived allelic states, and define ancestral $k$-mer backgrounds, an ancestral genome in FASTA format is required.
 Mutyper uses the package `pyfaidx` [@Shirley2015-nf] for fast random access to ancestral genomic content, with minimal memory requirements.
 Ancestral genomes can be specified by various means.
 The ancestral FASTA sequence provided by the 1000 Genomes Project [@1000_Genomes_Project_Consortium2015-ek] was estimated from a multi-species alignment using `ortheus` [@Paten2008-ny].
 In such a case, the ancestral FASTA can be passed to mutyper directly.
-Alternatively, ancestral states can be simply estimated by polarizing SNPs using an outgroup genome aligned to the reference (e.g. the chimp genome liftover to the human genome).
+Alternatively, `mutyper` can estimate ancestral states by polarizing SNPs using an outgroup genome aligned to the reference (e.g. the chimp genome liftover to the human genome).
 
-More complex analyses can be achieved by filtering input SNPs (i.e. with `bcftools` [@Li2011-ca]), and piping to `mutyper`.
-The `mutyper` command-line utility is fully compatible with standard command-line pipelines for filtering SNPs or samples, masking regions, and merging/concatenating VCFs.
-In addition to this core functionality, the CLI includes several other subcommands that facilitate research that aims to characterize modern mutation spectrum variation, and infer its evolutionary history.
+The user may specify the $k$-mer context size desired (e.g. $k=3$ for triplet mutation types).
+As in previous work, mutation type annotations are, by default, collapsed by reverse complementation such that the ancestral state is either `A` or `C`.
+Alternatively, a BED file can be supplied to define the strand orientation for nucleotide context at each site (e.g. based on direction of replication or transcription).
+
+In addition to this core functionality, the CLI includes several other subcommands that summarize mutation-type-annotated SNP data piped from the core command described above. Individual- and population-level mutation spectra and sample frequency spectra are streamed to `stdout` in tab-separated form, and can be used to characterize modern mutation spectrum variation, and infer its evolutionary history.
 
 ## Python API
 
@@ -110,5 +111,6 @@ As of this writing, `mutyper` is being used in several ongoing studies in multip
 Jedidiah Carlson and Sarah Hilton provided helpful comments.
 WSD was supported by the National Institute Of Allergy And Infectious Diseases (F31AI150163), and a Fellowship in Understanding Dynamic and Multi-scale Systems from the James S. McDonnell Foundation.
 AT has been supported by the Institute Strategic Programme Grant BBS/E/D/10002070 from the Biotechnology and Biological Sciences Research Council (BBSRC).
+ACB was supported by the Biological Mechanisms of Healthy Aging Training Program, NIH T32AG066574
 
 # References
