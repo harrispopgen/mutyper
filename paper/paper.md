@@ -36,9 +36,9 @@ affiliations:
    index: 2
  - name: Eccles Institute of Human Genetics, University of Utah, Salt Lake City, UT, USA
    index: 3
- - name: Roslin Institute, University of Edinburgh, Edinburgh, UK
+ - name: The Roslin Institute, Royal (Dick) School of Veterinary Studies, University of Edinburgh, Easter Bush Campus, Midlothian, UK
    index: 4
-date: 16 January 2023
+date: 18 January 2023
 bibliography: paper.bib
 ---
 
@@ -109,5 +109,6 @@ As of this writing, `mutyper` is being used in several ongoing studies in multip
 
 Jedidiah Carlson and Sarah Hilton provided helpful comments.
 WSD was supported by the National Institute Of Allergy And Infectious Diseases (F31AI150163), and a Fellowship in Understanding Dynamic and Multi-scale Systems from the James S. McDonnell Foundation.
+AT has been supported by the Institute Strategic Programme Grant BBS/E/D/10002070 from the Biotechnology and Biological Sciences Research Council (BBSRC).
 
 # References
