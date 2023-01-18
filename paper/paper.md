@@ -56,7 +56,7 @@ The *mutation spectrum* of an individual or population is the relative distribut
 Inter- and intra-specific germline mutation spectrum variation has revealed a dynamic and evolving germline mutation process shaping modern genomic diversity.
 Parsing mutation spectra temporally (i.e. according to allele frequency) and spatially (i.e. in different genomic compartments) has revealed the history and present of various mutational processes, and applying such analysis to *de novo* mutation data may be clinically informative for rare or undiagnosed genetic diseases.
 
-Here we describe `mutyper`, a command-line utility and Python package that uses an ancestral genome estimate to assign mutation types to SNP data, compute mutation spectra for individuals and populations, and compute sample frequency spectra resolved by mutation type for population genetic inference.
+Here we describe `mutyper`, a command-line utility and Python package that uses an ancestral genome estimate to assign mutation types to SNP data, compute mutation spectra for individuals and populations, and compute sample frequency spectra stratified by mutation type for population genetic inference.
 Documentation is provided at [https://harrispopgen.github.io/mutyper](); source code is available at [https://github.com/harrispopgen/mutyper]().
 
 # Statement of need
@@ -96,7 +96,7 @@ In addition to this core functionality, the CLI includes several other subcomman
 
 The `mutyper` Python API enables one to perform the functions above in an interactive notebook session, or to implement custom analyses of mutation type data by interfacing with the strong ecosystem of scientific computing packages available in Python.
 For example, dimensionality reduction (such as principal components analysis or non-negative matrix factorization) is often used to summarize mutation spectra, and the `scikit-learn` package [@scikit-learn] can be used in conjunction with the `mutyper` API for this purpose.
-The `mutyper` API produces mutation spectra or SFS matrices as `pandas` data frames [@mckinney-proc-scipy-2010], which can be easily manipulated, visualized, and analyzed with standard python scientific computing packages.
+The `mutyper` API produces mutation spectra or sample frequency spectrum matrices as `pandas` data frames [@mckinney-proc-scipy-2010], which can be easily manipulated, visualized, and analyzed with standard python scientific computing packages.
 
 # Applications
 
