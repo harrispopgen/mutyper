@@ -16,29 +16,31 @@ authors:
     affiliation: 2
   - name: Mitchell R. Vollger
     orcid: 0000-0002-8651-1615
-    affiliation: 2
+    affiliation: 3
   - name: Michael E. Goldberg
     orcid: 0000-0003-3310-6349
-    affiliation: "2,3"
+    affiliation: "3,4"
   - name: Andrea Talenti
     orcid: 0000-0003-1309-3667
-    affiliation: 4
+    affiliation: 5
   - name: Annabel C. Beichman
     orcid: 0000-0002-6991-587X
-    affiliation: 2
+    affiliation: 3
   - name: Kelley Harris
     orcid: 0000-0003-0302-2523
-    affiliation: 2
+    affiliation: 3
 affiliations:
  - name: Department of Electrical Engineering & Computer Sciences, University of California, Berkeley, CA, USA
    index: 1
- - name: Department of Genome Sciences, University of Washington, Seattle, WA, USA
+ - name: Department of Bioengineering, University of Washington, Seattle, WA, USA
    index: 2
- - name: Departments of Human Genetics and of Biomedical Informatics, University of Utah, Salt Lake City, UT, USA
+ - name: Department of Genome Sciences, University of Washington, Seattle, WA, USA
    index: 3
- - name: The Roslin Institute, Royal (Dick) School of Veterinary Studies, University of Edinburgh, Easter Bush Campus, Midlothian, UK
+ - name: Departments of Human Genetics and of Biomedical Informatics, University of Utah, Salt Lake City, UT, USA
    index: 4
-date: 18 January 2023
+ - name: The Roslin Institute, Royal (Dick) School of Veterinary Studies, University of Edinburgh, Easter Bush Campus, Midlothian, UK
+   index: 5
+date: 24 January 2023
 bibliography: paper.bib
 ---
 
