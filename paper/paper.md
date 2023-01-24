@@ -113,6 +113,7 @@ As of this writing, `mutyper` is being used in several ongoing studies in multip
 Jedidiah Carlson and Sarah Hilton provided helpful comments.
 WSD was supported by the National Institute Of Allergy And Infectious Diseases (F31AI150163), and a Fellowship in Understanding Dynamic and Multi-scale Systems from the James S. McDonnell Foundation.
 AT has been supported by the Institute Strategic Programme Grant BBS/E/D/10002070 from the Biotechnology and Biological Sciences Research Council (BBSRC).
-ACB was supported by the Biological Mechanisms of Healthy Aging Training Program, NIH T32AG066574
+ACB was supported by the Biological Mechanisms of Healthy Aging Training Program, NIH T32AG066574.
+KH was supported by National Institute of General Medical Sciences Grant 1R35GM133428-01, a Burroughs Wellcome Career Award at the Scientific Interface, a Pew Biomedical Scholarship, a Searle Scholarship, and a Sloan Research Fellowship.
 
 # References
