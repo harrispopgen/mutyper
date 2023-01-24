@@ -19,7 +19,7 @@ authors:
     affiliation: 2
   - name: Michael E. Goldberg
     orcid: 0000-0003-3310-6349
-    affiliation: 3
+    affiliation: "2,3"
   - name: Andrea Talenti
     orcid: 0000-0003-1309-3667
     affiliation: 4
@@ -34,7 +34,7 @@ affiliations:
    index: 1
  - name: Department of Genome Sciences, University of Washington, Seattle, WA, USA
    index: 2
- - name: Eccles Institute of Human Genetics, University of Utah, Salt Lake City, UT, USA
+ - name: Departments of Human Genetics and of Biomedical Informatics, University of Utah, Salt Lake City, UT, USA
    index: 3
  - name: The Roslin Institute, Royal (Dick) School of Veterinary Studies, University of Edinburgh, Easter Bush Campus, Midlothian, UK
    index: 4
