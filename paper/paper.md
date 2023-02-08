@@ -46,32 +46,28 @@ bibliography: paper.bib
 
 # Summary
 
-Genomics studies of the germline mutation process seek to elucidate the mutational forces that drive genetic variation and provide the raw material for adaptive evolution.
+The germline mutation process that drives genetic variation and provides the raw material for adaptive evolution.
 Germline mutations arise from spontaneous DNA damage caused by environmental mutagens, or errors in DNA replication.
-Populations and species may experience distinct histories of mutational input due to differences in environmental exposure, life history (i.e. generation time), and heritable variation in the machinery controlling DNA replication fidelity.
+Populations and species may experience distinct mutational histories due to variation in environmental exposure, life history, and heritable variation in the machinery controlling DNA replication fidelity.
 
-Diverse mutational processes can reveal themselves in tell-tale mutation signatures left in the nucleotide sequence contexts in which they tend to be active.
+Mutational mechanisms often have _mutation signatures_ in terms of the nucleotide sequence contexts of their activity.
 Population genomics has given increasing attention to nucleotide sequence context in the study of the germline mutation process (reviewed in @Carlson2020-hb).
 Single-nucleotide polymorphisms (SNPs) can be assigned to *mutation types* by the ancestral and derived nucleotide states and a window of local nucleotide context in the ancestral background.
 The *mutation spectrum* of an individual or population is the relative distribution of these mutation types.
 
 Inter- and intra-specific germline mutation spectrum variation has revealed a dynamic and evolving germline mutation process shaping modern genomic diversity.
-Parsing mutation spectra temporally (i.e. according to allele frequency) and spatially (i.e. in different genomic compartments) has revealed the history and present of various mutational processes, and applying such analysis to *de novo* mutation data may be clinically informative for rare or undiagnosed genetic diseases.
+Parsing mutation spectra temporally (via to allele frequency) and spatially (via genomic annotations) has revealed the history and present of mutational processes, and applying such analysis to *de novo* mutation data may be clinically informative for rare or undiagnosed genetic diseases.
 
-Here we describe `mutyper`, a command-line utility and Python package that uses an ancestral genome estimate to assign mutation types to SNP data, compute mutation spectra for individuals and populations, and compute sample frequency spectra stratified by mutation type for population genetic inference.
+Here we describe `mutyper`, a command-line utility and Python package that assigns ancestrally-polarized mutation types to SNP data, computes mutation spectra for individuals and populations, and computes sample frequency spectra stratified by mutation type for population genetic inference.
 Documentation is provided at [https://harrispopgen.github.io/mutyper](); source code is available at [https://github.com/harrispopgen/mutyper]().
 
 # Statement of need
 
-Despite many exciting findings to date, there is a lack of software for general-purpose germline mutation type partitioning and mutation spectrum generation from population-scale genomic variation data.
-There is a need for efficient and well-tested software for both larger bioinformatics pipelines and simple exploratory analysis.
-To address this need, we developed `mutyper`, an open-source command-line utility and Python package.
+Despite many exciting findings in this growing area, there is a lack of software for germline mutation type annotation and spectrum generation from population-scale genomic data.
+We developed `mutyper`, an open-source command-line utility and Python package, to address the field's need for efficient and well-tested software for both larger bioinformatics pipelines and exploratory analysis.
 
 The literature on cancer somatic mutation signatures includes several software tools (many implemented as R packages) for clustering and dimensionality reduction that are not directly amenable to population-scale germline variation data, but the package `helmsman` [@Carlson2018-uq] enables interoperability with these tools.
-Complementing this integrative work, `mutyper` is a flexible and extensible software package designed for population genomics researchers to generate the raw material needed to advance new analyses of germline mutation spectrum variation.
-
-The literature has seen a recent and rapid expansion of studies of germline mutation spectrum variation and evolution.
-This motivates the development of computational tools to make these analyses more standardized, reproducible, and accessible; `mutyper` meets this need.
+Complementing this work, `mutyper` is a flexible and extensible software package designed for population genomics researchers to generate the raw material needed to advance new analyses of germline mutation spectrum variation.
 
 # Implementation
 
@@ -87,17 +83,17 @@ Mutyper uses the package `pyfaidx` [@Shirley2015-nf] for fast random access to a
 Ancestral genomes can be specified by various means.
 The ancestral FASTA sequence provided by the 1000 Genomes Project [@1000_Genomes_Project_Consortium2015-ek] was estimated from a multi-species alignment using `ortheus` [@Paten2008-ny].
 In such a case, the ancestral FASTA can be passed to mutyper directly.
-Alternatively, `mutyper` can estimate ancestral states by polarizing SNPs using an outgroup genome aligned to the reference (e.g. the chimp genome liftover to the human genome).
+Alternatively, `mutyper` can estimate ancestral states by polarizing SNPs using an outgroup genome aligned to the reference (e.g. the chimp genome liftover to the human reference genome).
 
 The user may specify the $k$-mer context size desired (e.g. $k=3$ for triplet mutation types).
 As in previous work, mutation type annotations are, by default, collapsed by reverse complementation such that the ancestral state is either `A` or `C`.
-Alternatively, a BED file can be supplied to define the strand orientation for nucleotide context at each site (e.g. based on direction of replication or transcription).
+Alternatively, a BED file can be supplied to define the strand orientation for nucleotide context at each site (e.g. according to direction of replication or transcription).
 
 In addition to this core functionality, the CLI includes several other subcommands that summarize mutation-type-annotated SNP data piped from the core command described above. Individual- and population-level mutation spectra and sample frequency spectra are streamed to `stdout` in tab-separated form, and can be used to characterize modern mutation spectrum variation, and infer its evolutionary history.
 
 ## Python API
 
-The `mutyper` Python API enables one to perform the functions above in an interactive notebook session, or to implement custom analyses of mutation type data by interfacing with the strong ecosystem of scientific computing packages available in Python.
+The `mutyper` Python API exposes the functions above in an interactive notebook session to implement custom analyses of mutation type data by interfacing with the strong ecosystem of scientific computing packages available in Python.
 For example, dimensionality reduction (such as principal components analysis or non-negative matrix factorization) is often used to summarize mutation spectra, and the `scikit-learn` package [@scikit-learn] can be used in conjunction with the `mutyper` API for this purpose.
 The `mutyper` API produces mutation spectra or sample frequency spectrum matrices as `pandas` data frames [@mckinney-proc-scipy-2010], which can be easily manipulated, visualized, and analyzed with standard python scientific computing packages.
 
