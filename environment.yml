@@ -6,6 +6,8 @@ channels:
 dependencies:
   - bcftools
   - tabix
+  - libcurl
+  - bzip2
   - pip
   - pip:
     - -r requirements.txt
