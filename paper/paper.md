@@ -40,13 +40,13 @@ affiliations:
    index: 4
  - name: The Roslin Institute, Royal (Dick) School of Veterinary Studies, University of Edinburgh, Easter Bush Campus, Midlothian, UK
    index: 5
-date: 24 January 2023
+date: 8 February 2023
 bibliography: paper.bib
 ---
 
 # Summary
 
-The germline mutation process that drives genetic variation and provides the raw material for adaptive evolution.
+The germline mutation process drives genetic variation and provides the raw material for adaptive evolution.
 Germline mutations arise from spontaneous DNA damage caused by environmental mutagens, or errors in DNA replication.
 Populations and species may experience distinct mutational histories due to variation in environmental exposure, life history, and heritable variation in the machinery controlling DNA replication fidelity.
 
