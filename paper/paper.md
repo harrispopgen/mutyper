@@ -50,15 +50,15 @@ The germline mutation process drives genetic variation and provides the raw mate
 Germline mutations arise from spontaneous DNA damage caused by environmental mutagens, or errors in DNA replication.
 Populations and species may experience distinct mutational histories due to variation in environmental exposure, life history, and heritable variation in the machinery controlling DNA replication fidelity.
 
-Mutational mechanisms often have _mutation signatures_ in terms of the nucleotide sequence contexts of their activity.
+Mutational mechanisms often have _mutation signatures_ in terms of the nucleotide sequence contexts where they act.
 Population genomics has given increasing attention to nucleotide sequence context in the study of the germline mutation process (reviewed in @Carlson2020-hb).
 Single-nucleotide polymorphisms (SNPs) can be assigned to *mutation types* by the ancestral and derived nucleotide states and a window of local nucleotide context in the ancestral background.
 The *mutation spectrum* of an individual or population is the relative distribution of these mutation types.
 
 Inter- and intra-specific germline mutation spectrum variation has revealed a dynamic and evolving germline mutation process shaping modern genomic diversity.
-Parsing mutation spectra temporally (via to allele frequency) and spatially (via genomic annotations) has revealed the history and present of mutational processes, and applying such analysis to *de novo* mutation data may be clinically informative for rare or undiagnosed genetic diseases.
+Parsing mutation spectra temporally (via allele frequency) and spatially (via genomic annotations) has revealed the history and present of mutational processes, and applying such analysis to *de novo* mutation data may be clinically informative for rare or undiagnosed genetic diseases.
 
-Here we describe `mutyper`, a command-line utility and Python package that assigns ancestrally-polarized mutation types to SNP data, computes mutation spectra for individuals and populations, and computes sample frequency spectra stratified by mutation type for population genetic inference.
+Here we describe `mutyper`, a command-line utility and Python package that assigns ancestrally polarized mutation types to SNP data, computes mutation spectra for individuals and populations, and computes sample frequency spectra stratified by mutation type for population genetic inference.
 Documentation is provided at [https://harrispopgen.github.io/mutyper](); source code is available at [https://github.com/harrispopgen/mutyper]().
 
 # Statement of need
