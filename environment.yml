@@ -8,6 +8,7 @@ dependencies:
   - tabix
   - libcurl
   - bzip2
+  - zlib
   - gcc
   - pip
   - pip:
