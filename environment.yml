@@ -1,4 +1,4 @@
-name: mutyper_test
+name: mutyper
 channels:
   - bioconda
   - conda-forge

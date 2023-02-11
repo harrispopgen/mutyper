@@ -14,6 +14,17 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest]
         python-version: [3.7, 3.8, 3.9]
+        include:
+          - os: linux
+            compiler: gcc_linux-64
+          - os: macos
+            compiler: clang_osx-64
+
+    defaults:
+      # NOTE: must specify the shell so that conda init updates bashrc see:
+      #      https://github.com/conda-incubator/setup-miniconda#IMPORTANT
+      run:
+        shell: bash -el {0}
 
     steps:
       - name: Checkout 🛎️
@@ -25,27 +36,27 @@ jobs:
       - name: Install miniconda and create environment
         uses: conda-incubator/setup-miniconda@v2
         with:
+          miniconda-version: "latest"
           activate-environment: mutyper
-          environment-file: environment.yml
+          channels: bioconda,conda-forge,defaults
           python-version: ${{ matrix.python-version }}
           auto-activate-base: false
           auto-update-conda: true
 
+      - name: Install
+        run: |
+          conda install bcftools tabix pip ${{ matrix.compiler }}
+          make install
+
       - name: Lint
-        # NOTE: must specify the shell so that conda init updates bashrc see:
-        #      https://github.com/conda-incubator/setup-miniconda#IMPORTANT
-        shell: bash -l {0}
         run: make lint
 
       - name: Check format with black
-        shell: bash -l {0}
         run: black --check mutyper
 
       - name: Test
-        shell: bash -l {0}
         run: make test
 
       - name: Test docs build
-        shell: bash -l {0}
         run: |
           make docs
