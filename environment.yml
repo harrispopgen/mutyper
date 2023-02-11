@@ -4,12 +4,9 @@ channels:
   - defaults
   - bioconda
 dependencies:
+  - python
   - bcftools
   - tabix
-  - libcurl
-  - bzip2
-  - zlib
-  - gcc
   - pip
   - pip:
     - -r requirements.txt
