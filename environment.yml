@@ -1,8 +1,8 @@
-name: mutyper
+name: mutyper_test
 channels:
+  - bioconda
   - conda-forge
   - defaults
-  - bioconda
 dependencies:
   - python
   - bcftools
