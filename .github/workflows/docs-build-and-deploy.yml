@@ -7,6 +7,12 @@ jobs:
   build-and-deploy:
     concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
     runs-on: ubuntu-latest
+
+    defaults:
+      # must specify the shell so that conda init updates bashrc see: https://github.com/conda-incubator/setup-miniconda#IMPORTANT
+      run:
+        shell: bash -el {0}
+
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v2
@@ -14,19 +20,22 @@ jobs:
       - name: Install Pandoc
         uses: r-lib/actions/setup-pandoc@v2
 
-      - name: Install miniconda and activate environment
+      - name: Install miniconda and create environment
         uses: conda-incubator/setup-miniconda@v2
         with:
+          miniconda-version: "latest"
           activate-environment: mutyper
-          environment-file: environment.yml
+          channels: bioconda,conda-forge,defaults
           python-version: 3.9
           auto-activate-base: false
           auto-update-conda: true
 
+      - name: Install
+        run: |
+          conda install bcftools tabix pip gcc_linux-64
+          make install
+
       - name: Build 🔧
-        # NOTE: must specify the shell so that conda init updates bashrc see:
-        #      https://github.com/conda-incubator/setup-miniconda#IMPORTANT
-        shell: bash -l {0}
         run: |
           make docs
 

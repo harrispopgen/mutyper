@@ -23,7 +23,7 @@ setuptools.setup(
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
     ],
-    python_requires='>=3.7',
+    python_requires='>=3.8',
     install_requires=[
         'cyvcf2>=0.30.15',  # minimum version with fix to https://github.com/brentp/cyvcf2/issues/236
         'pyfaidx',
