@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
-        python-version: [3.7, 3.8, 3.9, '3.10', 3.11]  # https://github.com/actions/runner/issues/1989
+        python-version: [3.8, 3.9, '3.10', 3.11]  # https://github.com/actions/runner/issues/1989
         include:
           - os: ubuntu-latest
             compiler: gcc_linux-64
