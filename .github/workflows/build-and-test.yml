@@ -9,7 +9,6 @@ on:
 jobs:
   build:
     if: "!contains(github.event.commits[0].message, '[skip ci]')"
-    runs-on: ubuntu-latest
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
@@ -19,6 +18,8 @@ jobs:
             compiler: gcc_linux-64
           - os: macos-latest
             compiler: clang_osx-64
+
+    runs-on: ${{ matrix.os }}
 
     defaults:
       # must specify the shell so that conda init updates bashrc see: https://github.com/conda-incubator/setup-miniconda#IMPORTANT
