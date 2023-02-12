@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
-        python-version: [3.7, 3.8, 3.9, 3.10, 3.11]
+        python-version: [3.7, 3.8, 3.9, '3.10', 3.11]  # https://github.com/actions/runner/issues/1989
         include:
           - os: ubuntu-latest
             compiler: gcc_linux-64
@@ -21,8 +21,7 @@ jobs:
             compiler: clang_osx-64
 
     defaults:
-      # NOTE: must specify the shell so that conda init updates bashrc see:
-      #      https://github.com/conda-incubator/setup-miniconda#IMPORTANT
+      # must specify the shell so that conda init updates bashrc see: https://github.com/conda-incubator/setup-miniconda#IMPORTANT
       run:
         shell: bash -el {0}
 
