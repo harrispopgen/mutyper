@@ -9,4 +9,5 @@ sphinx-argparse
 sphinx_rtd_theme
 sphinx-autodoc-typehints
 sphinxcontrib-programoutput
-nbsphinx
+myst_nb
+sphinx-copybutton

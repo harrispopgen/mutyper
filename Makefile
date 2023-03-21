@@ -6,6 +6,7 @@ install:
 
 test:
 	pytest
+	make -C docs doctest
 
 format:
 	black mutyper

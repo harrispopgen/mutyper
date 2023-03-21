@@ -12,24 +12,24 @@ The Python API can be used for exploratory mutation type analysis in Python scri
   :caption: User Guide
 
   install
-  notebooks/quickstart
+  quickstart
   cite
 
 .. toctree::
    :maxdepth: 3
-   :caption: CLI Documentation
+   :caption: CLI
 
    cmd
 
 .. toctree::
    :maxdepth: 3
-   :caption: API Documentation
+   :caption: API
 
    mutyper
 
 .. toctree::
   :maxdepth: 1
-  :caption: Developer Documentation
+  :caption: Developer
 
   developer
 
@@ -38,7 +38,6 @@ The Python API can be used for exploratory mutation type analysis in Python scri
    :caption: Notes
 
    CHANGELOG
-   faq
 
 
 Indices and tables
