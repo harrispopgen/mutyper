@@ -59,7 +59,7 @@ Inter- and intra-specific germline mutation spectrum variation has revealed a dy
 Parsing mutation spectra temporally (via allele frequency) and spatially (via genomic annotations) has revealed the history and present of mutational processes, and applying such analysis to *de novo* mutation data may be clinically informative for rare or undiagnosed genetic diseases.
 
 Here we describe `mutyper`, a command-line utility and Python package that assigns ancestrally polarized mutation types to SNP data, computes mutation spectra for individuals and populations, and computes sample frequency spectra stratified by mutation type for population genetic inference.
-Documentation is provided at [https://harrispopgen.github.io/mutyper](); source code is available at [https://github.com/harrispopgen/mutyper]().
+Documentation is provided at [https://harrispopgen.github.io/mutyper](https://harrispopgen.github.io/mutyper); source code is available at [https://github.com/harrispopgen/mutyper](https://github.com/harrispopgen/mutyper).
 
 # Statement of need
 
