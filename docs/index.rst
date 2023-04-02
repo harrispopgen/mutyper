@@ -31,6 +31,7 @@ The Python API can be used for exploratory mutation type analysis in Python scri
   :maxdepth: 1
   :caption: Developer
 
+  CONTRIBUTING
   developer
 
 .. toctree::
