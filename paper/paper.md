@@ -66,15 +66,15 @@ Documentation is provided at [https://harrispopgen.github.io/mutyper](https://ha
 Despite many exciting findings in this growing area, there is a lack of software for germline mutation type annotation and spectrum generation from population-scale genomic data.
 We developed `mutyper`, an open-source command-line utility and Python package, to address the field's need for efficient and well-tested software for both larger bioinformatics pipelines and exploratory analysis.
 
-The literature on cancer somatic mutation signatures includes several software tools (many implemented as R packages) for clustering and dimensionality reduction that are not directly amenable to population-scale germline variation data, but the package `helmsman` [@Carlson2018-uq] enables interoperability with these tools.
-Complementing this work, `mutyper` is a flexible and extensible software package designed for population genomics researchers to generate the raw material needed to advance new analyses of germline mutation spectrum variation.
+The literature on cancer somatic mutation signatures includes several software tools for clustering and dimensionality reduction that are either not scalable or not flexible enough for general population-scale germline variation data [@gehring2015somaticsignatures; @rosenthal2016deconstructsigs; @rosales2017signer; @goncearenco2017exploring; @lee2018mutalisk; @li2020using; @manders2022mutationalpatterns], but the package `helmsman` [@Carlson2018-uq] enables partial interoperability with some of these tools.
+Complementing this work, `mutyper` is a flexible, efficient, and extensible software package for low-level bioinformatic workflows in germline mutation spectrum studies.
 
 # Implementation
 
 ## CLI
 
-`mutyper` is a Python package with a command-line interface (CLI) whose core functionality is to augment SNP data (input or piped in VCF/BCF format) with ancestral mutation type annotations and stream to `stdout`.
-Fast processing of VCF input [@Danecek2011-ng] is achieved with `cyvcf2` [@Pedersen2017-xu], and mutation types are assigned via the INFO field for each variant via a key-value pair such as `mutation_type=GAG>GTG`.
+The core functionality of the `mutyper` command-line interface (CLI) is to augment SNP data (input or piped in VCF/BCF format) with ancestral mutation type annotations and stream to `stdout`.
+Fast and memory-efficient processing of VCF input [@Danecek2011-ng] is achieved with `cyvcf2` [@Pedersen2017-xu], and mutation types are assigned via the INFO field for each variant via a key-value pair such as `mutation_type=GAG>GTG`.
 Reference and alternative alleles are polarized to the ancestral and derived states, respectively, and genotype counts are updated accordingly.
 The `mutyper` CLI is fully compatible with standard CLIs (i.e. `bcftools` [@Li2011-ca]) for filtering SNPs or samples, masking regions, and merging/concatenating VCFs.
 
