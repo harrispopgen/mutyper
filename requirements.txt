@@ -6,7 +6,8 @@ flake8
 pytest
 sphinx
 sphinx-argparse
-sphinx_rtd_theme
+sphinx-rtd-theme
 sphinx-autodoc-typehints
 sphinxcontrib-programoutput
-nbsphinx
+myst-nb
+sphinx-copybutton
