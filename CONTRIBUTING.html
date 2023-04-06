@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contributing &mdash; mutyper  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="_static/style.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Developer tools" href="developer.html" />
+    <link rel="prev" title="Python API: mutyper package" href="mutyper.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cite.html">Citing <code class="docutils literal notranslate"><span class="pre">mutyper</span></code></a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">CLI</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cmd.html">Command Line Interface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mutyper.html">Python API: <code class="docutils literal notranslate"><span class="pre">mutyper</span></code> package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#code-of-conduct">Code of Conduct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-contribute">How to Contribute</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reporting-bugs">Reporting Bugs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#requesting-features">Requesting Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pull-requests">Pull Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#style-guidelines">Style Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#testing-guidelines">Testing Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#documentation-guidelines">Documentation Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#acknowledgements">Acknowledgements</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Developer tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html">Change log</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mutyper</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Contributing</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/CONTRIBUTING.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="contributing">
+<h1>Contributing<a class="headerlink" href="#contributing" title="Permalink to this heading"></a></h1>
+<p>Thank you for considering contributing to <code class="docutils literal notranslate"><span class="pre">mutyper</span></code>!
+This document outlines the guidelines and expectations for contributing to the project at <a class="reference external" href="https://github.com/harrispopgen/mutyper">github.com/harrispopgen/mutyper</a>.</p>
+<section id="table-of-contents">
+<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="#code-of-conduct"><span class="std std-doc">Code of Conduct</span></a></p></li>
+<li><p><a class="reference internal" href="#how-to-contribute"><span class="std std-doc">How to Contribute</span></a></p></li>
+<li><p><a class="reference internal" href="#reporting-bugs"><span class="std std-doc">Reporting Bugs</span></a></p></li>
+<li><p><a class="reference internal" href="#requesting-features"><span class="std std-doc">Requesting Features</span></a></p></li>
+<li><p><a class="reference internal" href="#pull-requests"><span class="std std-doc">Pull Requests</span></a></p></li>
+<li><p><a class="reference internal" href="#style-guidelines"><span class="std std-doc">Style Guidelines</span></a></p></li>
+<li><p><a class="reference internal" href="#testing-guidelines"><span class="std std-doc">Testing Guidelines</span></a></p></li>
+<li><p><a class="reference internal" href="#documentation-guidelines"><span class="std std-doc">Documentation Guidelines</span></a></p></li>
+<li><p><a class="reference internal" href="#acknowledgements"><span class="std std-doc">Acknowledgements</span></a></p></li>
+</ul>
+</section>
+<section id="code-of-conduct">
+<h2>Code of Conduct<a class="headerlink" href="#code-of-conduct" title="Permalink to this heading"></a></h2>
+<p>This project adheres to the <a class="reference external" href="https://www.contributor-covenant.org/version/2/0/code_of_conduct/">Contributor Covenant Code of Conduct</a>.
+By participating, you are expected to uphold this code.
+Please report unacceptable behavior to <a class="reference external" href="mailto:harris&#46;kelley&#37;&#52;&#48;gmail&#46;com">harris<span>&#46;</span>kelley<span>&#64;</span>gmail<span>&#46;</span>com</a>.</p>
+</section>
+<section id="how-to-contribute">
+<h2>How to Contribute<a class="headerlink" href="#how-to-contribute" title="Permalink to this heading"></a></h2>
+<p>We welcome contributions of all kinds—bug reports, feature requests, code contributions, documentation improvements, and more.
+To get started:</p>
+<ol class="arabic simple">
+<li><p>Fork the repository to your own GitHub account</p></li>
+<li><p>Clone the repository to your local machine</p></li>
+<li><p>Create a new branch for your changes: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">-b</span> <span class="pre">your-branch-name</span></code></p></li>
+<li><p>Make your changes and commit them: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span> <span class="pre">-m</span> <span class="pre">&quot;your</span> <span class="pre">commit</span> <span class="pre">message&quot;</span></code></p></li>
+<li><p>Push your changes to your forked repository: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">origin</span> <span class="pre">your-branch-name</span></code></p></li>
+<li><p>Create a Pull Request to merge your changes into the main repository</p></li>
+</ol>
+</section>
+<section id="reporting-bugs">
+<h2>Reporting Bugs<a class="headerlink" href="#reporting-bugs" title="Permalink to this heading"></a></h2>
+<p>If you find a bug or other issue with <code class="docutils literal notranslate"><span class="pre">mutyper</span></code>, please report it by opening a new issue on GitHub.
+Please include as much information as possible, including:</p>
+<ul class="simple">
+<li><p>A clear and concise description of the problem</p></li>
+<li><p>Steps to reproduce the issue</p></li>
+<li><p>Expected behavior</p></li>
+<li><p>Actual behavior</p></li>
+<li><p>Screenshots or other relevant information</p></li>
+</ul>
+</section>
+<section id="requesting-features">
+<h2>Requesting Features<a class="headerlink" href="#requesting-features" title="Permalink to this heading"></a></h2>
+<p>If you have an idea for a new feature or improvement to <code class="docutils literal notranslate"><span class="pre">mutyper</span></code>, please submit it as a feature request on GitHub.
+Please provide a clear and concise description of the feature, including:</p>
+<ul class="simple">
+<li><p>Why the feature is needed</p></li>
+<li><p>How it would work</p></li>
+<li><p>Any potential drawbacks or limitations</p></li>
+</ul>
+</section>
+<section id="pull-requests">
+<h2>Pull Requests<a class="headerlink" href="#pull-requests" title="Permalink to this heading"></a></h2>
+<p>If you would like to contribute code to <code class="docutils literal notranslate"><span class="pre">mutyper</span></code>, please submit a Pull Request on GitHub. Please follow these guidelines:</p>
+<ul class="simple">
+<li><p>Ensure the code is well-tested and follows the style guidelines (see below)</p></li>
+<li><p>Write clear and concise commit messages</p></li>
+<li><p>Ensure the Pull Request description explains what the changes are and why they are needed</p></li>
+<li><p>Ensure the Pull Request title is descriptive and includes the relevant issue number (if applicable)</p></li>
+<li><p>Squash commits and rebase on the latest version of the <code class="docutils literal notranslate"><span class="pre">main</span></code> branch before submitting</p></li>
+</ul>
+</section>
+<section id="style-guidelines">
+<h2>Style Guidelines<a class="headerlink" href="#style-guidelines" title="Permalink to this heading"></a></h2>
+<p>We use <a class="reference external" href="https://black.readthedocs.io/en/stable/">Black</a>, <a class="reference external" href="https://docformatter.readthedocs.io">Docformatter</a>, and <a class="reference external" href="https://flake8.pycqa.org/en/latest/">Flake8</a> for formatting Python code and enforcing style.
+Please ensure your code is formatted/linted before submitting a Pull Request.</p>
+</section>
+<section id="testing-guidelines">
+<h2>Testing Guidelines<a class="headerlink" href="#testing-guidelines" title="Permalink to this heading"></a></h2>
+<p>We use <a class="reference external" href="https://docs.pytest.org/en/latest/">pytest</a> and <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/extensions/doctest.html">doctest</a> for testing.
+Please ensure your changes are well-tested and include new tests where appropriate.
+All tests should pass before submitting a Pull Request.</p>
+</section>
+<section id="documentation-guidelines">
+<h2>Documentation Guidelines<a class="headerlink" href="#documentation-guidelines" title="Permalink to this heading"></a></h2>
+<p>We use <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> for documentation, and running doctests.
+Please ensure your changes include any necessary updates to the documentation, including:</p>
+<ul class="simple">
+<li><p>docstrings</p></li>
+<li><p>doctests</p></li>
+<li><p>API reference documentation</p></li>
+<li><p>quickstart documentation</p></li>
+</ul>
+</section>
+<section id="acknowledgements">
+<h2>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Permalink to this heading"></a></h2>
+<p>We welcome and appreciate all contributions to <code class="docutils literal notranslate"><span class="pre">mutyper</span></code>.
+Thank you for helping to improve the project!</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="mutyper.html" class="btn btn-neutral float-left" title="Python API: mutyper package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="developer.html" class="btn btn-neutral float-right" title="Developer tools" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, William DeWitt.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

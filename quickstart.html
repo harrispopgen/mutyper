@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quickstart &mdash; mutyper  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="_static/style.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Citing mutyper" href="cite.html" />
+    <link rel="prev" title="Installation" href="install.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#python-api-demo">Python API demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#command-line-interface-demo">Command line interface demo</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#variants-subcommand"><code class="docutils literal notranslate"><span class="pre">variants</span></code> subcommand</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#targets-subcommand"><code class="docutils literal notranslate"><span class="pre">targets</span></code> subcommand</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#spectra-subcommand"><code class="docutils literal notranslate"><span class="pre">spectra</span></code> subcommand</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ksfs-subcommand"><code class="docutils literal notranslate"><span class="pre">ksfs</span></code> subcommand</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cite.html">Citing <code class="docutils literal notranslate"><span class="pre">mutyper</span></code></a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">CLI</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cmd.html">Command Line Interface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mutyper.html">Python API: <code class="docutils literal notranslate"><span class="pre">mutyper</span></code> package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Developer tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html">Change log</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mutyper</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Quickstart</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/quickstart.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="quickstart">
+<h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this heading"></a></h1>
+<p>This notebook demonstrates how to use <code class="docutils literal notranslate"><span class="pre">mutyper</span></code> for computing mutation
+type data for VCF/BCF data</p>
+<p>We will access some <a class="reference external" href="https://github.com/harrispopgen/mutyper/blob/master/docs/example_data/">example data</a> from a directory in the GitHub repo.</p>
+<section id="python-api-demo">
+<h2>Python API demo<a class="headerlink" href="#python-api-demo" title="Permalink to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mutyper</span>
+</pre></div>
+</div>
+<p>Path to an ancestral FASTA file for human chromosome 1</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fasta</span> <span class="o">=</span> <span class="s1">&#39;docs/example_data/ancestor.fa&#39;</span>
+</pre></div>
+</div>
+<p>Print the first 3 lines</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fasta</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+     <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+         <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">rstrip</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt;1
+TTTGTGGGAgACTATTCCTCCCATCTGCAACAGCTGCCCCTGCTGACTGCCCTTCTCTCCTCCCTCTCATCCCAGAGAAACAgGTCAGCTGGGAGCTTCT
+GCCCCCACTGCCTAGGGACCAACAGGGGCAGGAGGCAGTCACTGACCCCGAGACGTTTGCATCCTGCACAGCTAGAGATCCTTTATTAAAAGCACACTGT
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">mutyper</span></code> package has a single class <code class="docutils literal notranslate"><span class="pre">Ancestor</span></code>. We instantiate
+an <code class="docutils literal notranslate"><span class="pre">Ancestor</span></code> object using our FASTA file - We’re interested in 3-mer
+context, which we can indicate with the <code class="docutils literal notranslate"><span class="pre">k</span></code> keyword argument (by
+default it will be 3 though).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ancestor</span> <span class="o">=</span> <span class="n">mutyper</span><span class="o">.</span><span class="n">Ancestor</span><span class="p">(</span><span class="n">fasta</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can inspect FASTA record names, showing that the FASTA contains two
+records, chromosome <code class="docutils literal notranslate"><span class="pre">'1'</span></code> and <code class="docutils literal notranslate"><span class="pre">'2'</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">ancestor</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>odict_keys([&#39;1&#39;, &#39;2&#39;])
+</pre></div>
+</div>
+<p>and we can Pythonically slice sequences via fast random access without
+loading into memory (leaning on
+<a class="reference external" href="https://pythonhosted.org/pyfaidx/">pyfaidx</a> under the hood):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">start</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">end</span> <span class="o">=</span> <span class="mi">300</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">ancestor</span><span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">][</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]))</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt;1:101-300
+GCCCCCACTGCCTAGGGACCAACAGGGGCAGGAGGCAGTCACTGACCCCGAGACGTTTGCATCCTGCACAGCTAGAGATCCTTTATTAAAAGCACACTGTTGGTTTCTGCTCAGTTCTTTATTGATTGGTGTGCCGTTTTCTCTGGAAGCCTCTTAAGAACACAGTGGCGCAGGCTGGGTGGAGCCGTCCCCCCATGgAG
+</pre></div>
+</div>
+<p>We can also access these <code class="docutils literal notranslate"><span class="pre">FastaRecord</span></code> slices as string-like biopython
+<code class="docutils literal notranslate"><span class="pre">Seq</span></code> objects</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">ancestor</span><span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">][</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span><span class="o">.</span><span class="n">seq</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>GCCCCCACTGCCTAGGGACCAACAGGGGCAGGAGGCAGTCACTGACCCCGAGACGTTTGCATCCTGCACAGCTAGAGATCCTTTATTAAAAGCACACTGTTGGTTTCTGCTCAGTTCTTTATTGATTGGTGTGCCGTTTTCTCTGGAAGCCTCTTAAGAACACAGTGGCGCAGGCTGGGTGGAGCCGTCCCCCCATGgAG
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">mutation_type</span></code> method allows us to specify a SNP by the usual
+CHROM, POS, REF, ALT, and returns the correctly polarized mutation type
+as a tuple of ancestral kmer and derived kmer.</p>
+<p>First, consider the triplet context at site 100 on chromosome 1:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">ancestor</span><span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">][</span><span class="mi">98</span><span class="p">:</span><span class="mi">101</span><span class="p">]))</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt;1:99-101
+CTG
+</pre></div>
+</div>
+<p>Suppose a biallelic SNP at this site segregates in a population with
+reference allele T and alternative allele A. The mutation type of this
+SNP is</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">ancestor</span><span class="o">.</span><span class="n">mutation_type</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(&#39;CAG&#39;, &#39;CTG&#39;)
+</pre></div>
+</div>
+<p>Note that, by default, mutation types are collapsed by reverse
+complementation such that the ancestral state at the target site is A or
+C. So in the above, the ancestral state T caused the ancestral triplet
+CTG to be reversed and complemented to CAG.</p>
+<p>If the reference and alternative states are both distinct from the
+ancestral state, the site is not biallelic (an infinite sites
+violation), and the mutation type is returned as ambiguous.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">ancestor</span><span class="o">.</span><span class="n">mutation_type</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(None, None)
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">region_contexts</span></code> method returns a generator of ancestral contexts
+(by default collapsed as described above) over the positions in a region
+specified as in BED file format CHROM, START, END</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">start</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">end</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="k">for</span> <span class="n">context</span> <span class="ow">in</span> <span class="n">ancestor</span><span class="o">.</span><span class="n">region_contexts</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>CCC CCT AAG GAA TCT GAG TCT GAG TCC CCT GAG TCC CCC CCT GAG TCT GAG TCA CAT GAT TCC CCC CCA CAG TCT GAG TCT GAA AAA AAC ACA None None None GAC TCA CAG GCT GCT CAG CCA CCC TCC GAG GCT GCT AAG GAA TCT CAG
+</pre></div>
+</div>
+<p>Note that FASTA sites that are not nucleotide characters have
+non-identified ancestral state, so context is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<p>This generator method is used by the the <code class="docutils literal notranslate"><span class="pre">targets</span></code> method to compute
+the masked genomic target size for each <span class="math notranslate nohighlight">\(k\)</span>-mer context from a BED
+mask file. This may be useful for normalizing spectra in different
+genomic regions, or calibrating mutation rates.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bed</span> <span class="o">=</span> <span class="s1">&#39;docs/example_data/mask.bed&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">bed</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+     <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+         <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">rstrip</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>1   25      50
+1   150     175
+2   50      100
+</pre></div>
+</div>
+<p>Under the hood it loops over BED file entries and updates a <code class="docutils literal notranslate"><span class="pre">Counter</span></code>
+object for the different triplets</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">ancestor</span><span class="o">.</span><span class="n">targets</span><span class="p">(</span><span class="n">bed</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Counter({&#39;CAG&#39;: 10, &#39;GCA&#39;: 9, &#39;GCT&#39;: 7, &#39;TCT&#39;: 7, &#39;AAA&#39;: 7, &#39;CAT&#39;: 5, &#39;GAT&#39;: 5, &#39;GCC&#39;: 4, &#39;GAG&#39;: 4, &#39;TAG&#39;: 4, &#39;TAA&#39;: 4, &#39;CCA&#39;: 4, &#39;AAC&#39;: 3, &#39;CCC&#39;: 3, &#39;CCT&#39;: 3, &#39;TCC&#39;: 3, &#39;AAT&#39;: 3, &#39;CAA&#39;: 2, &#39;ACA&#39;: 2, &#39;TCA&#39;: 2, &#39;GAC&#39;: 2, &#39;ACG&#39;: 2, &#39;ACT&#39;: 1, &#39;CAC&#39;: 1, &#39;GAA&#39;: 1, &#39;AAG&#39;: 1, &#39;ACC&#39;: 1})
+</pre></div>
+</div>
+<p>We can also call it without the BED file mask to compute the unmasked
+target sizes of the ancestral FASTA</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">ancestor</span><span class="o">.</span><span class="n">targets</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Counter({&#39;AAA&#39;: 6197, &#39;CAG&#39;: 4423, &#39;TCT&#39;: 4319, &#39;AAT&#39;: 4240, &#39;ACA&#39;: 3920, &#39;GAA&#39;: 3861, &#39;AAG&#39;: 3860, &#39;CCT&#39;: 3811, &#39;CCA&#39;: 3764, &#39;TCA&#39;: 3730, &#39;GAG&#39;: 3601, &#39;TAA&#39;: 3527, &#39;CAT&#39;: 3456, &#39;CAA&#39;: 3408, &#39;TCC&#39;: 3317, &#39;TAT&#39;: 3279, &#39;CAC&#39;: 3260, &#39;CCC&#39;: 3234, &#39;GCA&#39;: 3182, &#39;ACT&#39;: 2998, &#39;GCT&#39;: 2972, &#39;GCC&#39;: 2694, &#39;AAC&#39;: 2688, &#39;ACC&#39;: 2378, &#39;GAT&#39;: 2370, &#39;TAG&#39;: 2210, &#39;GAC&#39;: 1998, &#39;TAC&#39;: 1927, &#39;CCG&#39;: 717, &#39;GCG&#39;: 592, &#39;ACG&#39;: 554, &#39;TCG&#39;: 450})
+</pre></div>
+</div>
+</section>
+<section id="command-line-interface-demo">
+<h2>Command line interface demo<a class="headerlink" href="#command-line-interface-demo" title="Permalink to this heading"></a></h2>
+<p>Display usage information for the mutyper command</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mutyper<span class="w"> </span>-h
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">mutyper</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">{</span><span class="n">ancestor</span><span class="p">,</span><span class="n">variants</span><span class="p">,</span><span class="n">targets</span><span class="p">,</span><span class="n">spectra</span><span class="p">,</span><span class="n">ksfs</span><span class="p">}</span> <span class="o">...</span>
+
+<span class="n">mutyper</span><span class="p">:</span> <span class="n">ancestral</span> <span class="n">kmer</span> <span class="n">mutation</span> <span class="n">types</span> <span class="k">for</span> <span class="n">variant</span> <span class="n">data</span>
+
+<span class="n">options</span><span class="p">:</span>
+  <span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>            <span class="n">show</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span> <span class="ow">and</span> <span class="n">exit</span>
+
+<span class="n">subcommands</span><span class="p">:</span>
+  <span class="n">specify</span> <span class="n">one</span> <span class="n">of</span> <span class="n">these</span>
+
+  <span class="p">{</span><span class="n">ancestor</span><span class="p">,</span><span class="n">variants</span><span class="p">,</span><span class="n">targets</span><span class="p">,</span><span class="n">spectra</span><span class="p">,</span><span class="n">ksfs</span><span class="p">}</span>
+                        <span class="n">additional</span> <span class="n">help</span> <span class="n">available</span> <span class="k">for</span> <span class="n">each</span> <span class="n">subcommand</span>
+</pre></div>
+</div>
+<section id="variants-subcommand">
+<h3><code class="docutils literal notranslate"><span class="pre">variants</span></code> subcommand<a class="headerlink" href="#variants-subcommand" title="Permalink to this heading"></a></h3>
+<p>Usage:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mutyper<span class="w"> </span>variants<span class="w"> </span>-h
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">mutyper</span> <span class="n">variants</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">verbose</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">k</span> <span class="n">K</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">target</span> <span class="n">TARGET</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">sep</span> <span class="n">SEP</span><span class="p">]</span>
+                        <span class="p">[</span><span class="o">--</span><span class="n">chrom_pos</span> <span class="n">CHROM_POS</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">strand_file</span> <span class="n">STRAND_FILE</span><span class="p">]</span>
+                        <span class="p">[</span><span class="o">--</span><span class="n">strict</span><span class="p">]</span>
+                        <span class="n">fasta</span> <span class="n">vcf</span>
+
+<span class="n">adds</span> <span class="n">mutation_type</span> <span class="n">to</span> <span class="n">VCF</span><span class="o">/</span><span class="n">BCF</span> <span class="n">INFO</span><span class="p">,</span> <span class="n">polarizes</span> <span class="n">REF</span><span class="o">/</span><span class="n">ALT</span><span class="o">/</span><span class="n">AC</span> <span class="n">according</span> <span class="n">to</span>
+<span class="n">ancestral</span><span class="o">/</span><span class="n">derived</span> <span class="n">states</span><span class="p">,</span> <span class="ow">and</span> <span class="n">stream</span> <span class="n">to</span> <span class="n">stdout</span>
+
+<span class="n">positional</span> <span class="n">arguments</span><span class="p">:</span>
+  <span class="n">fasta</span>                 <span class="n">path</span> <span class="n">to</span> <span class="n">ancestral</span> <span class="n">FASTA</span>
+  <span class="n">vcf</span>                   <span class="n">VCF</span><span class="o">/</span><span class="n">BCF</span> <span class="n">file</span><span class="p">,</span> <span class="n">usually</span> <span class="k">for</span> <span class="n">a</span> <span class="n">single</span> <span class="n">chromosome</span> <span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="k">for</span>
+                        <span class="n">stdin</span><span class="p">)</span>
+
+<span class="n">options</span><span class="p">:</span>
+  <span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>            <span class="n">show</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span> <span class="ow">and</span> <span class="n">exit</span>
+  <span class="o">--</span><span class="n">verbose</span>             <span class="n">increase</span> <span class="n">logging</span> <span class="n">verbosity</span>
+  <span class="o">--</span><span class="n">k</span> <span class="n">K</span>                 <span class="n">k</span><span class="o">-</span><span class="n">mer</span> <span class="n">context</span> <span class="n">size</span> <span class="p">(</span><span class="n">default</span> <span class="mi">3</span><span class="p">)</span>
+  <span class="o">--</span><span class="n">target</span> <span class="n">TARGET</span>       <span class="mi">0</span><span class="o">-</span><span class="n">based</span> <span class="n">mutation</span> <span class="n">target</span> <span class="n">position</span> <span class="ow">in</span> <span class="n">kmer</span> <span class="p">(</span><span class="n">default</span>
+                        <span class="n">middle</span><span class="p">)</span>
+  <span class="o">--</span><span class="n">sep</span> <span class="n">SEP</span>             <span class="n">field</span> <span class="n">delimiter</span> <span class="ow">in</span> <span class="n">FASTA</span> <span class="n">headers</span> <span class="p">(</span><span class="n">default</span> <span class="s2">&quot;:&quot;</span><span class="p">)</span>
+  <span class="o">--</span><span class="n">chrom_pos</span> <span class="n">CHROM_POS</span>
+                        <span class="mi">0</span><span class="o">-</span><span class="n">based</span> <span class="n">chromosome</span> <span class="n">field</span> <span class="n">position</span> <span class="ow">in</span> <span class="n">FASTA</span> <span class="n">headers</span>
+                        <span class="p">(</span><span class="n">default</span> <span class="mi">0</span><span class="p">)</span>
+  <span class="o">--</span><span class="n">strand_file</span> <span class="n">STRAND_FILE</span>
+                        <span class="n">path</span> <span class="n">to</span> <span class="n">bed</span> <span class="n">file</span> <span class="k">with</span> <span class="n">regions</span> <span class="n">where</span> <span class="n">reverse</span> <span class="n">strand</span>
+                        <span class="n">defines</span> <span class="n">mutation</span> <span class="n">context</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span> <span class="n">direction</span> <span class="n">of</span>
+                        <span class="n">replication</span> <span class="ow">or</span> <span class="n">transcription</span> <span class="p">(</span><span class="n">default</span> <span class="n">collapse</span> <span class="n">reverse</span>
+                        <span class="n">complements</span><span class="p">)</span>
+  <span class="o">--</span><span class="n">strict</span>              <span class="n">only</span> <span class="n">uppercase</span> <span class="n">nucleotides</span> <span class="ow">in</span> <span class="n">FASTA</span> <span class="n">considered</span>
+                        <span class="n">ancestrally</span> <span class="n">identified</span>
+</pre></div>
+</div>
+<p>Path to FASTA and a truncated VCF file for chromosome 1 from the 1000 Genomes
+Project.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nv">fasta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;docs/example_data/ancestral.fa&#39;</span>
+<span class="gp">$ </span><span class="nv">vcf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;docs/example_data/snps.vcf&#39;</span>
+</pre></div>
+</div>
+<p>We’ll use
+<a class="reference external" href="http://samtools.github.io/bcftools/bcftools.html#view">bcftools</a> to
+display the first few variants, omitting header and genotype
+information.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>bcftools<span class="w"> </span>view<span class="w"> </span>-HG<span class="w"> </span><span class="nv">$vcf</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-5
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span>       <span class="mi">10177</span>   <span class="o">.</span>       <span class="n">A</span>       <span class="n">AC</span>      <span class="mi">100</span>     <span class="n">PASS</span>    <span class="n">AC</span><span class="o">=</span><span class="mi">2130</span><span class="p">;</span><span class="n">AF</span><span class="o">=</span><span class="mf">0.425319</span><span class="p">;</span><span class="n">AN</span><span class="o">=</span><span class="mi">5008</span><span class="p">;</span><span class="n">NS</span><span class="o">=</span><span class="mi">2504</span><span class="p">;</span><span class="n">DP</span><span class="o">=</span><span class="mi">103152</span><span class="p">;</span><span class="n">EAS_AF</span><span class="o">=</span><span class="mf">0.3363</span><span class="p">;</span><span class="n">AMR_AF</span><span class="o">=</span><span class="mf">0.3602</span><span class="p">;</span><span class="n">AFR_AF</span><span class="o">=</span><span class="mf">0.4909</span><span class="p">;</span><span class="n">EUR_AF</span><span class="o">=</span><span class="mf">0.4056</span><span class="p">;</span><span class="n">SAS_AF</span><span class="o">=</span><span class="mf">0.4949</span><span class="p">;</span><span class="n">AA</span><span class="o">=|||</span><span class="n">unknown</span><span class="p">(</span><span class="n">NO_COVERAGE</span><span class="p">)</span>
+<span class="mi">1</span>       <span class="mi">10235</span>   <span class="o">.</span>       <span class="n">T</span>       <span class="n">TA</span>      <span class="mi">100</span>     <span class="n">PASS</span>    <span class="n">AC</span><span class="o">=</span><span class="mi">6</span><span class="p">;</span><span class="n">AF</span><span class="o">=</span><span class="mf">0.00119808</span><span class="p">;</span><span class="n">AN</span><span class="o">=</span><span class="mi">5008</span><span class="p">;</span><span class="n">NS</span><span class="o">=</span><span class="mi">2504</span><span class="p">;</span><span class="n">DP</span><span class="o">=</span><span class="mi">78015</span><span class="p">;</span><span class="n">EAS_AF</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">AMR_AF</span><span class="o">=</span><span class="mf">0.0014</span><span class="p">;</span><span class="n">AFR_AF</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">EUR_AF</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">SAS_AF</span><span class="o">=</span><span class="mf">0.0051</span><span class="p">;</span><span class="n">AA</span><span class="o">=|||</span><span class="n">unknown</span><span class="p">(</span><span class="n">NO_COVERAGE</span><span class="p">)</span>
+<span class="mi">1</span>       <span class="mi">10352</span>   <span class="n">rs145072688</span>     <span class="n">T</span>       <span class="n">TA</span>      <span class="mi">100</span>     <span class="n">PASS</span>    <span class="n">AC</span><span class="o">=</span><span class="mi">2191</span><span class="p">;</span><span class="n">AF</span><span class="o">=</span><span class="mf">0.4375</span><span class="p">;</span><span class="n">AN</span><span class="o">=</span><span class="mi">5008</span><span class="p">;</span><span class="n">NS</span><span class="o">=</span><span class="mi">2504</span><span class="p">;</span><span class="n">DP</span><span class="o">=</span><span class="mi">88915</span><span class="p">;</span><span class="n">EAS_AF</span><span class="o">=</span><span class="mf">0.4306</span><span class="p">;</span><span class="n">AMR_AF</span><span class="o">=</span><span class="mf">0.4107</span><span class="p">;</span><span class="n">AFR_AF</span><span class="o">=</span><span class="mf">0.4788</span><span class="p">;</span><span class="n">EUR_AF</span><span class="o">=</span><span class="mf">0.4264</span><span class="p">;</span><span class="n">SAS_AF</span><span class="o">=</span><span class="mf">0.4192</span><span class="p">;</span><span class="n">AA</span><span class="o">=|||</span><span class="n">unknown</span><span class="p">(</span><span class="n">NO_COVERAGE</span><span class="p">)</span>
+<span class="mi">1</span>       <span class="mi">10505</span>   <span class="o">.</span>       <span class="n">A</span>       <span class="n">T</span>       <span class="mi">100</span>     <span class="n">PASS</span>    <span class="n">AC</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="n">AF</span><span class="o">=</span><span class="mf">0.000199681</span><span class="p">;</span><span class="n">AN</span><span class="o">=</span><span class="mi">5008</span><span class="p">;</span><span class="n">NS</span><span class="o">=</span><span class="mi">2504</span><span class="p">;</span><span class="n">DP</span><span class="o">=</span><span class="mi">9632</span><span class="p">;</span><span class="n">EAS_AF</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">AMR_AF</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">AFR_AF</span><span class="o">=</span><span class="mf">0.0008</span><span class="p">;</span><span class="n">EUR_AF</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">SAS_AF</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">AA</span><span class="o">=.|||</span>
+<span class="mi">1</span>       <span class="mi">10506</span>   <span class="o">.</span>       <span class="n">C</span>       <span class="n">G</span>       <span class="mi">100</span>     <span class="n">PASS</span>    <span class="n">AC</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="n">AF</span><span class="o">=</span><span class="mf">0.000199681</span><span class="p">;</span><span class="n">AN</span><span class="o">=</span><span class="mi">5008</span><span class="p">;</span><span class="n">NS</span><span class="o">=</span><span class="mi">2504</span><span class="p">;</span><span class="n">DP</span><span class="o">=</span><span class="mi">9676</span><span class="p">;</span><span class="n">EAS_AF</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">AMR_AF</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">AFR_AF</span><span class="o">=</span><span class="mf">0.0008</span><span class="p">;</span><span class="n">EUR_AF</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">SAS_AF</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">AA</span><span class="o">=.|||</span>
+</pre></div>
+</div>
+<p>Now we use the <code class="docutils literal notranslate"><span class="pre">variants</span></code> subcommand, and pipe to <code class="docutils literal notranslate"><span class="pre">bcftools</span></code> for
+display. Notice there is an additional INFO field <code class="docutils literal notranslate"><span class="pre">mutation_type</span></code>, and
+only biallelic SNPs are output. Also note that REF/ALT state and INFO/AC
+fields are polarized according to ancestral/derived allele.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mutyper<span class="w"> </span>variants<span class="w"> </span><span class="nv">$fasta</span><span class="w"> </span><span class="nv">$vcf</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>bcftools<span class="w"> </span>view<span class="w"> </span>-HG<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-5
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span>       <span class="mi">10505</span>   <span class="o">.</span>       <span class="n">A</span>       <span class="n">T</span>       <span class="mi">100</span>     <span class="n">PASS</span>    <span class="n">AC</span><span class="o">=</span><span class="mi">5007</span><span class="p">;</span><span class="n">AF</span><span class="o">=</span><span class="mf">0.9998</span><span class="p">;</span><span class="n">AN</span><span class="o">=</span><span class="mi">5008</span><span class="p">;</span><span class="n">NS</span><span class="o">=</span><span class="mi">2504</span><span class="p">;</span><span class="n">DP</span><span class="o">=</span><span class="mi">9632</span><span class="p">;</span><span class="n">EAS_AF</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">AMR_AF</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">AFR_AF</span><span class="o">=</span><span class="mf">0.0008</span><span class="p">;</span><span class="n">EUR_AF</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">SAS_AF</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">AA</span><span class="o">=.|||</span><span class="p">;</span><span class="n">mutation_type</span><span class="o">=</span><span class="n">GAG</span><span class="o">&gt;</span><span class="n">GTG</span>
+<span class="mi">1</span>       <span class="mi">10506</span>   <span class="o">.</span>       <span class="n">C</span>       <span class="n">G</span>       <span class="mi">100</span>     <span class="n">PASS</span>    <span class="n">AC</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="n">AF</span><span class="o">=</span><span class="mf">0.000199681</span><span class="p">;</span><span class="n">AN</span><span class="o">=</span><span class="mi">5008</span><span class="p">;</span><span class="n">NS</span><span class="o">=</span><span class="mi">2504</span><span class="p">;</span><span class="n">DP</span><span class="o">=</span><span class="mi">9676</span><span class="p">;</span><span class="n">EAS_AF</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">AMR_AF</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">AFR_AF</span><span class="o">=</span><span class="mf">0.0008</span><span class="p">;</span><span class="n">EUR_AF</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">SAS_AF</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">AA</span><span class="o">=.|||</span><span class="p">;</span><span class="n">mutation_type</span><span class="o">=</span><span class="n">TCT</span><span class="o">&gt;</span><span class="n">TGT</span>
+<span class="mi">1</span>       <span class="mi">10542</span>   <span class="o">.</span>       <span class="n">A</span>       <span class="n">G</span>       <span class="mi">100</span>     <span class="n">PASS</span>    <span class="n">AC</span><span class="o">=</span><span class="mi">5007</span><span class="p">;</span><span class="n">AF</span><span class="o">=</span><span class="mf">0.9998</span><span class="p">;</span><span class="n">AN</span><span class="o">=</span><span class="mi">5008</span><span class="p">;</span><span class="n">NS</span><span class="o">=</span><span class="mi">2504</span><span class="p">;</span><span class="n">DP</span><span class="o">=</span><span class="mi">9007</span><span class="p">;</span><span class="n">EAS_AF</span><span class="o">=</span><span class="mf">0.001</span><span class="p">;</span><span class="n">AMR_AF</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">AFR_AF</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">EUR_AF</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">SAS_AF</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">AA</span><span class="o">=.|||</span><span class="p">;</span><span class="n">mutation_type</span><span class="o">=</span><span class="n">CAG</span><span class="o">&gt;</span><span class="n">CGG</span>
+<span class="mi">1</span>       <span class="mi">10642</span>   <span class="o">.</span>       <span class="n">A</span>       <span class="n">G</span>       <span class="mi">100</span>     <span class="n">PASS</span>    <span class="n">AC</span><span class="o">=</span><span class="mi">4987</span><span class="p">;</span><span class="n">AF</span><span class="o">=</span><span class="mf">0.995807</span><span class="p">;</span><span class="n">AN</span><span class="o">=</span><span class="mi">5008</span><span class="p">;</span><span class="n">NS</span><span class="o">=</span><span class="mi">2504</span><span class="p">;</span><span class="n">DP</span><span class="o">=</span><span class="mi">1360</span><span class="p">;</span><span class="n">EAS_AF</span><span class="o">=</span><span class="mf">0.003</span><span class="p">;</span><span class="n">AMR_AF</span><span class="o">=</span><span class="mf">0.0014</span><span class="p">;</span><span class="n">AFR_AF</span><span class="o">=</span><span class="mf">0.0129</span><span class="p">;</span><span class="n">EUR_AF</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">SAS_AF</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">AA</span><span class="o">=.|||</span><span class="p">;</span><span class="n">mutation_type</span><span class="o">=</span><span class="n">CAT</span><span class="o">&gt;</span><span class="n">CGT</span>
+<span class="mi">1</span>       <span class="mi">11008</span>   <span class="o">.</span>       <span class="n">C</span>       <span class="n">G</span>       <span class="mi">100</span>     <span class="n">PASS</span>    <span class="n">AC</span><span class="o">=</span><span class="mi">441</span><span class="p">;</span><span class="n">AF</span><span class="o">=</span><span class="mf">0.0880591</span><span class="p">;</span><span class="n">AN</span><span class="o">=</span><span class="mi">5008</span><span class="p">;</span><span class="n">NS</span><span class="o">=</span><span class="mi">2504</span><span class="p">;</span><span class="n">DP</span><span class="o">=</span><span class="mi">2232</span><span class="p">;</span><span class="n">EAS_AF</span><span class="o">=</span><span class="mf">0.0367</span><span class="p">;</span><span class="n">AMR_AF</span><span class="o">=</span><span class="mf">0.0965</span><span class="p">;</span><span class="n">AFR_AF</span><span class="o">=</span><span class="mf">0.1346</span><span class="p">;</span><span class="n">EUR_AF</span><span class="o">=</span><span class="mf">0.0885</span><span class="p">;</span><span class="n">SAS_AF</span><span class="o">=</span><span class="mf">0.0716</span><span class="p">;</span><span class="n">AA</span><span class="o">=.|||</span><span class="p">;</span><span class="n">mutation_type</span><span class="o">=</span><span class="n">CCT</span><span class="o">&gt;</span><span class="n">CGT</span>
+</pre></div>
+</div>
+</section>
+<section id="targets-subcommand">
+<h3><code class="docutils literal notranslate"><span class="pre">targets</span></code> subcommand<a class="headerlink" href="#targets-subcommand" title="Permalink to this heading"></a></h3>
+<p>Usage:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mutyper<span class="w"> </span>targets<span class="w"> </span>-h
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">mutyper</span> <span class="n">targets</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">verbose</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">k</span> <span class="n">K</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">target</span> <span class="n">TARGET</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">sep</span> <span class="n">SEP</span><span class="p">]</span>
+                       <span class="p">[</span><span class="o">--</span><span class="n">chrom_pos</span> <span class="n">CHROM_POS</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">strand_file</span> <span class="n">STRAND_FILE</span><span class="p">]</span>
+                       <span class="p">[</span><span class="o">--</span><span class="n">strict</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">bed</span> <span class="n">BED</span><span class="p">]</span>
+                       <span class="n">fasta</span>
+
+<span class="n">compute</span> <span class="n">𝑘</span><span class="o">-</span><span class="n">mer</span> <span class="n">target</span> <span class="n">sizes</span> <span class="ow">and</span> <span class="n">stream</span> <span class="n">to</span> <span class="n">stdout</span>
+
+<span class="n">positional</span> <span class="n">arguments</span><span class="p">:</span>
+  <span class="n">fasta</span>                 <span class="n">path</span> <span class="n">to</span> <span class="n">ancestral</span> <span class="n">FASTA</span>
+
+<span class="n">options</span><span class="p">:</span>
+  <span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>            <span class="n">show</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span> <span class="ow">and</span> <span class="n">exit</span>
+  <span class="o">--</span><span class="n">verbose</span>             <span class="n">increase</span> <span class="n">logging</span> <span class="n">verbosity</span>
+  <span class="o">--</span><span class="n">k</span> <span class="n">K</span>                 <span class="n">k</span><span class="o">-</span><span class="n">mer</span> <span class="n">context</span> <span class="n">size</span> <span class="p">(</span><span class="n">default</span> <span class="mi">3</span><span class="p">)</span>
+  <span class="o">--</span><span class="n">target</span> <span class="n">TARGET</span>       <span class="mi">0</span><span class="o">-</span><span class="n">based</span> <span class="n">mutation</span> <span class="n">target</span> <span class="n">position</span> <span class="ow">in</span> <span class="n">kmer</span> <span class="p">(</span><span class="n">default</span>
+                        <span class="n">middle</span><span class="p">)</span>
+  <span class="o">--</span><span class="n">sep</span> <span class="n">SEP</span>             <span class="n">field</span> <span class="n">delimiter</span> <span class="ow">in</span> <span class="n">FASTA</span> <span class="n">headers</span> <span class="p">(</span><span class="n">default</span> <span class="s2">&quot;:&quot;</span><span class="p">)</span>
+  <span class="o">--</span><span class="n">chrom_pos</span> <span class="n">CHROM_POS</span>
+                        <span class="mi">0</span><span class="o">-</span><span class="n">based</span> <span class="n">chromosome</span> <span class="n">field</span> <span class="n">position</span> <span class="ow">in</span> <span class="n">FASTA</span> <span class="n">headers</span>
+                        <span class="p">(</span><span class="n">default</span> <span class="mi">0</span><span class="p">)</span>
+  <span class="o">--</span><span class="n">strand_file</span> <span class="n">STRAND_FILE</span>
+                        <span class="n">path</span> <span class="n">to</span> <span class="n">bed</span> <span class="n">file</span> <span class="k">with</span> <span class="n">regions</span> <span class="n">where</span> <span class="n">reverse</span> <span class="n">strand</span>
+                        <span class="n">defines</span> <span class="n">mutation</span> <span class="n">context</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span> <span class="n">direction</span> <span class="n">of</span>
+                        <span class="n">replication</span> <span class="ow">or</span> <span class="n">transcription</span> <span class="p">(</span><span class="n">default</span> <span class="n">collapse</span> <span class="n">reverse</span>
+                        <span class="n">complements</span><span class="p">)</span>
+  <span class="o">--</span><span class="n">strict</span>              <span class="n">only</span> <span class="n">uppercase</span> <span class="n">nucleotides</span> <span class="ow">in</span> <span class="n">FASTA</span> <span class="n">considered</span>
+                        <span class="n">ancestrally</span> <span class="n">identified</span>
+  <span class="o">--</span><span class="n">bed</span> <span class="n">BED</span>             <span class="n">path</span> <span class="n">to</span> <span class="n">BED</span> <span class="n">file</span> <span class="n">mask</span> <span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="k">for</span> <span class="n">stdin</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mutyper<span class="w"> </span>targets<span class="w"> </span><span class="nv">$fasta</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>head
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AAA</span> <span class="mi">6331</span>
+<span class="n">AAC</span> <span class="mi">2775</span>
+<span class="n">AAG</span> <span class="mi">3947</span>
+<span class="n">AAT</span> <span class="mi">4335</span>
+<span class="n">ACA</span> <span class="mi">4066</span>
+<span class="n">ACC</span> <span class="mi">2440</span>
+<span class="n">ACG</span> <span class="mi">632</span>
+<span class="n">ACT</span> <span class="mi">3082</span>
+<span class="n">CAA</span> <span class="mi">3506</span>
+<span class="n">CAC</span> <span class="mi">3391</span>
+</pre></div>
+</div>
+<p>The optional argument <code class="docutils literal notranslate"><span class="pre">--bed</span></code> resticts target size computation based
+on a BED mask file, and is useful of normalizing mutation spectra
+according to genomic region, or calibrating mutaiton rates.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mutyper<span class="w"> </span>targets<span class="w"> </span><span class="nv">$fasta</span><span class="w"> </span>--bed<span class="w"> </span><span class="nv">$bed</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>head
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AAA</span> <span class="mi">7</span>
+<span class="n">AAC</span> <span class="mi">3</span>
+<span class="n">AAG</span> <span class="mi">1</span>
+<span class="n">AAT</span> <span class="mi">3</span>
+<span class="n">ACA</span> <span class="mi">2</span>
+<span class="n">ACC</span> <span class="mi">1</span>
+<span class="n">ACG</span> <span class="mi">2</span>
+<span class="n">ACT</span> <span class="mi">1</span>
+<span class="n">CAA</span> <span class="mi">2</span>
+<span class="n">CAC</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</section>
+<section id="spectra-subcommand">
+<h3><code class="docutils literal notranslate"><span class="pre">spectra</span></code> subcommand<a class="headerlink" href="#spectra-subcommand" title="Permalink to this heading"></a></h3>
+<p>Usage:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mutyper<span class="w"> </span>spectra<span class="w"> </span>-h
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">mutyper</span> <span class="n">spectra</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">verbose</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">population</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">randomize</span><span class="p">]</span> <span class="n">vcf</span>
+
+<span class="n">compute</span> <span class="n">mutation</span> <span class="n">spectra</span> <span class="k">for</span> <span class="n">each</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">VCF</span><span class="o">/</span><span class="n">BCF</span> <span class="k">with</span> <span class="n">mutation_type</span> <span class="n">data</span>
+<span class="ow">and</span> <span class="n">stream</span> <span class="n">to</span> <span class="n">stdout</span>
+
+<span class="n">positional</span> <span class="n">arguments</span><span class="p">:</span>
+  <span class="n">vcf</span>           <span class="n">VCF</span><span class="o">/</span><span class="n">BCF</span> <span class="n">file</span><span class="p">,</span> <span class="n">usually</span> <span class="k">for</span> <span class="n">a</span> <span class="n">single</span> <span class="n">chromosome</span> <span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="k">for</span> <span class="n">stdin</span><span class="p">)</span>
+
+<span class="n">options</span><span class="p">:</span>
+  <span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>    <span class="n">show</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span> <span class="ow">and</span> <span class="n">exit</span>
+  <span class="o">--</span><span class="n">verbose</span>     <span class="n">increase</span> <span class="n">logging</span> <span class="n">verbosity</span>
+  <span class="o">--</span><span class="n">population</span>  <span class="n">population</span><span class="o">-</span><span class="n">wise</span> <span class="n">spectrum</span><span class="p">,</span> <span class="n">instead</span> <span class="n">of</span> <span class="n">individual</span>
+  <span class="o">--</span><span class="n">randomize</span>   <span class="n">randomly</span> <span class="n">assign</span> <span class="n">mutation</span> <span class="n">to</span> <span class="n">a</span> <span class="n">single</span> <span class="n">haplotype</span>
+</pre></div>
+</div>
+<p>We first add mutation type information with the <code class="docutils literal notranslate"><span class="pre">variants</span></code> subcommand,
+then pipe into the <code class="docutils literal notranslate"><span class="pre">spectra</span></code> subcommand to generate mutation spectra
+for all samples, and finally crop the output with <code class="docutils literal notranslate"><span class="pre">head</span></code> and <code class="docutils literal notranslate"><span class="pre">cut</span></code>
+for display.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mutyper<span class="w"> </span>variants<span class="w"> </span><span class="nv">$fasta</span><span class="w"> </span><span class="nv">$vcf</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>mutyper<span class="w"> </span>spectra<span class="w"> </span>-<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-f-5
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sample</span>      <span class="n">AAA</span><span class="o">&gt;</span><span class="n">AGA</span> <span class="n">AAT</span><span class="o">&gt;</span><span class="n">AGT</span> <span class="n">ACA</span><span class="o">&gt;</span><span class="n">AAA</span> <span class="n">ACA</span><span class="o">&gt;</span><span class="n">AGA</span>
+<span class="n">HG00096</span>     <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">2</span>
+<span class="n">HG00097</span>     <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">2</span>
+<span class="n">HG00099</span>     <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">2</span>
+<span class="n">HG00100</span>     <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">2</span>
+<span class="n">HG00101</span>     <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">2</span>
+<span class="n">HG00102</span>     <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">2</span>
+<span class="n">HG00103</span>     <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">2</span>
+<span class="n">HG00105</span>     <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">2</span>
+<span class="n">HG00106</span>     <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">2</span>
+</pre></div>
+</div>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">--population</span></code> to get the spectrum for whole population,
+rather than each individual</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mutyper<span class="w"> </span>variants<span class="w"> </span><span class="nv">$fasta</span><span class="w"> </span><span class="nv">$vcf</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>mutyper<span class="w"> </span>spectra<span class="w"> </span>-<span class="w"> </span>--population<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-f-5
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AAA</span><span class="o">&gt;</span><span class="n">AGA</span>     <span class="n">AAT</span><span class="o">&gt;</span><span class="n">AGT</span> <span class="n">ACA</span><span class="o">&gt;</span><span class="n">AAA</span> <span class="n">ACA</span><span class="o">&gt;</span><span class="n">AGA</span> <span class="n">ACA</span><span class="o">&gt;</span><span class="n">ATA</span>
+<span class="mi">2</span>   <span class="mi">1</span>       <span class="mi">1</span>       <span class="mi">2</span>       <span class="mi">3</span>
+</pre></div>
+</div>
+</section>
+<section id="ksfs-subcommand">
+<h3><code class="docutils literal notranslate"><span class="pre">ksfs</span></code> subcommand<a class="headerlink" href="#ksfs-subcommand" title="Permalink to this heading"></a></h3>
+<p>Usage:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mutyper<span class="w"> </span>ksfs<span class="w"> </span>-h
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">mutyper</span> <span class="n">ksfs</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">verbose</span><span class="p">]</span> <span class="n">vcf</span>
+
+<span class="n">compute</span> <span class="n">sample</span> <span class="n">frequency</span> <span class="n">spectrum</span> <span class="k">for</span> <span class="n">each</span> <span class="n">mutation</span> <span class="nb">type</span> <span class="kn">from</span> <span class="nn">a</span> <span class="n">VCF</span><span class="o">/</span><span class="n">BCF</span> <span class="n">file</span>
+<span class="k">with</span> <span class="n">mutation_type</span> <span class="n">data</span> <span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">e</span><span class="o">.</span> <span class="n">output</span> <span class="kn">from</span> <span class="nn">variants</span> <span class="n">subcommand</span> <span class="p">)</span> <span class="ow">and</span> <span class="n">stream</span> <span class="n">to</span>
+<span class="n">stdout</span>
+
+<span class="n">positional</span> <span class="n">arguments</span><span class="p">:</span>
+  <span class="n">vcf</span>         <span class="n">VCF</span><span class="o">/</span><span class="n">BCF</span> <span class="n">file</span><span class="p">,</span> <span class="n">usually</span> <span class="k">for</span> <span class="n">a</span> <span class="n">single</span> <span class="n">chromosome</span> <span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="k">for</span> <span class="n">stdin</span><span class="p">)</span>
+
+<span class="n">options</span><span class="p">:</span>
+  <span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>  <span class="n">show</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span> <span class="ow">and</span> <span class="n">exit</span>
+  <span class="o">--</span><span class="n">verbose</span>   <span class="n">increase</span> <span class="n">logging</span> <span class="n">verbosity</span>
+</pre></div>
+</div>
+<p>Similar to the previous subcommand, but now we are generating a sample
+frequency spectrum (SFS) for each mutation type.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mutyper<span class="w"> </span>variants<span class="w"> </span><span class="nv">$fasta</span><span class="w"> </span><span class="nv">$vcf</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>mutyper<span class="w"> </span>ksfs<span class="w"> </span>-<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-f-5
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sample_frequency</span>    <span class="n">AAA</span><span class="o">&gt;</span><span class="n">AGA</span> <span class="n">AAT</span><span class="o">&gt;</span><span class="n">AGT</span> <span class="n">ACA</span><span class="o">&gt;</span><span class="n">AAA</span> <span class="n">ACA</span><span class="o">&gt;</span><span class="n">AGA</span>
+<span class="mi">1</span>   <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span>
+<span class="mi">2</span>   <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span>
+<span class="mi">3</span>   <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span>
+<span class="mi">4</span>   <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span>
+<span class="mi">5</span>   <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span>
+<span class="mi">6</span>   <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span>
+<span class="mi">7</span>   <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span>
+<span class="mi">8</span>   <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span>
+<span class="mi">9</span>   <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="install.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="cite.html" class="btn btn-neutral float-right" title="Citing mutyper" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, William DeWitt.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

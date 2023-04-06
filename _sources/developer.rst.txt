@@ -1,10 +1,5 @@
-Open source code repository
-===========================
-
-All code is freely available at `<https://github.com/harrispopgen/mutyper>`_
-
 Developer tools
-===============
+---------------
 
 Developer install::
 
