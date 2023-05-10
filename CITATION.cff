@@ -1,0 +1,68 @@
+cff-version: "1.2.0"
+authors:
+- family-names: DeWitt
+  given-names: William S.
+  orcid: "https://orcid.org/0000-0002-6802-9139"
+- family-names: Zhu
+  given-names: Luke
+  orcid: "https://orcid.org/0000-0002-6324-1464"
+- family-names: Vollger
+  given-names: Mitchell R.
+  orcid: "https://orcid.org/0000-0002-8651-1615"
+- family-names: Goldberg
+  given-names: Michael E.
+  orcid: "https://orcid.org/0000-0003-3310-6349"
+- family-names: Talenti
+  given-names: Andrea
+  orcid: "https://orcid.org/0000-0003-1309-3667"
+- family-names: Beichman
+  given-names: Annabel C.
+  orcid: "https://orcid.org/0000-0002-6991-587X"
+- family-names: Harris
+  given-names: Kelley
+  orcid: "https://orcid.org/0000-0003-0302-2523"
+contact:
+- family-names: DeWitt
+  given-names: William S.
+  orcid: "https://orcid.org/0000-0002-6802-9139"
+doi: 10.5281/zenodo.7921769
+message: If you use this software, please cite our article in the
+  Journal of Open Source Software.
+preferred-citation:
+  authors:
+  - family-names: DeWitt
+    given-names: William S.
+    orcid: "https://orcid.org/0000-0002-6802-9139"
+  - family-names: Zhu
+    given-names: Luke
+    orcid: "https://orcid.org/0000-0002-6324-1464"
+  - family-names: Vollger
+    given-names: Mitchell R.
+    orcid: "https://orcid.org/0000-0002-8651-1615"
+  - family-names: Goldberg
+    given-names: Michael E.
+    orcid: "https://orcid.org/0000-0003-3310-6349"
+  - family-names: Talenti
+    given-names: Andrea
+    orcid: "https://orcid.org/0000-0003-1309-3667"
+  - family-names: Beichman
+    given-names: Annabel C.
+    orcid: "https://orcid.org/0000-0002-6991-587X"
+  - family-names: Harris
+    given-names: Kelley
+    orcid: "https://orcid.org/0000-0003-0302-2523"
+  date-published: 2023-05-10
+  doi: 10.21105/joss.05227
+  issn: 2475-9066
+  issue: 85
+  journal: Journal of Open Source Software
+  publisher:
+    name: Open Journals
+  start: 5227
+  title: "mutyper: assigning and summarizing mutation types for
+    analyzing germline mutation spectra"
+  type: article
+  url: "https://joss.theoj.org/papers/10.21105/joss.05227"
+  volume: 8
+title: "`mutyper`: assigning and summarizing mutation types for
+  analyzing germline mutation spectra"
