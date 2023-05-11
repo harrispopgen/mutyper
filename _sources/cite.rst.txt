@@ -1,6 +1,9 @@
 Citing ``mutyper``
 ##################
 
+.. image:: https://joss.theoj.org/papers/10.21105/joss.05227/status.svg
+   :target: https://doi.org/10.21105/joss.05227
+
 APA
 ---
 
